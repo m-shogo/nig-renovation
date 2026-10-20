@@ -1,0 +1,226 @@
+@charset "UTF-8";
+
+
+
+
+/*navigation
+--------------------------------------------------------------------------------------*/
+
+#navigation{
+	zoom:100%;
+	width:60em;
+	height:4.375em;
+	overflow:hidden;
+	margin:0 auto;
+	clear: both;
+}
+
+ul#main-nav{
+	width:60em;
+	height: 4.375em;
+}
+
+ul#main-nav li{
+	width:12.5%;
+	height:4.375em;
+	float:left;
+}
+ul#main-nav li img{
+	width:100%;
+}
+
+ul#main-nav li.navi01 a img,
+ul#main-nav li.navi02 a img,
+ul#main-nav li.navi03 a:hover img,
+ul#main-nav li.navi04 a:hover img,
+ul#main-nav li.navi05 a:hover img,
+ul#main-nav li.navi06 a:hover img,
+ul#main-nav li.navi07 a img,
+ul#main-nav li.navi08 a img{	
+	filter:alpha(opacity=60);
+	-moz-opacity:0.6;
+	-khtml-opacity: 0.6;
+	opacity:0.6;
+}
+
+
+ul#main-nav li.navi01 a:hover img,
+ul#main-nav li.navi02 a:hover img,
+ul#main-nav li.navi07 a:hover img,
+ul#main-nav li.navi08 a:hover img{	
+	filter:alpha(opacity=100);
+	-moz-opacity:1;
+	-khtml-opacity: 1;
+	opacity:1;
+}
+
+
+
+ul#main-nav li ul li a img{	
+	filter:alpha(opacity=100);
+	-moz-opacity:1;
+	-khtml-opacity: 1;
+	opacity:1;
+}
+ul#main-nav li ul li a:hover img{	
+	filter:alpha(opacity=100);
+	-moz-opacity:1;
+	-khtml-opacity: 1;
+	opacity:1;
+}
+
+
+ul#main-nav li ul img{
+	width:auto;
+	margin:0 0.2em 0 0.5em;
+}
+
+ul#main-nav li ul li{
+	padding-left:1em;
+}
+
+ul#main-nav li ul.sub-menu li{
+	padding-left:2em;
+}
+
+
+ul#main-nav li ul a.nw{
+	width:auto;
+	margin:0 0.2em 0 0.5em;
+}
+
+ul#main-nav li span{
+	display:none;
+}
+ul#main-nav ul.sub-menu{
+	display:none;
+}
+
+#navigation table ul li.nonlink a{
+	pointer-events: none;
+	cursor: default;
+}
+#navigation table ul li.nonlink ul.sub-menu li a{
+	pointer-events: auto;
+	cursor: pointer;
+}
+ul#main-nav div._subCategory ul li.nonlink a{
+	pointer-events: none;
+	cursor: default;
+}
+ul#main-nav div._subCategory ul li.nonlink ul.sub-menu li a{
+	pointer-events: auto;
+	cursor: pointer;
+}
+
+
+
+#navigation div._subCategory{
+	font-size:0.75em;
+	line-height:2em;
+	width:100%;
+	display:none;
+	overflow:hidden;
+}
+
+
+#navigation div.navi01,#navigation div.navi02,#navigation div.navi07,#navigation div.navi08 
+{		background-color:#ccc; /* background-color:#eff5f6; background-color:#EEEFEF; */	}
+#navigation div.navi03 {		background-color:#2C59A5;	color:#FFF;	}
+#navigation div.navi04 {		background-color:#01A7BD;	color:#FFF; }
+#navigation div.navi05 {		background-color:#A5B200;	color:#FFF; }
+#navigation div.navi06 {		background-color:#953690;	color:#FFF; }
+
+#navigation table{
+	width:98%;
+	max-width:960px;
+	padding:0.5em 1% 0;
+	text-align:left;
+	margin:0 auto;
+}
+#navigation table td{
+	width:24%;
+	padding:0.5em 0.5% 2.5em;
+	vertical-align:top;
+	line-height:1.2em;
+}
+
+#navigation table td ul{
+	line-height:1.2em;
+}
+
+
+#navigation table td ul li{
+	font-weight:bold;
+}
+#navigation table td ul li ul.sub-menu{
+	padding-top: 0.4em;
+}
+
+#navigation table td ul li ul.sub-menu li{
+	line-height:1.5em;
+	min-height:0;
+	padding: 0 0 0 1em;
+}
+
+
+
+
+ul#main-nav li.navi01 a,ul#main-nav li.navi02 a,ul#main-nav li.navi07 a,ul#main-nav li.navi08 a,
+#navigation div.navi01 a,#navigation div.navi02 a,#navigation div.navi07 a,#navigation div.navi08 a{
+	color:#333;
+	font-weight:bold;
+	text-decoration:none;
+}
+ul#main-nav li.navi03 a,ul#main-nav li.navi04 a,ul#main-nav li.navi05 a,ul#main-nav li.navi06 a,
+#navigation div.navi03 a,#navigation div.navi04 a,#navigation div.navi05 a,#navigation div.navi06 a{
+	color:#FFF;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+#navigation div.navi01 li ul.sub,#navigation div.navi02 a,#navigation div.navi07 a,#navigation div.navi08 a{
+	color:#333;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+#navigation ul li ul.sub-menu li a{
+	font-weight:normal;
+}
+
+/* ナビゲーションカラー */
+#site-base .bgColorBl{ background-color:#2B59A6;  color:#FFF;}
+#site-base .bgColorLb{ background-color:#01A7BD;  color:#FFF;}
+#site-base .bgColorYe{ background-color:#DBA332;  color:#FFF;}
+#site-base .bgColorGr{ background-color:#A5B200;  color:#FFF;}
+#site-base .bgColorPu{ background-color:#953690;  color:#FFF;}
+#site-base .bgColorGl,
+#site-base .bgColorBr{ background-color:#cccccc;  color:#333;}
+
+#site-base .bgColorBr li.next,
+#site-base .bgColorGl li.next{ 	background: url(../images/common/arrow.gif) no-repeat right 0.3em; }
+
+#site-base .bgColorBr a,
+#site-base .bgColorGl a{ color:#333; }
+
+#site-base .bgColorBl a,
+#site-base .bgColorYe a,
+#site-base .bgColorGr a,
+#site-base .bgColorLb a,
+#site-base .bgColorPu a{ color:#FFF; }
+
+ 
+
+/* スマホ用閉じるボタン */ 
+p#_headMenuHideBtn{
+	width:100%;
+	background-color : #4F4C4C;
+	text-align:center;
+	height:1.5em;
+	line-height:1.5em;
+	color:#FFF;
+	display:none;
+}
+
+

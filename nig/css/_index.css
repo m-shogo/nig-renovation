@@ -1,0 +1,209 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*slideWrap
+--------------------------------------------------------------------------------------*/
+
+#mainWrapp{
+	width:100%;
+	background:url(../images/index/slideBg.jpg) repeat-x 0px 0px;
+}
+
+#mainWrapp #slideWrap #slider img { display:none; } 
+
+
+#slider {
+width:1360px;
+	height:300px;
+	/*z-index:100;*/
+	margin-top:0px;
+	margin-right:auto;
+	margin-bottom:0px;
+	margin-left:auto;
+	position: relative;
+	padding:0px;
+	clear:both;
+}
+
+/* The Nivo Slider styles */
+.nivoSlider {
+	position:relative;
+	/*width:100%;height:auto;*/
+	overflow: hidden;
+}
+.nivoSlider img {
+	position:absolute;
+	top:0px;
+	left:0px;
+	max-width: none;
+}
+.nivo-main-image {
+	display: block !important;
+	position: relative !important; 
+	width: 100% !important;
+}
+
+/* The slices and boxes in the Slider */
+.nivo-slice {
+	display:block;
+	position:absolute;
+	z-index:5;
+	height:100%;
+	top:0;
+}
+.nivo-box {
+	display:block;
+	position:absolute;
+	z-index:5;
+	overflow:hidden;
+}
+.nivo-box img { display:block; }
+
+/* Caption styles */
+.nivo-caption {
+	position:absolute;
+	left:0px;
+	bottom:0px;
+	color:#fff;
+	width:100%;
+	z-index:8;
+	padding: 5px 0px;
+	opacity: 0.8;
+	/*overflow: hidden;
+	display: none;*/
+	-moz-opacity: 0;
+	filter:alpha(opacity=8);
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	display:hidden !important;
+	 clear: both;
+}
+.nivo-caption p {
+	padding:0px;
+	margin:0;
+}
+.nivo-caption a {
+	display:inline;
+}
+.nivo-html-caption {
+	display:none;
+}
+/* Direction nav styles (e.g. Next & Prev) */
+
+.nivo-prevNav {
+	left:0px;
+}
+.nivo-nextNav {
+	right:0px;
+}
+
+/* Control nav styles (e.g. 1,2,3...) */
+
+.nivo-controlNav {
+width:100%;
+display:block;
+position:relative;
+margin: -40px 0px 0px 0px !important;
+padding: 0 0 0 0 ;
+z-index:999 !important;
+text-align:center !important;
+}
+
+.nivo-controlNav {
+width:120px;
+margin:0 0 0 0;
+right:320px;
+float:right;
+display:inline;
+position:relative;
+}
+.nivo-controlNav a {
+	margin:0 auto;
+	width: 5px;
+	background: url(../images/common/pager.gif) no-repeat bottom;
+	text-indent:-9999px; 
+	display: block;
+	float: left;
+	padding: 0 5px;
+}
+
+.nivo-controlNav a.active {
+	background: url(../images/common/pagerA.gif) no-repeat bottom;
+	text-indent:-9999px; 
+	display: block;
+}
+
+.nivo-control {	
+}
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+
+/*
+
+
+top3メニュー
+
+
+*/
+
+/*-----------------------------------------------------------------------------------*/
+
+#container2,
+#container{
+float: left;
+width: 960px;
+margin-top: 15px;
+margin-bottom: 15px;
+/*
+	background: url(../images/index/slot3.gif) no-repeat left bottom;
+	position:relative;
+*/
+}
+.menu{
+float:left;
+width:310px;
+padding-top:15px;
+margin-left:15px;
+background-color:#FFF;
+/*position:relative;*/
+
+}
+.first{
+margin-left:0;
+}
+.menu h2{
+padding: 0px 0px 20px 0px;
+}
+
+.news{
+padding: 10px 15px;
+text-align:left;
+}
+.news dt{
+margin:0 0 3px 0;
+font-size:120%;
+font-weight:bold;
+}
+.news dt span.icon{
+padding-left:5px;
+}
+.news dd{
+margin:0 0 10px 0;
+}
+
+
+.more{
+bottom:0;
+text-align:right;
+/*position:relative;*/
+right:0px;
+clear:both;
+vertical-align:bottom
+}
+
+#linksBox{}
+#linksBox li{ display:inline; padding-right:5px;}

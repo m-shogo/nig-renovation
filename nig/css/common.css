@@ -1,0 +1,2024 @@
+/* ===============================================
+
+　 common CSS
+
+================================================== */
+
+/* Common
+================================================== */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video ,input , select , textarea{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	word-break: normal !important;
+	word-wrap: normal !important;
+    list-style: none;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	/*margin: 0px;
+	padding: 0px;*/
+	color: #444;
+/*	background:#eeefef url(../images/common/body.jpg) repeat-x left top;	*/
+	text-align: center;
+	font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif;
+	/*font-family: helvetica, Neo Tech, verdana, impact, arial, sans-serif;*/
+	word-break: normal !important;
+	word-wrap: normal !important;
+    line-height: 1.4;
+}
+
+.EnglishWordBreak {
+	word-break: normal !important;
+	word-wrap: normal !important;
+}
+
+/*div{margin:0;padding:0;}*/
+
+p {
+	margin:0 0 5px 0;
+	/*padding:0;*/
+	word-break: normal !important;
+	word-wrap: normal !important;
+}
+
+img {
+	/*margin:0;
+	padding:0;*/
+	display:inline;
+	vertical-align:middle;
+	max-width:100%;
+}
+
+br {
+	letter-spacing: 0;
+}
+
+sub, sup {
+	vertical-align: baseline;
+}
+
+sup {
+	font-size:0.75em;
+	position:relative;
+	top:-4px;
+}
+
+sub {
+	font-size:0.75em;
+	position:relative;
+	top:4px;
+} 
+
+/*ul{margin:0;padding:0;list-style:none;}
+li {margin:0;padding:0;list-style:none;}*/
+
+/*dl{margin:0;padding:0;}
+dt{padding:0;margin:0;}     
+dd{padding:0;margin:0;}*/
+
+dt:first-child {
+	margin-top: 0 !important;
+}
+
+/* Link
+-------------------------------------------------- */
+
+a img {
+	/*margin:0;
+	padding:0;*/
+	border: none;
+} 
+
+a:hover img.over{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-ms-filter: "alpha( opacity=70 )";
+	background:none;
+}
+
+a:link {
+	color:#036eb6;
+	text-decoration:none;
+}
+
+a:visited {
+	color:#036eb6;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#b6d2fd;
+	text-decoration:none;
+}
+
+a:active {
+	color:#036eb6;
+	text-decoration:none;
+}
+
+/* Image
+-------------------------------------------------- */
+
+.image_left,
+.imageL {
+	margin:0 1em 0.625em 0;
+	padding:0;
+	float:left;
+	display:inline;
+}
+
+.image_right,
+.imageR {
+	margin:0 0 0.625em 1em;
+	padding:0;
+	float:right;
+	display:inline;
+}
+
+/* Decoration
+-------------------------------------------------- */
+
+.italic {
+	font-style: italic;
+}
+
+.texts_orange{color:#cc3300;}
+.texts_red{color:#ff0000;}
+.texts_bold{ font-weight:bold;}
+
+.bgGl{ background-color:#EEF0EF;}
+
+.pt5{ padding-top:5px;}
+
+.pb5{ padding-bottom:5px;}
+.pb20{ padding-bottom:20px;}
+
+.pl5{ padding-left:5px;}
+.pl10{ padding-left:10px;}
+.pl20{ padding-left:20px;}
+
+.pr5{ padding-right:5px;}
+.pr10{ padding-right:10px;}
+.pr20{ padding-right:20px;}
+
+.alignRight{ text-align:right;}
+.alignCenter{ text-align:center;}
+
+/*	Wrapp
+--------------------------------------------------------------------------------------*/
+
+.mainWrapp{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+	clear:both;
+	
+}
+.autoWrapp{
+	width:60em;
+	min-width:20em;		/* 320px */
+	max-width:60em;		/* 960px */
+	margin:0 auto;
+}
+
+/* header
+-------------------------------------------------- */
+
+#header {
+	zoom: 100%;
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+#header #logo {
+	width: 634px;
+	height: 85px;
+	padding: 1.5em 0 0.8em;
+	
+	margin: 0 auto;
+}
+
+#header #logo img {
+	width: 634px;
+	height: 85px;
+	text-indent: -650em;
+	outline: 0;
+}
+
+#header #headR {
+	position : absolute;
+	top : 0;	
+	margin-left: 46.875em;
+	width: 13.125em;
+}
+
+#header #headR ul#lang {
+	float: right;
+	margin: 0;
+}
+
+#header #headR ul#lang li {
+	float: right;
+	display: block;
+	text-align: right;
+}
+
+#header #headR ul#lang li img {
+	/*margin-top:5px;*/
+	margin-bottom: 5px;
+	vertical-align: top;
+}
+
+#header #headR ul#lang li.ar {
+	/*padding:0 1em 0 1em;*/
+	padding: 0 0.6em 0 0.6em;
+}
+
+/* ボタン（Access・En?Jp） */
+
+#snss {
+	float: right;
+	display: inline;
+	clear: right;
+}
+
+#header #headR ul#sns {
+	float: left;
+	margin: 0.625em 0 0 0;
+}
+
+#header #headR ul#sns li {
+	display: inline;
+	margin-right: 0.3125em;
+}
+
+#header #headR ul#sns li img {
+	vertical-align: top;
+}
+
+/* 検索ボックス */
+
+#header div#searchBox {
+	float: left;
+	margin: 0.625em 0 0 0;
+	padding: 0 0 0 0;
+	width: 9.4em;
+	background: none;
+}
+
+#header #searchBox .keyword {
+	float: left;
+	font-size: 12px;
+	border: none;
+	/*width: 128px;*/
+	width: 123px;
+	/*height: 18px;*/
+	height: 23px;
+	padding: 1px;
+	margin: 0px;
+	background-color: #e3e4e4;
+}
+
+#header #searchBox .search {
+	border: none;
+	color: #333;
+	float: left;
+	/*width: 20px;*/
+	width: 25px;
+}
+
+.containers {
+	width: 60em;
+	margin: 0;
+	padding: 0;
+}
+
+
+/* footer
+--------------------------------------------------------------------------------------*/
+
+#footWrap {
+	clear: both;
+	width: 100%;
+	margin: 0px;
+	padding: 1.25em 0;
+}
+
+#footer {
+	margin: 0px auto;
+	padding: 0px 0px 1em 0px;
+	text-align: left;
+	font-size: 0.675em;
+}
+
+#footer ul#adress {
+	text-align: center;
+	color: #333333;
+}
+
+#footer #adress li {
+	text-align: center;
+	line-height: 1.5em;
+	margin-bottom: 1em;
+}
+
+/* copyright */	
+
+#footer #copyright {
+	text-align:center;
+}
+
+#footer #copyright li {
+	margin: 0px 0;
+	text-align: left;
+	display: inline;
+	margin-left: 1em;
+	padding: 0 0 0 1em;
+	background: url(../images/common/arrow.gif) no-repeat 0px 5px;
+}
+
+#footWrap #f_icons{
+	padding:0 0 2em;
+	display:block;
+	text-align:center;
+}
+
+#footWrap #f_icons li{
+	display:inline-block;
+	margin:0 1em;
+}
+
+#footWrap #f_icons li img{
+	width:40px;
+}
+#footWrap #f_icons li a:hover img{		opacity: 0.6;	}
+
+
+/* パン屑
+--------------------------------------------------------------------------------------*/
+
+div#breadcrumb{
+	line-height:1.2em;
+	margin: 0 auto ;
+	padding:0 0 0.3125em 0;
+	height:1.5625em;
+}
+
+div#breadcrumb ul{
+	float:left;
+	margin: 0.5em 0;
+	display:inline;
+	font-size:0.625em;
+	text-align:left;
+}
+div#breadcrumb li{
+	width:auto;
+	text-align:left;
+	margin: 0;
+	padding:0 1em 0.5em 0.5em;
+	display:inline;
+}
+div#breadcrumb li.next{
+	background: url(../images/common/arrowBread.gif) no-repeat right 0.3em;
+}
+
+#headMenuWrap{background: url(../images/common/mainWrapp.gif) repeat-x 0px top;}
+
+
+/* 共通
+
+--------------------------------------------------------------------------------------*/
+
+#contentsWrapper{
+	padding-top:2.5em;
+}
+
+
+div#leftSlot {
+	font-size:0.75em;
+	width:20.83%;
+	margin: 2.08% 0 10.4% 0;
+	padding: 0 0 0 0;
+	float:left;
+	display:inline;
+	line-height:1.8em;
+}
+
+
+#list{
+	text-align:left;
+	margin-bottom:1.66em;
+}
+#list li{
+	text-align:left;
+	display:block;
+	margin-bottom:0.416em;
+	padding-bottom:0.66em;
+	border-bottom:1px dotted #ccc;
+	color:#444;
+}
+
+#list li a{
+	color:#444;
+	text-decoration:none;
+}
+#list li a:hover{
+	color:#ccc;
+	text-decoration:none;
+}
+
+#list li ul.sub-menu{
+	text-align:left;
+	margin-left:5%;
+}
+#list li .sub-menu li{
+	text-align:left;
+	display:block;
+	margin-bottom:0;
+	padding-bottom:0;
+	border-bottom:none;
+	padding-left:5%;
+	color:#444;
+	background:url(../images/common/submenu.gif) no-repeat 0px 10px;
+}
+
+#list li.nonlink a{
+	pointer-events: none;
+	cursor: default;
+	color:#444;
+}
+
+#list li.nonlink ul.sub-menu li a{
+	pointer-events: auto;
+	cursor: pointer;
+}
+#list li.nonlink ul.sub-menu li a:hover{
+	color:#ccc;
+	text-decoration:none;
+}
+
+div#rightSlot {
+	font-size:0.83em;
+	width:75%;
+	float:right;
+	display:block;
+	text-align:left;
+}
+div#rightSlot {	overflow:auto;	}
+
+
+img.icon,
+span.icon img{
+	height:15px;
+}
+
+/* 見出し 基本
+--------------------------------------------------------------------------------------*/
+
+#rightSlot h2{
+	font-size:2.0em;
+	line-height:1.2em;
+	text-align:left;
+	margin:0.535em 0 0.3em 0;
+	padding:0.178em 0 0.178em 0;
+	font-weight:normal;
+	background-color:#fff;
+	background:url(../images/common/h2_gray.gif) no-repeat left bottom;
+	color:#222222;
+}
+
+#rightSlot h2 span{
+    font-size:0.70em;
+    font-weigth:normal;
+    margin-left:0.5em;
+}
+#rightSlot h2 span.italic {
+font-size: unset;
+    margin-left: auto;
+}
+
+
+
+#rightSlot h3{
+	font-size:1.6em;
+	line-height:1.2em;
+	text-align:left;
+	margin:0 0 0em 0px;
+	padding:0.1em 0 0.35em 0.75em;
+	font-weight:normal;
+	background:url(../images/common/h3_gray.gif) no-repeat 0px 3px;
+	color:#222222;
+}
+
+
+/* 見出し ._bgColorGl
+--------------------------------------------------------------------------------------*/
+._bgColorGl #rightSlot h2{
+	background:url(../images/common/h2_gray.png) no-repeat left bottom;
+	color:#222222;
+}
+
+._bgColorGl #rightSlot h3{
+	background:url(../images/common/h3_gray.gif) no-repeat 0px 3px;
+	color:#222222;
+}
+
+._bgColorGl #rightSlot h4{
+	color:#666666;
+}
+
+
+/* 見出し ._bgColorBl
+--------------------------------------------------------------------------------------*/
+._bgColorBl #rightSlot h2{
+	background:url(../images/common/h2_blue.png) no-repeat left bottom;
+	color:#222222;
+}
+
+._bgColorBl #rightSlot h3{
+	background:url(../images/common/h3_blue.gif) no-repeat 0px 3px;
+	color:#222222;
+	border-left: solid 12px #2b59a6;
+}
+
+._bgColorBl #rightSlot h4{
+	color:#2b59a6;
+}
+
+
+/* 見出し ._bgColorLb
+--------------------------------------------------------------------------------------*/
+._bgColorLb #rightSlot h2{
+	background:url(../images/common/h2_lightblue.png) no-repeat left bottom;
+	color:#222222;
+}
+
+._bgColorLb #rightSlot h3{
+	background:url(../images/common/h3_lightblue.gif) no-repeat 0px 3px;
+	color:#222222;
+	border-left: solid 12px #01a7bd;
+
+}
+
+._bgColorLb #rightSlot h4{
+	color:#01a7bd;
+}
+
+
+/* 見出し ._bgColorGr
+--------------------------------------------------------------------------------------*/
+._bgColorGr #rightSlot h2{
+	background:url(../images/common/h2_green.png) no-repeat left bottom;
+	color:#222222;
+}
+
+._bgColorGr #rightSlot h3{
+	background:url(../images/common/h3_green.gif) no-repeat 0px 3px;
+	color:#222222;
+	border-left: solid 12px #899211;
+
+}
+
+._bgColorGr #rightSlot h4{
+	/*color:#a5b200;*/
+	color: #899211; /* 薄く見えるため文字のみ濃い色に変更 */
+	
+}
+
+
+/* 見出し ._bgColorPu
+--------------------------------------------------------------------------------------*/
+._bgColorPu #rightSlot h2{
+	background:url(../images/common/h2_purple.gif) no-repeat left bottom;
+	color:#222222;
+}
+
+._bgColorPu #rightSlot h3{
+	background:url(../images/common/h3_purple.gif) no-repeat 0px 3px;
+	color:#222222;
+	border-left: solid 12px #953690;
+}
+
+._bgColorPu #rightSlot h4{
+	color:#953690;
+}
+
+/* HOME
+================================================== */
+
+/* 1文字インデント
+-------------------------------------------------- */
+.indent {
+	text-indent: 1em;
+}
+
+/* 太字
+-------------------------------------------------- */
+.bold {
+	font-weight: bold;
+}
+
+/* 斜体
+-------------------------------------------------- */
+.italic {
+	font-style: italic;
+}
+
+/* 上付き数字
+-------------------------------------------------- */
+.super {
+  vertical-align: super;
+  font-size: 0.8em;
+}
+
+.sub {
+  vertical-align: sub;
+  font-size: 0.8em;
+}
+
+/* アンダーライン
+-------------------------------------------------- */
+.underline {
+  text-decoration: underline;
+}
+
+/* 
+-------------------------------------------------- */
+
+/*.menu {
+	min-height: 400px;
+}*/
+
+
+/* Information
+-------------------------------------------------- */
+
+#information .text {
+	text-align: 1.5em;
+	margin-bottom: 20px;
+}
+
+/* 画像右寄せ */
+
+#information .image_right {
+	float: right;
+	display: inline;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+#information .image_right:after {
+	content: "."; 
+	display: block;  
+	font-size: 0;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+/* 画像左寄せ */
+
+#information .image_left {
+	float: left;
+	display: inline;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#information .image_left:after {
+	content: ".";  /* 新しい要素を作る */
+	display: block;  /* ブロックレベル要素に */
+	font-size: 0;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+#information .phototext {
+	text-align: center;
+}
+
+/* 矢印 */
+
+#information .arrow {
+	background-image: url('/nig/images/common/arrow.jpg');
+	background-size: 7px 10px;
+  background-repeat: no-repeat;
+  background-position: left center;
+	vertical-align: top;
+	list-style-type: none;
+}
+
+#information .arrow_space {
+	margin-left: 15px;
+}
+
+/* Research Highlights
+-------------------------------------------------- */
+
+#research-highlights #info {
+	margin-bottom: 40px;
+}
+
+#research-highlights img {
+	margin: 30px 0;
+}
+
+#research-highlights ul {
+	margin: 30px 0;
+}
+
+#research-highlights ul li {
+	background-image: url('/nig/images/common/arrow.jpg');
+	background-size: 7px 10px;
+         background-repeat: no-repeat;
+         background-position: left center;
+	vertical-align: top;
+	list-style-type: none;
+	padding-left: 15px;
+}
+
+#research-highlights #image_text {
+	margin-left: 75px;
+	margin-right: 75px;	
+}
+
+#research-highlights_pr #pr_icon {
+	width: 100px;
+	float: left;
+	margin-top: -20px;
+}
+
+#research-highlights_pr #labo {
+	float: right;
+}
+
+#research-highlights_pr #labo p {
+	text-align: right;
+}
+
+#research-highlights_pr #info {
+	clear: both;
+	padding-top: 30px;
+	padding-bottom: 10px;
+}
+
+#research-highlights_pr #pr_pdf {
+	background: url(/nig/images/common/icon_pdf.jpg) no-repeat;
+	background-size: 20px;
+	padding-left: 25px;
+	padding-bottom: 30px;
+}
+
+#research-highlights_pr img {
+	margin: 30px 0;
+}
+
+#research-highlights_pr ul {
+	margin: 30px 0;
+}
+
+#research-highlights_pr ul li {
+	background-image: url('/nig/images/common/arrow.jpg');
+	background-size: 7px 10px;
+         background-repeat: no-repeat;
+         background-position: left center;
+	vertical-align: top;
+	list-style-type: none;
+	padding-left: 15px;
+}
+
+#research-highlights_pr #image_text {
+	margin-left: 75px;
+	margin-right: 75px;	
+}
+
+
+.researcHighlight {
+	margin: 0 auto 20px auto;
+	display:block; text-align:center;
+}
+
+.researcHighlight th {
+	text-align:left; line-height:1.5;
+	font-weight:normal;
+	padding-top:10px;
+}
+
+/* About NIG
+================================================== */
+
+/* Research
+================================================== */
+
+/* Organization
+-------------------------------------------------- */
+/* 20141222追加 */
+/*☆ 山下追加*/
+
+.oranizationFontB {
+	font-weight: bold;
+	font-size: 120%;
+}
+
+.oranizationFontB_open {
+	font-weight: bold;
+	font-size: 120%;
+	background: url(/nig/images/common/acd_icon.gif) no-repeat left;
+	padding-left: 20px;
+	background-size: 13px;
+}
+
+.oranizationFontS {
+	font-size: 80%;
+}
+
+.FontMS {
+	font-size: 92%;
+}
+
+#oranizationWrap {
+	width: 100%;
+	clear: both;
+}
+
+#oranizationWrap02 {
+	width: 100%;
+	clear: both;
+}
+
+table.oranizationTable01 {
+	width:100%; /*☆*/
+	float: left;
+	border: solid 1px #CCCCCC;
+	margin-bottom: 10px;
+	/*border-collapse: collapse;*/ /*☆*/
+}
+
+table.oranizationTable01 th {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+}
+
+table.oranizationTable01 td {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+	line-height: 1.4em;
+}
+
+table.oranizationTable01_A {
+	width: 98%;
+	float: right;
+	border: solid 1px #CCCCCC;
+	margin-bottom: 10px;
+	border-collapse: collapse; /*☆*/
+}
+
+table.oranizationTable01_A th {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+}
+
+table.oranizationTable01_A td {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+	line-height: 1.4em;
+}
+
+table.oranizationTable02 {
+	width: 350px;
+	float: left;
+	border: solid 1px #CCCCCC;
+	margin-right: 20px;
+	margin-bottom: 10px;
+	/*border-collapse: collapse;*/ /*☆*/
+}
+
+table.oranizationTable02 th {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+}
+
+table.oranizationTable02 td {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+	line-height: 1.4em;
+}
+
+table.oranizationTable03 {
+	width: 350px;
+	float: left;
+	border: solid 1px #CCCCCC;
+	margin-bottom: 10px;
+	/*border-collapse: collapse;*/ /*☆*/
+}
+
+table.oranizationTable03 th {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+}
+
+table.oranizationTable03 td {
+	padding: 3px 0 3px 10px;
+	text-align: left;
+	line-height: 1.4em;
+}
+
+#oranizationWrap .bgcl01,
+#oranizationWrap02 .bgcl01	{
+	background-color: #eef0ef !important;
+}
+
+#oranizationWrap .bgcl01b	{
+	background-color: #eef0ef;
+}
+
+#oranizationWrap .bgcl02 {
+	background-color: #e3dfd7;
+}
+
+#oranizationWrap .bgcl03 {
+	background-color: #d4dcc9;
+}
+
+#oranizationWrap .bgcl04 {
+	background-color: #cadbdc;
+}
+
+#oranizationWrap .bgcl05 {
+	background-color: #e5deef;
+}
+
+#oranizationWrap .w10	{
+	width: 10%;
+}
+
+#oranizationWrap .w20	{
+	width: 20%;
+}
+
+#oranizationWrap .w30	{
+	width: 30%;
+}
+
+#oranizationWrap .w40	{
+	width: 40%;
+}
+
+#oranizationWrap .w70	{
+	width: 70%;
+}
+
+br.sponly{
+	display: none;
+}
+
+.nameRight {
+	display: block;
+	text-align: right;
+	float: right;
+}
+
+.nameRight02 {
+	display: block;
+	text-align: right;
+	float: right;
+	margin-right: 15px;
+}
+
+.nameLeft {
+	display: block;
+	text-align: left;
+	float: left;
+}
+
+@media only screen and (min-width:0) {
+#oranizationWrap table.oranizationTable02,
+#oranizationWrap table.oranizationTable03 {
+	width: 100%;
+	float: none;
+}
+br.sponly {
+	display: inline;
+}
+}
+
+@media only screen and (min-width:30em) {
+br.sponly {
+	display: none;
+}
+}
+
+@media only screen and (min-width:60em) {
+#oranizationWrap table.oranizationTable02,
+#oranizationWrap table.oranizationTable03{
+	width: 49%;
+	float: left;
+}
+}
+
+/* 研究室ページ
+-------------------------------------------------- */
+/* 20170330追加 */
+
+.organization_list {
+	padding-left: 20px;
+	margin-bottom: 30px;
+}
+
+.organization_list li {
+	list-style-type: disc;
+}
+
+
+/* Interviews
+-------------------------------------------------- */
+
+/* インタビュー共通 */
+
+#interview_menu .lead {
+	line-height: 1.5em;
+	margin-bottom: 20px;
+}
+
+#interview_menu .box {
+	margin-bottom: 20px;
+}
+
+#interview_menu .box2 {
+	margin-bottom: 20px;
+}
+
+#interview_menu .box:after {
+	content: ".";
+	display: block;
+	clear: both;
+	height: 0px;
+	visibility: hidden;
+	font-size: 0;
+}
+
+#interview_menu .box .ec {
+	width: 180px;
+	float: left;
+	display: inline;
+	line-height: 0;
+}
+
+#interview_menu .box .title {
+	font-size: 1.3em;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+	overflow: hidden;
+}
+
+#interview_menu .box .title img {
+	margin-left: 10px;
+	vertical-align: text-bottom;
+}
+
+#interview_menu .box .name {
+	overflow: auto;
+}
+
+#interview_menu .box .name p {
+	line-height: 1.2em;
+}
+
+#interview_menu .box .name p span {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+
+#interview_menu .box .name .summary {
+	margin-top: 0.8em;
+	line-height: 1.3em;
+}
+
+/* Faculty Interviews
+-------------------------------------------------- */
+
+/* 山下制作 */
+
+#faculty .profile {
+}
+
+#faculty .profile .prof_photo {
+	width: 20%;
+	float: left;
+	padding-right: 20px;
+	padding-bottom:20px;
+}
+
+#faculty .profile .prof_text {
+	padding-bottom: 20px;
+	overflow:auto;
+	zoom:1;
+}
+
+#faculty .profile .prof_text .prof_labs {
+	padding-left:30px;
+	padding-top: 5px;
+	border-top: 1px dotted #cccccc;
+	background:url(/nig/images/common/research_arrow.gif) no-repeat left 10px;
+}
+
+#faculty h3 {
+	clear: both;
+	margin-bottom: 20px;
+}
+
+#faculty h4 {
+	margin-bottom: 20px !important;
+}
+
+
+#faculty .f_headline {
+	padding-bottom: 20px;
+}
+
+#faculty .lead {
+	margin-bottom: 30px;
+}
+
+#faculty .figure_captions {
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 20px;
+}
+
+#faculty .text {
+	padding-bottom:20px;
+}
+
+/* トライス制作 */
+
+.interviewL{
+	width:20%;
+	float:left;
+	padding-right:10px;
+	padding-bottom:30px;
+}
+.interviewR{
+	width:77%;
+	float:left;
+	padding-bottom:30px;
+}
+.interviewR dl{
+}
+.interviewR dt{
+	background:url(/nig/images/common/research_arrow.gif) no-repeat left 6px;
+	color:#2c59a3;
+	padding-left:30px;
+	padding-bottom:3px;
+	border-bottom:1px dotted #ccc;
+	margin-bottom:5px;
+	font-size:110%;
+	padding-top:5px;
+}
+.interviewR dd{
+}
+
+dl.interview{
+	text-align:left;
+	padding-bottom:15px;
+}
+.interview dt{
+	color:#2c59a3;
+	font-weight:bold;
+	font-size:120%;
+	margin-top:10px;
+	margin-bottom:5px;
+}
+.interview dd{
+	padding-bottom:15px;
+}
+.interview dd.c{
+	text-align:center;
+	padding-bottom:15px;
+}
+
+.interviewsMidashi 		{ font-size:120%; color:#2c59a3; font-weight:bold; margin: 0 0 5px;}
+.ImgRight 				{ float:right; display:block; margin: 0 0 20px 20px;}
+.ImgLeft  				{ float:left; display:block; margin: 0 20px 20px 0;}
+.interviewsTxtRight 	{ text-align:right;}
+.interviewImgCenter	 	{ margin: 0 auto; display:block; text-align:center;}
+.interviewFontB 		{ font-size:120%;}
+.interviewspaceMB10		{ margin-bottom:10px; display:block;}
+
+
+/* Prizes and Awards
+-------------------------------------------------- */
+
+#prize .text {
+	text-align: 1.5em;
+	margin-bottom: 20px;
+}
+
+/* 画像右寄せ */
+
+#prize .image_right {
+	float: right;
+	display: inline;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+#prize .image_right:after {
+	content: "."; 
+	display: block;  
+	font-size: 0;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+/* 画像左寄せ */
+
+#prize .image_left {
+	float: left;
+	display: inline;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#prize .image_left:after {
+	content: ".";  /* 新しい要素を作る */
+	display: block;  /* ブロックレベル要素に */
+	font-size: 0;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+#prize .phototext {
+	text-align: center;
+}
+
+/* 矢印 */
+
+#prize .arrow {
+	background-image: url('/nig/images/common/arrow.jpg');
+	background-size: 7px 10px;
+  background-repeat: no-repeat;
+  background-position: left center;
+	vertical-align: top;
+	list-style-type: none;
+}
+
+#prize .arrow_space {
+	margin-left: 15px;
+}
+
+
+
+/* PhD Program
+================================================== */
+
+/* NIGINTERN
+-------------------------------------------------- */
+
+#nigintern h3 {
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+}
+
+#nigintern .text {
+	margin-bottom: 0.5em;
+}
+
+#nigintern img {
+	margin: 1em 0; 
+}
+
+#nigintern ol li {
+	list-style: decimal outside;
+	margin-left: 1.5em;
+	margin-bottom: 1em;
+}
+
+#nigintern ol p {
+	background: url(/nig/images/phd_program/faculty_arrow.gif) no-repeat 0px 7px;
+	background-size: 11px;
+	padding-left: 15px;
+	margin-top: 1em;
+	margin-left: 1.5em;
+	margin-bottom: 0.5em;
+	font-weight: bold;
+}
+
+#nigintern .details {
+	background: url(/nig/images/phd_program/faculty_arrow.gif) no-repeat 0px 7px;
+	background-size: 11px;
+	padding-left: 15px;
+	margin-top: 1em;
+	margin-left: 1.5em;
+	margin-bottom: 0.5em;
+	font-weight: bold;
+}
+
+#nigintern .course {
+	text-align: right;
+}
+
+#nigintern .course02 {
+	padding-left: 1em;
+}
+
+#nigintern #mf_nigintern {
+	float: left;
+	margin-right: 1em;
+}
+
+#nigintern .mf_nigintern_list li {
+	display: inline;
+	margin-right: 1em;
+}
+
+/* Student Perspectives
+-------------------------------------------------- */
+
+#student-perspectives .box .mainimage {
+	margin-bottom: 20px;
+}
+
+/* Research Infrastructure & Collaboration
+================================================== */
+
+/* Model Organism Resources
+================================================== */
+
+/* Career Development
+================================================== */
+
+/* Outreach
+================================================== */
+
+
+#rightSlot h4{
+	font-size:1.35em;
+	line-height:1.5em;
+	text-align:left;
+	margin:0.75em 0 0.2em 0;
+	padding:0;
+	font-weight:normal;
+}
+
+#rightSlot h4.noImage{ background:none; padding-left:0;}
+
+
+#rightSlot h5{
+	font-size:1.125em;
+	line-height:2em;
+	text-align:left;
+	margin:1em 0 1em 0px;
+	padding:0px 0px 0px 1.1em;
+	font-weight:bold;
+	color:#444;
+	background:url(../images/common/h5.gif) no-repeat 0px 11px;
+}
+
+#rightSlot h6{
+	font-size:1em;
+	line-height:2em;
+	font-weight:bold;
+	color:#666;
+}
+
+
+div.box {
+/zoom: 1;
+	width: 100%;
+	margin: 0px 0px 5.2% 0px;
+	/* padding: 1.04% 0px 0px 0px; */
+    padding: 2% 0px 0px 0px;
+	clear: both;
+	float: left;
+	background-color: #FFF;
+}
+
+table.table{
+	text-align:left;
+	border:1px solid #ccc;
+	border-collapse:collapse;
+}
+.table th{
+	background-color:#fefefe;
+	padding:0.666em 1.25em;
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	text-align:left;
+}
+.table td{
+	padding:0.666em 1.25em;
+	vertical-align:top;
+	border-bottom:1px solid #ccc;
+	border-right:1px solid #ccc;
+	text-align:left;
+}
+.table td.tdleft{}
+.table td.tdright{}
+
+#bodies{
+	background-color:#fff;
+}
+
+#headImageWrapp{
+	width:100%;
+	background-color:#eef0ef/* #EEE */;
+}
+
+.date{
+	font-size:1.2em;
+	line-height:2em;
+}
+.date img{
+	vertical-align:middle;
+	/*margin-left:0.5em;*/
+}
+
+div.listlink_box{
+	border-bottom:1px dotted #999;
+	padding-bottom:0.975em;
+	margin-bottom:0.5em;
+}
+
+div.listlink_box a{
+	display:block;
+	font-size:1.25em;
+	line-height:1.4375em;
+	text-align:left;
+	padding: 0;
+	font-weight:normal;
+	color:#666;
+	text-decoration:none;
+	font-weight:bold;
+
+}
+
+div.listlink_box a:hover{
+	color:#333;
+
+}
+
+.texts{
+}
+
+#headImageWrapp {
+	width:auto;
+	max-height:18.75em;
+	min-height:7.5em;
+	/*z-index:100;*/
+	position: relative;
+	padding:0;
+	clear:both;
+}
+
+#slideWrap {
+	max-width:60em;
+	margin: 0 auto;
+	max-height:18.75em;
+	/*min-height:7.5em;*/
+	/*z-index:100;*/
+	position: relative;
+}
+
+#slideWrap img {
+	position: relative;
+	width: 100%;
+	max-height:18.75em;
+	/*min-height:7.5em;*/
+	max-width: none;
+}
+
+div.accessImage{}
+dl.dl{ text-align:left;}
+.dl dt{ border-bottom:1px dotted #666666; color:#666; font-weight:bold;}
+.dl dd{ margin:0; padding: 10px 0 10px 0;}
+
+ul.list{text-align:left;
+}
+.list li{
+width: auto;
+margin: 0px 0px 2px 0px;
+padding: 0px 0px 0px 18px;
+text-align: left;
+background-image: url(../images/common/arrow2.gif);
+background-repeat: no-repeat;
+background-position: 0px 5px;
+display: block;
+}
+
+
+dl.qa{
+}
+
+.qa dt.qaQ{
+	background-size:20px !important;
+	font-size:1.6em;
+	line-height:1.5em;
+	text-align:left;
+	margin:0 0 0.5em 0px;
+	padding:0 0 0.1em 1.6em;
+	font-weight:normal;
+	background:url(../images/common/qaQ.gif) no-repeat 0px 4px;
+	color:#222222;
+}
+
+
+.qa dd.qaA{
+	padding:0 0 2em 0px;
+}
+
+
+
+
+
+
+table.articleTblSeminar01 {
+	width: 100%;
+    border-bottom: 1px #999 solid;
+	border-top: 1px #999 solid;
+	border-collapse:collapse;
+	margin-bottom:40px;
+}
+table.articleTblSeminar01 th {
+    padding: 5px;
+    border-bottom: 1px #999 solid;    
+    background: #eef0ef;
+    font-weight: bold;
+    line-height: 120%;
+    text-align: center;
+}
+table.articleTblSeminar01 td.SeminarBg01 {
+    padding: 5px;
+    border-bottom: 1px #999 solid; 
+	line-height: 140%;
+	background-color:#fff;
+}
+
+table.articleTblSeminar01 td.SeminarBg02 {
+    padding: 5px;
+    border-bottom: 1px #999 solid; 
+	line-height: 140%;
+	background-color:#f5f6f6;
+}
+table.articleTblSeminar01 td.title {
+	text-align: left;
+	font-size: 130%;
+	background-color:#eef0ef;
+	padding-left: 10px;
+}
+
+table.articleTblSeminar02 {
+	width: 100%;
+　　margin: 1em 0;
+	border-collapse:collapse;
+}
+table.articleTblSeminar02 th {
+	width:85px;
+    padding: 10px;
+	background: #eef0ef;
+    font-weight: bold;
+    line-height: 120%;
+    text-align: center;
+	border-bottom: 3px solid #fff;
+	vertical-align:top;
+}
+table.articleTblSeminar02 td {
+    padding: 5px 10px;
+   	text-align: left;
+}
+table.articleTblSeminar02 td.title {
+	text-align: left;
+	font-size: 130%;
+	background-color:#eef0ef;
+	padding-left: 10px;
+}
+
+ul#PreviousList { clear:both; display:inline-block; margin: 0 auto;}
+ul#PreviousList li { float:left; background:url(/nig/images/common/previousList_arrow.gif) no-repeat #2b59a6 5px 10px; padding: 4px 10px 0 20px; margin:0 20px 10px 0; color:#fff;}
+ul#PreviousList li a { color:#fff; font-weight:bold;}
+.articleTblSeminarMidashi { margin:0; padding:0; font-size:150%; color:#000; font-weight:bold;}
+
+#update { float:right; background:url(/nig/images/common/previousList_arrow.gif) no-repeat #2b59a6 5px 10px; padding: 4px 10px 0 20px; margin:0 0 10px 0; color:#fff; font-weight:bold; font-size:95%;}
+
+.title { font-weight:bold; font-size:130%; line-height:1.4em;}
+.nameTitle { font-weight:bold; font-size:110%;}
+.SeminarLine{ color:#ebebeb;}
+
+/* 20140926菊井さんより */
+div.wp-pagenavi{
+    margin:0.5em 0 1.5em;
+}
+div.wp-pagenavi span,
+div.wp-pagenavi a{
+    display: inline-block;
+    width:1.4em;
+    height:1.4em;
+    line-height:1.4em;
+    text-align:center;
+    margin:0 0 0 2px;
+    padding:2px 0 0 0;
+}
+
+div.wp-pagenavi a{
+    color:#fff;
+    text-decoration:none;
+}
+
+div.wp-pagenavi span.pages{
+   /* display:none;     ページ数を表示する場合この行は削除 */
+    text-align:left;
+    width:auto;
+    padding-right:1em;
+	background-color:#626262;
+	color:#fff;
+	padding-left:1em;
+}
+div.wp-pagenavi span.current{
+	background-color:#cacaca;
+    color:#fff;
+}
+
+div.wp-pagenavi a.page{
+    background-color:#626262;
+}
+
+div.wp-pagenavi a.last{
+	background-color:#626262;
+	color:#fff;
+}
+
+#info{
+	margin-top:30px;
+}
+
+div#liPrev{width:80px !important; float:left; border:1px solid #ccc; margin-bottom:40px; padding:5px 5px 2px 5px; line-height:1.5; height:1.5; background-color:#999; color:#fff;}
+div#liNext{width:40px !important; float:right; border:1px solid #ccc; margin-bottom:40px; padding: 5px 5px 2px 5px; line-height:1.5; height:1.5; background-color:#999; color:#fff;}
+
+div#liPrev a ,hover { color:#fff;}
+div#liNext a ,hover { color:#fff;}
+
+#info img { height:auto;}
+
+#imagesBox{
+	width:auto;
+	
+}
+
+/* 20141106追加 */
+ul.yearList{
+	text-align:left;
+	padding:0.5em 0;
+}
+ul.yearList li{
+	display:inline;
+}
+ul.yearList li a{
+	display:inline-block;
+	padding:4px 0.8em;
+	background-color:#2B59A6;
+	color:#FFF;
+	height:auto;
+	line-height:1;
+	margin: 4px 2px 4px 0 ;
+}
+/* 20141107シラバス用css追加 */
+
+#SyllabusArea 		{ clear:both;}
+#SyllabusArea .txtR {text-align:right; display:block;}
+#SyllabusArea dl 	{ margin-bottom:10px; line-height:1.5em;}
+#SyllabusArea dl dt { font-weight:bold;}
+
+#SyllabusArea ol	{ margin-left:35px;}
+#SyllabusArea ol li	{ list-style: decimal;}
+
+.pagetopLink		{ width:720px; text-align:right; display:inline-block; border-top: solid 1px #CCC;}
+.coursesTalbe		{ margin-bottom:15px;}
+
+#seminar_data{
+	/* padding-top:10px; */
+}
+
+/*seminar/meetings 141110追加*/
+dl#SMtoday ,#SMfuture ,#SMpast {
+	margin:0px 10px 10px;
+	border-bottom: 1px solid #c0c0c0;
+	padding-bottom:5px;
+}
+
+/*Google検索 141126追加*/
+.gs-title	{ text-align:left; margin: 0 0 10px 0; }
+
+
+/* CSS3専用 可変ボックス */ 
+@media only screen{
+	.autoWrapp{	width:auto;	}
+}
+
+/* スマートフォン用設定 */
+@media only screen and (min-width:0) {
+	.autoWrapp{	width:auto;	}
+
+	#header #logo{
+		width:100%;
+		padding: 2em 0 0.8em;
+		height:auto;
+		margin-top:2em;
+	}
+	
+	#header #logo img{
+		width:95%;
+		height:auto;
+	}
+	
+
+	#header #headR{
+		position : absolute;
+		top : 0;
+		width:100%;	
+		margin-left:0;
+	}
+
+
+	#header #headR ul#lang{
+		margin:0.55em 2% 0.25em 0;
+	}
+	#header #headR ul#lang li{
+		float:none;
+	}
+	#header #headR ul#lang li.ar{
+		padding:0;
+	}
+	#snss{
+		margin-left:2%;
+		float:left;
+		clear:none;
+	}
+	#header div#searchBox {
+		margin: 0.55em 0 0 0;
+	}
+
+	div#breadcrumb{
+		padding-left:1.5%;
+	}
+
+	#footer{
+		padding-left:1.5%;
+	}
+
+	#footer ul#adress{
+		width:100%;
+	}
+	
+	/* copyright */	
+	#footer #copyright{
+		display:block;
+		width:auto;
+		padding:0 0 1em;
+		margin:0 1em 0 0;
+	}
+	div#rightSlot {
+		padding-right:0;
+		width:94%;
+		margin: 0 3%;
+	}
+	div#leftSlot {
+		display:none;
+	}
+.interviewImgCenter img{ width:100%;}
+.researcHighlight td img{ width:100%;}
+	
+
+}
+
+/* タブレット用設定 */
+@media only screen and (min-width:30em) {
+	.autoWrapp{	width:auto;	}
+	#header #logo{
+		width:100%;
+		padding: 1.75em 0 0.8em;
+		margin: 0 auto;
+		height:auto;
+		margin-top:0;
+	}
+	#header #headR ul#lang li{
+		float:right;
+		display:block;
+	}
+	#header #headR ul#lang li.ar{
+		/*padding:0 1em 0 1em;*/
+		padding:0 0.6em 0 0.6em;
+
+	}
+	
+	#header #logo img{
+		width:90%;
+		max-width:634px;
+		height:auto;
+		outline: 0;
+	}
+
+	#header #headR{
+		min-width:13.125em;
+		position : absolute;
+		margin:0;
+		top : 0;
+		width:100%;	
+	}
+
+	
+	#header #headR ul#lang{
+		margin:0;
+		float:right;
+	}
+
+	#snss{
+		margin-left:0;
+		float:left;
+		clear:none;
+	}
+	#header div#searchBox {
+		margin: 0 0 0 0;
+	}
+
+	div#breadcrumb{
+		padding-left:1%;
+	}
+	#footer{
+		padding-left:1%;
+	}
+
+	#footer ul#adress{
+		width:auto;
+	}
+	
+	/* copyright */	
+	#footer #copyright{
+	}
+
+.img_float{
+width:300px;
+padding:0 10px 10px 0;
+float:left;
+display:inline;
+}
+.img_float:after {
+    content: "";
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
+}
+
+	div#rightSlot {
+		padding-right:1%;
+		width:75%;
+		margin:0;
+	}
+	div#leftSlot {
+		padding-left:1%;
+		display:inline;
+	}
+.interviewImgCenter img{ width:100%;}
+.researcHighlight td img{ width:100%;}
+
+}
+
+
+
+/* タブレット用設定 */
+@media only screen and (min-width:60em) {
+	.autoWrapp{	width:auto;	}
+
+	#header #logo{
+		padding: 1.5em 0 0.8em;
+		width: 634px;
+		height: 85px;
+		margin: 0 auto;
+	}
+	
+	#header #logo img{
+		width: 634px;
+		height: 85px;
+		max-width:634px;
+		text-indent: -650em;
+		outline: 0;
+	}
+	div#rightSlot {
+		padding-right:0;
+	}
+	div#leftSlot {
+		padding-left:0;
+	}
+	#header #headR{
+		position : absolute;
+		top : 0;	
+		margin-left:46.875em;
+		width:13.125em;
+	}
+	#footer{
+		padding-left:0;
+	}
+	#footer ul#adress{
+	}
+	div#breadcrumb{
+		padding-left:0;
+	}
+	#snss {
+		float: right;
+		display: inline;
+		clear: right;
+	}
+	#header div#searchBox {
+		margin: 0.625em 0 0 0;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+/* 20150309追加 */
+.memberIntroduction	   { width: 220px; float:left; margin-right:30px;}
+.memberIntroductionNon { width: 220px; float:left;}
+ul#memberListTxt	   { width: 220px; margin:10px 0 30px; padding:0; list-style: none; line-height: 1.3em;}
+ul#memberListTxt li	   { width: 200px; margin-bottom: 3px;}
+	
+.font01 { font-size:110%; font-weight:bold;}
+.font02 { font-size:90%;}
+.font03 { font-size: 60%;}
+
+#memberLinkBox 			{ width: 100%; clear:both; margin:0 auto 10px; padding: 10px 0 0; border-bottom:1px solid #CCC; border-top:1px solid #CCC; display:inline-block;}
+ul.memberLink  			{ clear:both;}
+ul.memberLink li 		{ float:left; margin-right: 20px; line-height: 1.4em; font-size: 90%; text-align:left; margin-bottom:10px;} 
+ul.memberLink li.w230 	{ display:inline-block; margin-right:20px;}
+ul.memberLink li.ml20 	{ margin-left:20px;}
+
+@media only screen and (min-width:0) {
+    ul.memberLink li{ float:none; }
+}
+
+@media only screen and (min-width:30em) {
+    ul.memberLink li{ float:left; }
+}
+
+.capBg 		{ background-color:#dbdbdb; padding: 10px;}
+.imgSize 	{ width:90%; margin: 0 auto; display:block;}
+.txtR 		{ text-align: right; font-size: 90%; }
+
+
+.txtWidth 		{ width:100%;}
+td, th, p, h1, h2, h3, h4, h5, h6, label { word-break: break-all; word-wrap: break-word;}
+img.icon 		{}
+img.icon:hover	{ opacity: 0.6; filter: alpha(opacity=60); -moz-opacity: 0.6;}
+
+
+
+
+#NOmemberLinkBox {
+	width: 100%; 
+	clear:both; 
+	margin:0 auto 10px;
+	padding: 10px 0 0;
+	border-top:1px solid #CCC;
+	display:inline-block;
+	}
+
+
+
+.news dd {
+font-family: "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN W3", HiraKakuProN-W3, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.news dd .italic {
+    font-weight: bold;
+}
+

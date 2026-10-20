@@ -1,0 +1,20 @@
+# 大容量・機密データ(Google Drive で共有する)
+/data/backups/*
+/data/plugins/*
+!/data/**/.gitkeep
+
+# ai1wm が backups に自動生成するファイル
+*.wpress
+
+.env
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.swp
+
+# テーマ内の生成物・ログ
+node_modules/
+*.log

@@ -1,0 +1,46 @@
+
+$(document).ready( function(){
+	//	コンテンツ高さ調整
+
+	$('#slideWrap #bxslider').bxSlider({
+		auto: true,
+		mode: 'fade'
+	});
+	
+	var autoContentsResize = function(){
+		if( $(window).width() >= windowProfile.rep.tab ){
+			$(".container").find("div._hightAdust").css( 'height' , 'auto');
+			max = 0;
+			$(".container").each(function(){
+				max = 0;
+				$(this).find("div._hightAdust").each(function(){
+					if( $(this).outerHeight(true) > max ){
+						max = $(this).outerHeight(true) ;
+					}
+				});	
+				$(this).find("div._hightAdust").css( 'height' , max + 'px');
+			});
+		}else{
+			$(".container").find("div._hightAdust").css( 'height' , 'auto');
+		}
+	}
+	
+	var _resizeTimer = false;
+	$("body").resize(function() {
+	    if (_resizeTimer != false)       clearTimeout(_resizeTimer);		    
+	    _resizeTimer = setTimeout(function() {
+			autoContentsResize();
+			
+	    }, 200);
+	});
+	
+	autoContentsResize();
+	
+});
+
+
+
+
+
+
+

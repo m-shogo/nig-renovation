@@ -1,0 +1,82 @@
+name: nig-renovation
+
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_allowed_packet=256M
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  wordpress:
+    build: ./docker/wordpress
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WP_PORT:-3080}:80"
+    # 本番と同じく /nig/ 配下に WordPress を置く
+    working_dir: /var/www/html/nig
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: wp_
+      WP_URL: http://localhost:${WP_PORT:-3080}/nig
+      # ローカルに無いファイルの転送先(docker/wordpress/apache.conf)
+      STATIC_FALLBACK_URL: ${STATIC_FALLBACK_URL:-https://nig-new.codiadev8.site}
+      UPLOADS_FALLBACK_URL: ${UPLOADS_FALLBACK_URL:-https://www.nig.ac.jp}
+      WP_VERSION: ${WP_VERSION:-6.9.5}
+      # 7.112 以降は Unlimited Extension 2.88 以上が必要(手元の zip は 2.83)
+      AI1WM_VERSION: ${AI1WM_VERSION:-7.111}
+      WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
+      TZ: Asia/Tokyo
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv_docker('WP_URL', ''));
+        define('WP_SITEURL', getenv_docker('WP_URL', ''));
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+    volumes:
+      - wp_core:/var/www/html
+      - ./nig/wp-content/themes/samplemain:/var/www/html/nig/wp-content/themes/samplemain
+      - ./nig/css:/var/www/html/nig/css
+      - ./nig/js:/var/www/html/nig/js
+      - ./data/backups:/var/www/html/nig/wp-content/ai1wm-backups
+      - ./data/plugins:/data/plugins:ro
+      - ./scripts:/scripts:ro
+      - ./docs:/docs
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PMA_PORT:-8081}:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 1G
+
+volumes:
+  db_data:
+  wp_core:
