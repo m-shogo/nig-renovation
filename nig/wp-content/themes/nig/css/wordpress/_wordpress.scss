@@ -1,0 +1,237 @@
+@use '../global' as *;
+@use 'sass:math';
+@use 'sass:color';
+//
+// WordPress用CSS
+//
+// ==========================================================================
+// テキスト
+// ==========================================================================
+.wp-caption-text {
+  text-align: center;
+  display: block;
+  margin-top: 16px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
+  letter-spacing: 0.7px;
+  color: $color-gray-text;
+}
+// ==========================================================================
+// iframe
+// ==========================================================================
+iframe {
+  // embed埋め込みがスマホではみ出すのを防止
+  &.wp-embedded-content {
+    max-width: 100% !important;
+  }
+}
+// ==========================================================================
+// 画像モジュール
+// ==========================================================================
+// 変数（画像テキスト回り込み時の余白設定用）
+$alignWP_paddingSP-X: 20px;
+$alignWP_paddingSP-Y: 1em;
+$alignWP_paddingPC-X: 30px;
+$alignWP_paddingPC-Y: 1em;
+////////////////////////////////////////
+img,
+div {
+  &.alignleft,
+  &.alignright {
+    display: block;
+    margin: 0 auto $alignWP_paddingSP-Y;
+    max-width: calc(50% - #{$alignWP_paddingSP-X} / 2) !important;
+    height: auto;
+    @include breakPoint_over-PC {
+      margin: 0 0 $alignWP_paddingPC-Y;
+      max-width: calc(50% - #{$alignWP_paddingPC-X} / 2) !important;
+    }
+    img {
+      height: auto;
+    }
+  }
+  &.alignleft {
+    float: left;
+    margin-right: $alignWP_paddingSP-X;
+    @include breakPoint_over-PC {
+      margin-right: $alignWP_paddingPC-X;
+    }
+  }
+  &.alignright {
+    float: right;
+    margin-left: $alignWP_paddingSP-X;
+    @include breakPoint_over-PC {
+      margin-left: $alignWP_paddingPC-X;
+    }
+  }
+  &.aligncenter {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+// キャプション付き画像のラッパー要素に挿入されるwidthがimgより10px大きいため調整
+div {
+  .wp-caption {
+    max-width: 100%;
+    &.alignnone {
+      @include breakPoint_over-PC {
+        padding: 0 10px 0 0;
+      }
+    }
+    &.aligncenter {
+      padding: 0 5px;
+      text-align: left;
+    }
+    &.alignleft {
+      @include breakPoint_over-PC {
+        margin-right: #{$alignWP_paddingPC-X} - 10px;
+        padding: 0 10px 0 0;
+      }
+    }
+    &.alignright {
+      @include breakPoint_over-PC {
+        margin-left: #{$alignWP_paddingPC-X} - 10px;
+        padding: 0 0 0 10px;
+      }
+    }
+    &:first-child {
+      &.alignright,
+      &.alignleft {
+        & + p {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+// ==========================================================================
+// パスワード保護
+// ==========================================================================
+.module_password {
+  p:not([class]) {
+    &:first-child {
+      text-align: center;
+    }
+  }
+  form {
+    label[for*='pwbox'] {
+      display: block;
+      margin: 0 auto;
+      @include breakPoint_over-PC {
+        max-width: 350px;
+      }
+    }
+    input[type='password'] {
+      font-family:
+        Consolas, 'Courier New', Courier, Monaco, monospace !important;
+      &:hover,
+      &:focus {
+      }
+    }
+    .mp_submit-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .mp_submit-inner {
+      @extend %module_button;
+      padding: 0;
+      background-color: $color-primary;
+      color: $color-secondary;
+      @include breakPoint_over-PC {
+        padding: 0;
+      }
+      &:hover {
+        background-color: $color-secondary;
+        color: $color-primary;
+      }
+    }
+    input[type='submit'] {
+      position: relative;
+      z-index: 2;
+      padding: 15px 50px;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      color: inherit;
+    }
+  }
+}
+// ==========================================================================
+// ログイン時のadmin-bar高さ分固定メニューを移動
+// ==========================================================================
+html:has(.admin-bar){
+  margin-top: 0 !important;
+  #wpadminbar{
+    position: fixed;
+  }
+  body._contentFixed{
+    #wpadminbar{
+      display: none;
+    }
+    .headerNavigation {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+  }
+}
+body.admin-bar {
+  $heightSP: 46px;
+  $heightPC: 32px;
+  #wpadminbar {
+    // transform: translateY(-#{$heightSP});
+    // @include breakPoint_over-WP01 {
+    //   transform: none;
+    // }
+  }
+  .headerNavigation {
+    top: #{$heightSP};
+    @include breakPoint_over-WP01 {
+    }
+    @include breakPoint_over-WP02 {
+    }
+    @include breakPoint_over-PC{
+      top: #{$heightPC};
+    }
+    .headerNavigationInner {
+      > .module_menu-01 {
+        > .inner {
+          .menuList{
+            top: 151px;
+            @include breakPoint_over-PC{
+              top: 144px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .global_wrapper{
+    padding-top: #{$heightSP};
+    @include breakPoint_over-PC{
+      padding-top: #{$heightPC};
+    }
+  }
+  // .global_navigation {
+  //   @include breakPoint_over-WP01 {
+  //     transform: translateY($heightSP);
+  //   }
+  //   @include breakPoint_over-WP02 {
+  //     transform: translateY($heightPC);
+  //   }
+  // }
+  // &._open-menu {
+  //   .global_navigation {
+  //     @include breakPoint_over-WP01 {
+  //       padding-bottom: 70px + $heightSP;
+  //     }
+  //     @include breakPoint_over-WP02 {
+  //       padding-bottom: 0;
+  //     }
+  //   }
+  // }
+}

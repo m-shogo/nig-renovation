@@ -1,0 +1,74 @@
+@charset "utf-8";
+@use './global' as *;
+@use 'sass:math';
+@use 'sass:color';
+// ==========================================================================
+// 管理画面ビジュアルエディタ用CSS
+// ==========================================================================
+// --------------------------------------------------------------------------
+// 案件ごとに変更
+// --------------------------------------------------------------------------
+// 基本：本文テキストのfont-size、line-height、letter-spacingを指定
+#tinymce.mce-content-body {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.editor-styles-wrapper {
+  // ブロック間の余白
+  .is-root-container {
+    > .wp-block {
+      & + .wp-block {
+        margin-top: 24px;
+      }
+    }
+    > .wp-block-heading {
+      & + .wp-block {
+        margin-top: auto;
+      }
+    }
+  }
+  // タイトル下の余白
+  .editor-visual-editor__post-title-wrapper {
+    margin-bottom: 40px;
+  }
+}
+
+.editor-styles-wrapper {
+  [class*='module_'] {
+    a {
+      pointer-events: none;
+    }
+  }
+  h1.wp-block-post-title {
+    font-weight: 400;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  @include wp-block-include;
+}
+
+html :where(.wp-block) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// --------------------------------------------------------------------------
+// 共通（基本的に変更しない）
+// --------------------------------------------------------------------------
+html {
+  background-color: $color-secondary;
+}
+#tinymce.mce-content-body {
+  display: block;
+  min-height: 250px;
+  padding: 25px;
+  background-color: $color-secondary;
+  @include font_sansSerif-ja();
+}
+.editor-styles-wrapper {
+  // フォントファミリー
+  @include font_sansSerif-ja();
+}

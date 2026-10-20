@@ -28,7 +28,9 @@ nig-renovation/
 │   └─ export.sh            # 今の DB とファイルを .wpress に書き出す
 ├─ nig/                     # サーバーの /nig/ と同じ構造(Git 管理するものだけ)
 │   ├─ css/  js/            # WordPress 外の静的ファイル
-│   └─ wp-content/themes/samplemain/   # 有効テーマ
+│   └─ wp-content/themes/
+│       ├─ samplemain/      # 現在の有効テーマ
+│       └─ nig/             # リニューアル用テーマ(.wpress には入っていない。Git が正本)
 ├─ acf/                     # ACF フィールド定義の JSON(参考保管)
 ├─ data/                    # Git 管理外。Google Drive で共有
 │   ├─ backups/             # .wpress(コンテナの ai1wm-backups と同じフォルダ)
@@ -43,7 +45,7 @@ nig-renovation/
 | 入れる | 入れない(理由) |
 |---|---|
 | Docker 設定、スクリプト、手順書 | `.wpress`(500MB 超。GitHub は 1 ファイル 100MB まで。DB はマージできない) |
-| テーマ `samplemain` | Unlimited Extension の zip(有料プラグイン。リポジトリが公開のため) |
+| テーマ `samplemain`・`nig` | Unlimited Extension の zip(有料プラグイン。リポジトリが公開のため) |
 | `nig/css`、`nig/js` | `images`・`pdf` など(合計 4GB 超。検証サーバーから表示する) |
 | ACF の JSON | `wp-config.php`、`.env`(パスワード) |
 

@@ -1,0 +1,2288 @@
+@charset "utf-8";
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:map';
+//
+// SASS用関数の設定
+//
+// ==========================================================================
+// 変数
+// ==========================================================================
+// プライマリーカラー
+$color-primary: #009F7F;
+// セカンダリーカラー
+$color-secondary: #fff;
+$color-tertiary: #3C8FD5;
+// アクセントカラー
+$color-accent: #E1735B;
+//$color-accent-yellow: #bd9620;
+//$color-accent-purple: #a73073;
+// グレー
+$color-gray-text: #555555;
+$color-gray-border: #555555;
+$color-gray-border-02: #969696;
+$color-gray-border-03: #eeeeee;
+$color-gray-background: #F0F0F0;
+// テキストカラー
+$color-text: #111111;
+$color-link: #009F7F;
+// エラーカラー
+$color-error-text: #E1735B;
+$color-error-border: #E1735B;
+$color-error-background: #ffebee;
+// ベース幅
+$width-base: 1160px;
+$width-base-02: 1024px;
+$width-content: 960px;
+$width-main: 860px;
+$width-side: 260px;
+// ベース余白
+$padding-SP: 16px;
+$padding-TB: 60px;
+// transition
+$transition-duration: 0.3s;
+//$transition-timing-function: ease-in;
+// ヘッダー高さ
+$header_height-SP: 60px;
+$header_height-PC: 112px;
+
+// 既存のカスタムブロックのclassName一覧（除外用）
+$excluded-classes: (
+  'anchor-box',
+  'attention-list',
+  'border-list',
+  'annotation-list',
+  'circle-text',
+  'double-text',
+  'has-background',
+  'has-pale-pink-color',
+  'has-text-color',
+  'has-vivid-cyan-blue-color',
+  'monotone-table',
+  'organization-table',
+  'triangle-text',
+  'type-vertical',
+  'organization-table',
+  'monotone-table'
+);
+
+$wp-block-list-exclude: ''; // `:not(.class1):not(.class2)...` の形式を動的に作成
+
+@each $class in $excluded-classes {
+  $wp-block-list-exclude: '#{$wp-block-list-exclude}:not(.#{$class})';
+}
+
+// ==========================================================================
+// 画像ディレクトリurl('#{$imageDir}common/logo-01.svg')
+// ==========================================================================
+$imageDir: '/wp/wp-content/themes/nig/images/';
+// ==========================================================================
+// フォント
+// ==========================================================================
+// 日本語サンセリフ体
+@mixin font_sansSerif-ja($weight: 500) {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: $weight;
+}
+// 日本語セリフ体
+@mixin font_serif-ja($weight: 500) {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: $weight;
+}
+// 英語サンセリフ体
+@mixin font_sansSerif-en($weight: 400) {
+  font-family: 'Poppins', sans-serif;
+  font-weight: $weight;
+}
+// 英語セリフ体
+@mixin font_serif-en($weight: 400) {
+  font-family: 'Crimson Text', serif;
+  font-weight: $weight;
+}
+// FontAwesome
+@mixin font-awesome($weight: 300) {
+  font-family: 'Font Awesome\ 6 Pro';
+  font-weight: $weight;
+  line-height: 1;
+}
+// FontAwesome Brands
+@mixin font-awesomeBrands($weight: 400) {
+  font-family: 'Font Awesome\ 6 Brands';
+  font-weight: $weight;
+  line-height: 1;
+}
+// ==========================================================
+// テキスト
+// ==========================================================
+@mixin letter-spacing($letterSpacing) {
+  letter-spacing: calc(#{$letterSpacing}/ 1000 * 1em);
+}
+@mixin line-height($lineHeight, $fontSize) {
+  line-height: calc($lineHeight / $fontSize);
+}
+// ==========================================================
+// ベンダープレフィックス付与
+// ==========================================================
+@mixin vendorPrefix($property, $value) {
+  @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+    #{$prefix}#{$property}: $value;
+  }
+}
+// ==========================================================
+// メディアクエリー設定
+// ==========================================================
+// 375px以上用
+@mixin breakPoint_over-SP {
+  @media (min-width: 375px) {
+    @content;
+  }
+}
+// タブレット以上用
+@mixin breakPoint_over-TB {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+// PC以下用
+@mixin breakPoint_under-PC {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+// PC（サイトのコンテンツ幅）以上用
+@mixin breakPoint_over-PC {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+// WordPress用
+@mixin breakPoint_over-WP01 {
+  @media (min-width: 601px) {
+    @content;
+  }
+}
+@mixin breakPoint_over-WP02 {
+  @media (min-width: 783px) {
+    @content;
+  }
+}
+// カスタム幅以上用
+@mixin breakPoint_original-min($width) {
+  @media (min-width: #{$width}) {
+    @content;
+  }
+}
+// 読み込み順番制御
+body {
+  @include breakPoint_over-SP {
+    /* 375px以上 */
+  }
+  @include breakPoint_over-WP01 {
+    /* WordPress601px以上 */
+  }
+  @include breakPoint_over-WP02 {
+    /* WordPress783px以上 */
+  }
+  @include breakPoint_over-TB {
+    /* タブレット以上 */
+  }
+  @include breakPoint_over-PC {
+    /* PC（サイトのコンテンツ幅）以上 */
+  }
+}
+// ==========================================================
+// 条件付与クラス設定
+// ==========================================================
+// 英語用
+@mixin lang-en {
+  html[lang|='en'] & {
+    @content;
+  }
+}
+// ==========================================================
+// ホバー定義
+// ==========================================================
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin hover-opacity($opacity: 0.5) {
+  transition: opacity $transition-duration;
+  @include hover {
+    opacity: $opacity;
+  }
+}
+
+// ==========================================================
+// アイコン定義
+// ==========================================================
+@mixin icon-blank {
+  content: '\f14c';
+}
+@mixin icon-file {
+  content: '\f15c';
+}
+@mixin icon-pdf {
+  content: '\f1c1';
+}
+@mixin icon-zoom {
+  content: '\f002';
+}
+@mixin icon-arrow {
+  content: '\f061';
+}
+@mixin icon-chevron-down {
+  content: '\f078';
+}
+
+// ==========================================================
+// clearFix定義
+// ==========================================================
+@mixin clearFix {
+  @content;
+  &::after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
+}
+
+// ==========================================================
+// ブロックエディタ用
+// ==========================================================
+// ------------------------------
+// フロント・管理画面一括読み込み用
+// ※ mixinを作ったらここにも追加！
+// ------------------------------
+@mixin wp-block-include {
+  @include wp-block-heading_styles; // タイトル
+  @include wp-block-text_styles; // パラグラフ
+  @include wp-block-flex_styles; // flex
+  @include wp-block-image_styles; // 画像
+  @include wp-block-list_styles; // リスト
+  @include wp-block-textLink-style; // テキストリンク
+  @include wp-block-buttonLink-style; // ボタンリンク
+  @include wp-block-table-style; // テーブル
+  @include wp-block-gallery-style; // ギャラリー
+  @include wp-block-accordion-style; // アコーディオン
+  @include wp-block-separator-style; // 区切り線
+  @include wp-block-quote; // 引用
+  @include wp-block-inPageLink; // ページ内リンク
+  @include wp-block-newsCard-style; // ニュースカード
+  @include wp-block-newsList-style; // ニュースリスト
+  @include wp-block-navigation-style; // ナビゲーション
+  @include wp-block-other; // その他
+}
+
+// ------------------------------
+// タイトル
+// ------------------------------
+@mixin wp-block-heading_styles {
+  h1:is(:not([class]), .wp-block-heading) {
+    position: relative;
+    font-size: 30px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    clear: both;
+    line-height: 1.3;
+    @include breakPoint_over-PC {
+      margin-bottom: 40px;
+    }
+    & + :is(h1, h2, h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 64px;
+      }
+    }
+  }
+  h2:is(:not([class]), .wp-block-heading) {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 30.8px */
+    letter-spacing: 1.1px;
+    border-bottom: 2px solid $color-primary;
+    color: $color-text;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    width: 100%;
+    @include breakPoint_over-PC {
+      font-size: var(--font-fontsize-h2, 26px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 36.4px */
+      letter-spacing: 1.3px;
+      margin-bottom: 32px;
+    }
+    & + :is(h1, h2, h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 64px;
+      }
+    }
+  }
+  h3:is(:not([class]), .wp-block-heading) {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 28px */
+    letter-spacing: 1px;
+    color: $color-text;
+    margin-bottom: 24px;
+    padding-left: 28px;
+    position: relative;
+    width: 100%;
+    @include breakPoint_over-PC {
+      font-size: var(--font-fontsize-h3, 22px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 30.8px */
+      letter-spacing: 1.1px;
+      padding-left: 31px;
+      margin-bottom: 32px;
+    }
+    & + :is(h1, h2):is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 64px;
+      }
+    }
+    & + :is(h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 24px;
+      @include breakPoint_over-PC {
+      }
+    }
+    &::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%228%22%20height%3D%228%22%20fill%3D%22%233C8FD5%22%2F%3E%3Crect%20width%3D%228%22%20height%3D%228%22%20fill%3D%22%233C8FD5%22%2F%3E%3C%2Fsvg%3E');
+      background-size: contain;
+      background-repeat: no-repeat;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 6px;
+    }
+  }
+  h4:is(:not([class]), .wp-block-heading) {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 2.16px;
+    color: $color-primary;
+    margin-bottom: 20px;
+    @include breakPoint_over-PC {
+      font-size: var(--font-fontsize-h4, 20px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 28px */
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    & + :is(h1, h2, h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 24px;
+      @include breakPoint_over-PC {
+        margin-top: 40px;
+      }
+    }
+  }
+  h5:is(:not([class]), .wp-block-heading) {
+    font-size: var(--font-fontsize-h5, 18px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 25.2px */
+    letter-spacing: 0.9px;
+    color: $color-text;
+    margin-bottom: 16px;
+    @include breakPoint_over-PC {
+      font-size: var(--font-fontsize-h5, 18px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 25.2px */
+      letter-spacing: 0.9px;
+      margin-bottom: 16px;
+    }
+    & + :is(h1, h2, h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 24px;
+      @include breakPoint_over-PC {
+        margin-top: 40px;
+      }
+    }
+  }
+  h6:is(:not([class]), .wp-block-heading) {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.08em;
+    color: $color-text;
+    margin-bottom: 16px;
+    @include breakPoint_over-PC {
+      margin-bottom: 24px;
+    }
+    & + :is(h1, h2, h3, h4, h5, h6):is(:not([class]), .wp-block-heading) {
+      margin-top: 24px;
+      @include breakPoint_over-PC {
+        margin-top: 40px;
+      }
+    }
+  }
+
+  p:is(
+    :not([class]),
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center,
+    .block-editor-rich-text__editable,
+    .has-background
+  ),
+  ul,
+  ol,
+  .wp-block-flexible-table-block-table,
+  .wp-block-group,
+  .wp-block-table,
+  .wp-block-image,
+  .wp-block-gallery,
+  .wp-block-columns,
+  .wp-block-list,
+  .wp-block-buttons,
+  .wp-block-separator,
+  .wp-block-acf-in-page-link,
+  .wp-block-quote,
+  .wp-block-acf-tab-container,
+  .wp-block-acf-navigation-large,
+  .wp-block-acf-navigation-small,
+  .wp-block-media-text,
+  [class*='module_'] {
+    & + h1:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    & + h2:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    & + h3:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    & + h4:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    & + h5:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    & + h6:is(:not([class]), .wp-block-heading) {
+      margin-top: 40px;
+    }
+  }
+}
+
+// ------------------------------
+// パラグラフ
+// ------------------------------
+@mixin wp-block-text_styles {
+  p:is(
+    :not([class]),
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center
+  ) {
+    color: $color-text;
+  }
+  .wp-block-columns {
+    .has-background {
+      p:is(
+        :not([class]),
+        .wp-block-paragraph,
+        .has-text-align-left,
+        .has-text-align-right,
+        .has-text-align-center
+      ) {
+        color: initial;
+      }
+    }
+  }
+  p:is(
+    :not([class]),
+    .block-editor-rich-text__editable,
+    .has-background,
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center
+  ) {
+    @include font_sansSerif-ja();
+    font-size: 16px;
+    font-style: normal;
+    line-height: 160%; /* 25.6px */
+    letter-spacing: 0.8px;
+    span[style*='text-decoration: underline'] {
+      text-decoration: none !important;
+      text-decoration: underline !important;
+      text-decoration-color: rgba(#E6810B, 1) !important;
+      text-decoration-thickness: 2px !important;
+      text-underline-offset: 4px !important;
+      text-decoration-skip-ink: none !important;
+    }
+  }
+
+  p:is(
+    :not([class]),
+    .block-editor-rich-text__editable,
+    .has-background,
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center
+  ) {
+    & + p.has-background {
+      margin-top: 40px;
+    }
+    & + .is-layout-flex {
+      margin-top: 40px;
+    }
+  }
+
+  p:is(
+    :not([class]),
+    .block-editor-rich-text__editable,
+    .has-background,
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center
+  ),
+  ul,
+  ol,
+  .wp-block-flexible-table-block-table,
+  .wp-block-group,
+  .wp-block-table,
+  .wp-block-image,
+  .wp-block-buttons {
+    &
+      + p:is(
+        :not([class]),
+        .block-editor-rich-text__editable,
+        .has-background,
+        .wp-block-paragraph,
+        .has-text-align-left,
+        .has-text-align-right,
+        .has-text-align-center
+      ) {
+      margin-top: 16px;
+    }
+  }
+
+  div.wp-block-group {
+    margin-top: 32px;
+  }
+  div.wp-block-group__inner-container{
+    &:has(.wp-block-image .alignright,.wp-block-image .alignleft){
+      display: flow-root;
+      > p:first-of-type{
+        margin-top: 0;
+      }
+    }
+  }
+
+  div.wp-block-group.has-background,
+  div.wp-block-column.has-background,
+  div.wp-block-columns.has-background,
+  p.has-background {
+    padding: 32px 16px;
+    border-radius: 10px;
+    display: flow-root;
+    @include breakPoint_over-PC {
+      padding: 40px;
+    }
+  }
+  div.wp-block-group.has-gray-background-color,
+  div.wp-block-column.has-gray-background-color,
+  div.wp-block-columns.has-gray-background-color,
+  p.has-gray-background-color {
+    background-color: $color-gray-background;
+  }
+  div.wp-block-group.has-border-background-color,
+  div.wp-block-column.has-border-background-color,
+  div.wp-block-columns.has-border-background-color,
+  p.has-border-background-color {
+    background-color: transparent !important;
+    border: solid 1px $color-primary;
+  }
+
+  mark.has-inline-color.has-gray-color {
+    color: $color-gray-background;
+  }
+}
+
+// ------------------------------
+// flex
+// ------------------------------
+@mixin wp-block-flex_styles {
+  .is-layout-flex:not(.wp-block-gallery) {
+    gap: 32px 24px;
+    @include breakPoint_over-PC {
+      gap: 32px;
+    }
+    p:is(
+      :not([class]),
+      .wp-block-paragraph,
+      .has-text-align-left,
+      .has-text-align-right,
+      .has-text-align-center,
+      .block-editor-rich-text__editable,
+      .has-background
+    ) {
+      margin-top: 0 !important;
+    }
+  }
+  .wp-block-group {
+    & + .wp-block-columns {
+      margin-top: 24px;
+      @include breakPoint_over-PC {
+        margin-top: 40px;
+      }
+    }
+  }
+}
+
+// ------------------------------
+// 画像
+// ------------------------------
+@mixin wp-block-image_styles {
+  .wp-block-media-text__media{
+    border-radius: 10px;
+    overflow: hidden;
+    img {
+      max-width: 100% !important;
+      position: relative;
+      border-radius: 10px;
+    }
+  }
+  p + .wp-block-image {
+    margin-top: 16px;
+  }
+  .wp-block-image {
+    figure{
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    img {
+      max-width: 100% !important;
+      position: relative;
+      border-radius: 10px;
+    }
+    &.border-none {
+      img {
+        border: none;
+      }
+    }
+    .wp-element-caption {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%; /* 22.4px */
+      letter-spacing: 0.7px;
+      color: $color-gray-text;
+      @include breakPoint_over-PC {
+      }
+    }
+    .alignleft {
+      margin: 0 16px 32px 0;
+      max-width: 50% !important;
+      @include breakPoint_over-PC {
+        margin-bottom: 0;
+        margin-right: 40px;
+        max-width: 100% !important;
+      }
+    }
+    .alignright {
+      margin: 0 0 32px 16px;
+      max-width: 50% !important;
+      @include breakPoint_over-PC {
+        margin-bottom: 0;
+        margin-left: 40px;
+        max-width: 100% !important;
+      }
+    }
+    .wp-lightbox-container {
+      .lightbox_wrap {
+        display: block;
+        position: relative;
+        @extend %module_zoom-button;
+      }
+    }
+  }
+  .wp-block[data-align='left'] > .wp-block-image {
+    @include breakPoint_over-PC {
+      margin-right: 32px;
+    }
+  }
+  .wp-block[data-align='right'] > .wp-block-image {
+    @include breakPoint_over-PC {
+      margin-right: 32px;
+    }
+  }
+  .wp-block-columns.is-not-stacked-on-mobile {
+    .lightbox_wrap {
+      &::after {
+        width: 2em;
+        height: 2em;
+        font-size: 16px;
+      }
+    }
+  }
+  // メディアとテキスト
+  .wp-block-media-text {
+    gap: 32px 16px;
+    @include breakPoint_over-PC {
+      gap: 40px;
+    }
+    .wp-block-media-text__content {
+      padding: 0;
+    }
+  }
+}
+
+// ------------------------------
+// リスト
+// ------------------------------
+@mixin wp-block-list_styles {
+  //---------- 共通設定 ----------
+  .wp-block-list#{$wp-block-list-exclude},
+  .annotation-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    gap: 15px;
+    .wp-block-list {
+      margin-top: 15px;
+    }
+    & + .wp-block-list {
+      margin-top: 32px;
+    }
+    li {
+      margin: 0;
+      color: $color-text;
+      padding-left: 30px;
+      position: relative;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+      @include breakPoint_over-PC {
+        font-size: 16px;
+      }
+      &::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: inline-block;
+      }
+      a {
+        @extend %module_file-type-icon;
+        &::after {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  //---------- ulのみ ----------
+  ul.wp-block-list#{$wp-block-list-exclude} {
+    > li {
+      padding-left: 20px;
+      &::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: $color-primary;
+        border-radius: 50%;
+        transform: translateY(0.6em);
+      }
+    }
+  }
+  //---------- olのみ ----------
+  ol.wp-block-list#{$wp-block-list-exclude} {
+    counter-reset: li;
+    gap: 20px;
+    > li {
+      padding-left: 30px;
+      &::before {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        counter-increment: li;
+        content: counter(li) '.';
+        color: $color-tertiary;
+        line-height: 1;
+        top: 5px;
+        letter-spacing: 0;
+        font-size: 16px;
+        @include font_sansSerif-en(500);
+      }
+    }
+  }
+  //---------- 注釈リスト ----------
+  .annotation-list {
+    gap: 10px;
+    margin-top: 20px !important;
+    li {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%; /* 22.4px */
+      letter-spacing: 0.7px;
+      &::before {
+        content: '※';
+        font-size: 16px;
+        color: $color-accent;
+      }
+    }
+  }
+  .anchor-box,
+  .border-list {
+    padding: 0;
+  }
+}
+
+// ------------------------------
+// テキストリンク
+// ------------------------------
+@mixin wp-block-textLink-style {
+  p:is(
+    :not([class]),
+    .wp-block-paragraph,
+    .has-text-align-left,
+    .has-text-align-right,
+    .has-text-align-center,
+    .block-editor-rich-text__editable,
+    .has-background
+  ) {
+    a:is(:not([class]), .icon-blank) {
+      color: $color-link;
+      text-decoration: underline 1px;
+      text-underline-offset: 2px;
+      &[target='_blank'] {
+        &::after {
+          @include font-awesome(300);
+          @include icon-blank;
+          margin-left: 4px;
+        }
+      }
+      &[href$='.pdf'] {
+        &::after {
+          @include font-awesome(300);
+          @include icon-pdf;
+          margin-left: 4px;
+        }
+      }
+      &[href$='.doc'],
+      &[href$='.docx'],
+      &[href$='.docm'],
+      &[href$='.xls'],
+      &[href$='.xlsx'],
+      &[href$='.xlsm'],
+      &[href$='.png'],
+      &[href$='.jpg'],
+      &[href$='.jpeg'],
+      &[href$='.gif'],
+      &[href$='.webp'] {
+        &::after {
+          @include font-awesome(300);
+          @include icon-file;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// ボタンリンク
+// ------------------------------
+@mixin wp-block-buttonLink-style {
+  ///////// デフォルト設定 /////////
+  .wp-block-buttons {
+    gap: 12px !important;
+    @include breakPoint_over-PC() {
+      gap: 16px 12px !important;
+    }
+    & + .wp-block-buttons{
+      margin-top: 20px;
+    }
+    &:has(._cta){
+      gap: 16px !important;
+      @include breakPoint_over-PC() {
+        gap: 24px !important;
+      }
+    }
+    &.is-content-justification-center{
+      justify-content: center;
+    }
+    .wp-block-button {
+      display: block;
+      &.has-custom-width {
+        @include breakPoint_under-PC {
+          width: 100%;
+        }
+      }
+      &:not(.has-custom-width) {
+        // デフォルトサイズ
+        @include breakPoint_over-PC {
+        }
+      }
+      &._cta{
+        @include breakPoint_over-PC {
+        }
+        .wp-block-button__link {
+          min-height: 72px;
+          border-color: $color-tertiary;
+          background-color: $color-tertiary;
+          color: $color-secondary;
+          border-radius: 10px;
+          min-width: 300px;
+          padding: 15px 62px 15px 32px;
+          @include breakPoint_over-PC {
+          }
+          &::after{
+            right: 32px;
+            font-size: 16px;
+          }
+          &:hover{
+            background-color: #EAF5FF;
+            color: $color-tertiary;
+            &::after{
+              color: $color-tertiary;
+            }
+          }
+        }
+      }
+      .wp-block-button__link {
+        position: relative;
+        text-decoration: none;
+        font-size: var(--font-fontsize-p, 16px);
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 24px */
+        letter-spacing: 0.8px;
+        line-height: normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 1px solid $color-primary;
+        border-radius: 999px;
+        background-color: $color-secondary;
+        color: $color-primary;
+        transition: $transition-duration;
+        max-width: 100%;
+        width: auto;
+        min-width: 230px;
+        min-height: 56px;
+        padding: 15px 48px 15px 32px;
+        @include breakPoint_over-PC {
+        }
+        &:hover{
+          background-color: $color-primary;
+          color: $color-secondary;
+          &::after{
+            color: $color-secondary;
+          }
+        }
+        &.has-text-align-center {
+          justify-content: center;
+        }
+        &.has-text-align-right {
+          justify-content: flex-end;
+        }
+        &::after {
+          content: '';
+          @include font-awesome(500);
+          @include icon-arrow;
+          position: absolute;
+          right: 24px;
+          top: 50%;
+          transform: translateY(-50%);
+          transition: $transition-duration;
+          font-size: 14px;
+        }
+        &:not([target='_blank']):not([href$='.pdf']):not([href$='.doc']):not(
+            [href$='.docx']
+          ):not([href$='.docm']):not([href$='.xls']):not([href$='.xlsx']):not(
+            [href$='.xlsm']
+          ):not([href$='.png']):not([href$='.jpg']):not([href$='.jpeg']):not(
+            [href$='.gif']
+          ):not([href$='.webp']) {
+          @include hover {
+          }
+        }
+        &[target='_blank'] {
+          &::after {
+            @include font-awesome(300);
+            @include icon-blank;
+          }
+        }
+        &[href$='.pdf'] {
+          &::after {
+            @include font-awesome(300);
+            @include icon-pdf;
+          }
+        }
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'],
+        &[href$='.png'],
+        &[href$='.jpg'],
+        &[href$='.jpeg'],
+        &[href$='.gif'],
+        &[href$='.webp'] {
+          &::after {
+            @include font-awesome(300);
+            @include icon-file;
+          }
+        }
+      }
+    }
+    ///////// 個別設定 /////////
+    // ボタン小
+    &.small {
+    }
+  }
+}
+
+// ------------------------------
+// テーブル
+// ------------------------------
+@mixin wp-block-table-style {
+  // 標準テーブル
+  .wp-block-table,
+  .wp-block-flexible-table-block-table {
+    margin-block: 24px;
+  }
+  .wp-block-table#{$wp-block-list-exclude} {
+    table {
+      thead {
+        border-bottom: 0;
+        background-color: $color-primary;
+        color: $color-secondary;
+        th {
+        }
+      }
+      tr {
+        th,
+        td {
+          border-color: $color-gray-border-02 !important;
+          padding: 15px 20px;
+        }
+        th{
+          border-color: $color-primary !important;
+          background: #D8F1E0 !important;
+          color: $color-primary !important;
+        }
+      }
+    }
+  }
+  .wp-block-table.wp-block-table.is-style-stripes {
+    table {
+       tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: $color-gray-background;
+          }
+        }
+      }
+    }
+  }
+  // Flexible Table Block
+  .wp-block-flexible-table-block-table {
+    font-size: 16px;
+    > table {
+      thead,
+      tbody {
+        tr {
+          th {
+          border-color: $color-primary !important;
+          background: #D8F1E0 !important;
+          color: $color-primary !important;
+          }
+        }
+      }
+      tr {
+        th,
+        td {
+          border-color: $color-gray-border-02 !important;
+          padding: 15px 20px;
+        }
+      }
+      &.is-stacked-on-mobile {
+        @include breakPoint_under-PC {
+          thead,
+          tbody {
+            tr {
+              &:first-of-type {
+                th,
+                td {
+                  &:first-of-type {
+                    border-top-width: 1px;
+                  }
+                }
+              }
+            }
+          }
+          thead {
+            + tbody {
+              tr {
+                &:first-of-type {
+                  th,
+                  td {
+                    &:first-of-type {
+                      border-top-width: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          tr {
+            th,
+            td {
+              border-top-width: 0;
+            }
+          }
+        }
+      }
+    }
+    &.is-scroll-on-mobile {
+      @include breakPoint_under-PC {
+        padding-bottom: 10px;
+        > table {
+          width: $width-main;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// ギャラリー
+// ------------------------------
+@mixin wp-block-gallery-style {
+  .wp-block-gallery {
+    gap: var(--wp--style--unstable-gallery-gap) !important;
+    & + .wp-block-gallery {
+      margin-top: 40px;
+    }
+  }
+  .wp-lightbox-container {
+    .lightbox_wrap {
+      display: block;
+      position: relative;
+      @extend %module_zoom-button;
+    }
+  }
+  .wp-block-gallery.has-nested-images {
+    align-items: flex-start;
+    .wp-block-image {
+      aspect-ratio: 3 / 2;
+    }
+    figure.wp-block-image {
+      &:not(:has(a)) {
+        pointer-events: none;
+      }
+      &:has(a) {
+        a {
+          position: relative;
+          @extend %module_zoom-button;
+        }
+      }
+      figcaption {
+        background: none;
+        color: $color-text;
+        text-shadow: unset;
+        position: initial;
+        padding: 0;
+        flex-basis: unset;
+        flex-grow: unset;
+      }
+      &::before {
+        content: unset;
+      }
+    }
+  }
+}
+
+// ------------------------------
+// アコーディオン
+// ------------------------------
+@mixin wp-block-accordion-style {
+  .module_accordion-01 {
+    &._qa {
+      .accordion {
+        .head,
+        .body {
+          display: flex;
+          gap: 8px;
+          align-items: flex-start;
+          @include breakPoint_over-TB {
+            gap: 14px;
+          }
+          &::before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 500;
+            flex-shrink: 0;
+            @include breakPoint_over-TB {
+              font-size: var(--font-fontsize-h3, 22px);
+              font-style: normal;
+              font-weight: 500;
+              line-height: 140%; /* 30.8px */
+              letter-spacing: 1.1px;
+            }
+          }
+        }
+        .head {
+          @include breakPoint_over-TB {
+          }
+          .title{
+
+          }
+          &::before {
+            content: 'Q';
+            color: #E1735B;
+          }
+        }
+        .body {
+          padding-left: 0;
+          @include breakPoint_over-TB {
+            padding-left: 32px;
+          }
+          &::before {
+            content: 'A';
+            color: $color-tertiary;
+          }
+        }
+      }
+    }
+    .accordion {
+      transition: $transition-duration;
+      &:hover {
+        @include breakPoint_over-TB {
+          .head {
+            .title {
+            }
+            .button {
+              background-color: $color-primary;
+              span {
+                &::before,
+                &::after {
+                  background-color: $color-secondary;
+                }
+              }
+            }
+          }
+        }
+      }
+      &._open {
+        .head {
+          .title {
+          }
+          .button {
+            background-color: $color-secondary !important;
+            border-color: $color-primary !important;
+            span {
+              &::after {
+                transform: rotate(0deg);
+                background-color: $color-primary !important;
+              }
+            }
+          }
+        }
+      }
+      & + .accordion {
+        margin-top: 32px;
+        @include breakPoint_over-PC {
+        }
+        margin-top: 20px;
+      }
+      .head {
+        position: relative;
+        padding: 16px 72px 16px 16px;
+        background-color: $color-gray-background;
+        transition: $transition-duration;
+        border-radius: 10px;
+        @include breakPoint_over-PC {
+          cursor: pointer;
+          padding: 20px 92px 20px 32px;
+        }
+        &:hover{
+          .button{
+            border-color: #64D4B7;
+            background-color: #64D4B7;
+          }
+        }
+        .title {
+          font-size: var(--font-fontsize-p, 16px);
+          font-style: normal;
+          font-weight: 500;
+          line-height: 140%; /* 22.4px */
+          letter-spacing: 0.8px;
+          @include breakPoint_over-TB {
+            font-size: var(--font-fontsize-h4, 20px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%; /* 28px */
+            letter-spacing: 1px;
+          }
+        }
+        .button {
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: calc(100%);
+          background-color: $color-primary;
+          border: 1px solid $color-primary;
+          transition: $transition-duration;
+          border-radius: 0 10px 10px 0;
+          @include breakPoint_over-TB {
+            width: 60px;
+          }
+          span {
+            &::before,
+            &::after {
+              position: absolute;
+              top: calc(50% - 1px);
+              left: calc(50% - 8px);
+              display: block;
+              width: 16px;
+              height: 2px;
+              content: '';
+              background-color: $color-secondary;
+              transition: $transition-duration;
+            }
+            &::before {
+            }
+            &::after {
+              transform: rotate(90deg);
+            }
+          }
+        }
+      }
+      .body {
+        position: relative;
+        display: none;
+        padding: 24px 0 0 0;
+        @include breakPoint_over-TB {
+          padding: 42px 24px 0;
+          margin-bottom: 40px;
+        }
+        .text {
+          display: flow-root;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// 区切り線
+// ------------------------------
+@mixin wp-block-separator-style {
+  .wp-block-separator {
+    margin-block-start: 50px !important;
+    margin-block-end: 50px !important;
+    border-top: 1px solid $color-gray-border-02 !important;
+  }
+}
+
+// ------------------------------
+// 引用
+// ------------------------------
+@mixin wp-block-quote {
+  .wp-block-quote {
+    margin-bottom: 24px;
+    position: relative;
+    padding: 0 37px;
+    @include breakPoint_over-PC {
+    }
+    &::before,
+    &::after {
+      background: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2221%22%20height%3D%2217%22%20viewBox%3D%220%200%2021%2017%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M6.0297%200L9.0099%202.36885C6.79208%203.76229%204.57426%206.54918%204.22772%208.91803C4.36634%208.84836%204.92079%208.77869%205.33663%208.77869C7.41584%208.77869%209.0099%2010.4508%209.0099%2012.75C9.0099%2015.0492%207.20792%2017%204.78218%2017C2.21782%2017%200%2014.8402%200%2011.1475C0%206.61885%202.49505%202.5082%206.0297%200ZM17.9505%200L20.9307%202.36885C18.7129%203.76229%2016.5644%206.54918%2016.2178%208.91803C16.3564%208.84836%2016.8416%208.77869%2017.2574%208.77869C19.3366%208.77869%2021%2010.4508%2021%2012.75C21%2015.0492%2019.1287%2017%2016.7723%2017C14.2079%2017%2011.9901%2014.8402%2011.9901%2011.1475C11.9901%206.61885%2014.4851%202.5082%2017.9505%200Z%22%20fill%3D%22%23009F7F%22%20fill-opacity%3D%220.5%22%2F%3E%3C%2Fsvg%3E')
+        50% 50% / contain no-repeat;
+      display: block;
+      position: absolute;
+      line-height: 1;
+      width: 21px;
+      height: 17px;
+      @include breakPoint_over-PC {
+        background: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2221%22%20height%3D%2217%22%20viewBox%3D%220%200%2021%2017%22%20fill%3D%22none%22%3E%20%3Cpath%20d%3D%22M6.0297%200L9.0099%202.36885C6.79208%203.76229%204.57426%206.54918%204.22772%208.91803C4.36634%208.84836%204.92079%208.77869%205.33663%208.77869C7.41584%208.77869%209.0099%2010.4508%209.0099%2012.75C9.0099%2015.0492%207.20792%2017%204.78218%2017C2.21782%2017%200%2014.8402%200%2011.1475C0%206.61885%202.49505%202.5082%206.0297%200ZM17.9505%200L20.9307%202.36885C18.7129%203.76229%2016.5644%206.54918%2016.2178%208.91803C16.3564%208.84836%2016.8416%208.77869%2017.2574%208.77869C19.3366%208.77869%2021%2010.4508%2021%2012.75C21%2015.0492%2019.1287%2017%2016.7723%2017C14.2079%2017%2011.9901%2014.8402%2011.9901%2011.1475C11.9901%206.61885%2014.4851%202.5082%2017.9505%200Z%22%20fill%3D%22%23969696%22%2F%3E%3C%2Fsvg%3E')
+          50% 50% / contain no-repeat;
+      }
+    }
+    &::before {
+      content: '';
+      left: 0;
+      top: 0;
+    }
+    &::after {
+      transform: rotate(180deg);
+      content: '';
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
+// ------------------------------
+// ページ内リンク
+// ------------------------------
+@mixin wp-block-inPageLink {
+  .module_inPageLink-01 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+    list-style: none;
+    padding: 24px 16px;
+    background-color: #EAF5FF;
+    border-radius: 10px;
+    @include breakPoint_over-PC {
+      gap: 8px 32px;
+      padding: 32px;
+    }
+    .inPageLink {
+      @include breakPoint_over-PC {
+        
+      }
+      a {
+        color: $color-text;
+        text-decoration: none;
+        font-size: var(--font-fontsize-p--menu, 15px);
+        font-style: normal;
+        font-weight: 500;
+        line-height: 160%; /* 24px */
+        letter-spacing: 0.75px;
+        transition: $transition-duration;
+        @include breakPoint_over-PC {
+        }
+
+        .title {
+          padding-left: 19px;
+          position: relative;
+          width: 100%;
+          &::after {
+            content: '';
+            display: block;
+            color: $color-primary;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: 100%; /* 12px */
+            letter-spacing: 0.6px;
+            position: absolute;
+            left: 0;
+            top: 6px;
+            @include font-awesome(900);
+            @include icon-chevron-down;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// ニュースカード
+// ------------------------------
+@mixin wp-block-newsCard-style {
+  p + [class*='module_news'] {
+    margin-top: 24px;
+  }
+  [class*='module_news'] + [class*='module_news'] {
+    margin-top: 40px;
+    @include breakPoint_over-PC {
+      margin-top: 64px;
+    }
+  }
+  .module_newsCard-01,.module_pickupCard-01 {
+    // 変数（カラム数・余白設定用）
+    $paddingSP-X: 24px;
+    $paddingSP-Y: 32px;
+    $paddingPC-X: 30px;
+    $paddingPC-Y: 48px;
+    $columnSP: 2;
+    $columnPC: 3;
+    ///////////////////////////
+    display: flex;
+    flex-wrap: wrap;
+    gap: #{$paddingSP-Y} #{$paddingSP-X};
+    @include breakPoint_over-PC {
+      gap: #{$paddingPC-Y} #{$paddingPC-X};
+    }
+    article {
+      width: calc(
+        100% / #{$columnSP} - #{$paddingSP-X * ($columnSP - 1)} / #{$columnSP}
+      );
+      @include breakPoint_over-PC {
+        width: calc(
+          100% / #{$columnPC} - #{$paddingPC-X * ($columnPC - 1)} /
+            #{$columnPC} - 0.01px
+        ); //IE,Edgeのカラム落ち対策
+      }
+      // カラム
+      a {
+        display: block;
+        color: $color-text;
+        text-decoration: none;
+        transition: $transition-duration;
+        &::after {
+          content: none;
+        }
+        @include hover {
+          .body {
+            .title {
+              color: $color-primary;
+            }
+          }
+        }
+        &[target='_blank'],
+        &[href$='.pdf'],
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include font-awesome();
+              transition: none;
+              margin-left: 0.5em;
+            }
+          }
+        }
+        &[target='_blank'] {
+          .title {
+            &::after {
+              @include icon-blank;
+            }
+          }
+        }
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include icon-file;
+            }
+          }
+        }
+        &[href$='.pdf'] {
+          .title {
+            &::after {
+              @include icon-pdf;
+            }
+          }
+        }
+      }
+      .head {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        .image {
+          border-radius: 10px;
+          overflow: hidden;
+          aspect-ratio: 300 / 200;
+          &._noImage {
+            display: flex;
+            box-shadow: 4px 4px 12px 0 rgba(0, 0, 0, 0.15) inset;
+            align-items: center;
+            justify-content: center;
+            background-color: $color-secondary
+          }
+          img {
+            aspect-ratio: 300 / 200;
+            max-width: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            &[src$='noimage_logo_01.svg'] {
+              width: auto;
+              height: 40%;
+              aspect-ratio: auto;
+            }
+          }
+        }
+      }
+      .foot {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        @include breakPoint_over-PC {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 16px 0;
+        }
+        .date {
+          @include font_sansSerif-en();
+          font-size: var(--font-fontsize-p--menu, 15px);
+          font-style: normal;
+          font-weight: 400;
+          line-height: 100%; /* 15px */
+          letter-spacing: 0.75px;
+          color: $color-gray-text;
+        }
+        .category {
+          position: relative;
+          @include breakPoint_over-PC {
+            padding-right: 16px;
+            margin-right: 16px;
+          }
+          &::before{
+            @include breakPoint_over-PC {
+              content: "";
+              height: 10px;
+              width: 1px;
+              background-color: rgba($color: $color-gray-border-02, $alpha:0.5);
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+              display: block;
+            }
+          }
+          .label {
+            font-size: var(--font-fontsize-p--btn, 14px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 130%; /* 18.2px */
+            letter-spacing: 0.7px;
+            display: inline-block;
+          }
+        }
+      }
+      .body {
+        margin-top: 16px;
+        .title {
+          font-size: var(--font-fontsize-p, 16px);
+          font-style: normal;
+          font-weight: 500;
+          line-height: 130%; /* 20.8px */
+          letter-spacing: 0.8px;
+          transition: $transition-duration;
+        }
+      }
+    }
+  }
+  .module_interviewCard-01 {
+    // 変数（カラム数・余白設定用）
+    $paddingSP-X: 0px;
+    $paddingSP-Y: 0px;
+    $paddingPC-X: 0px;
+    $paddingPC-Y: 0px;
+    $columnSP: 1;
+    $columnPC: 2;
+    ///////////////////////////
+    display: flex;
+    flex-wrap: wrap;
+    gap: #{$paddingSP-Y} #{$paddingSP-X};
+    @include breakPoint_over-PC {
+      gap: #{$paddingPC-Y} #{$paddingPC-X};
+    }
+    article {
+      position: relative;
+      width: calc(
+        100% / #{$columnSP} - #{$paddingSP-X * ($columnSP - 1)} / #{$columnSP}
+      );
+      @include breakPoint_over-PC {
+        width: calc(
+          100% / #{$columnPC} - #{$paddingPC-X * ($columnPC - 1)} /
+            #{$columnPC} - 0.01px
+        ); //IE,Edgeのカラム落ち対策
+      }
+      &:nth-child(2n + 2){
+        @include breakPoint_over-PC {
+          padding-right: 0;
+          padding-left: 32px;
+        }
+      }
+      &:nth-child(2n + 1){
+        &::before{
+          @include breakPoint_over-PC {
+            content: "";
+            height: calc(100% -  64px);
+            width: 1px;
+            background-color: rgba($color: $color-gray-border-02, $alpha:0.5);
+            position: absolute;
+            top: 32px;
+            right: 0;
+            display: block;
+          }
+        }
+      }
+      border-bottom: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+      &:first-child{
+        border-top: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+      }
+      &:nth-child(2){
+        @include breakPoint_over-PC {
+          border-top: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+        }
+      }
+      // カラム
+      a {
+        display: block;
+        color: $color-text;
+        text-decoration: none;
+        transition: $transition-duration;
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        gap: 16px;
+        padding: 24px 0;
+        @include breakPoint_over-PC {
+          padding: 32px 32px 32px 0;
+          grid-template-columns: 160px 1fr;
+          gap: 32px;
+          align-items: center;
+        } 
+        &::after {
+          content: none;
+        }
+        @include hover {
+          .body {
+            .title {
+              opacity: .7;
+            }
+          }
+        }
+        &[target='_blank'],
+        &[href$='.pdf'],
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include font-awesome();
+              transition: none;
+              margin-left: 0.5em;
+            }
+          }
+        }
+        &[target='_blank'] {
+          .title {
+            &::after {
+              @include icon-blank;
+            }
+          }
+        }
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include icon-file;
+            }
+          }
+        }
+        &[href$='.pdf'] {
+          .title {
+            &::after {
+              @include icon-pdf;
+            }
+          }
+        }
+      }
+      .head {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        .image {
+          border-radius: 10px;
+          overflow: hidden;
+          aspect-ratio: 1;
+          &._noImage {
+            display: flex;
+            box-shadow: 4px 4px 12px 0 rgba(0, 0, 0, 0.15) inset;
+            align-items: center;
+            justify-content: center;
+            background-color: $color-secondary
+          }
+          img {
+            aspect-ratio: 1;
+            max-width: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            &[src$='noimage_logo_01.svg'] {
+              width: auto;
+              height: 40%;
+              aspect-ratio: auto;
+            }
+          }
+        }
+      }
+      .body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px 0;
+        @include breakPoint_over-PC {
+          gap: 12px 0;
+        }
+        .title {
+          font-size: var(--font-fontsize-h5, 18px);
+          font-style: normal;
+          font-weight: 500;
+          line-height: 140%; /* 25.2px */
+          letter-spacing: 0.9px;
+          color: $color-primary;
+          transition: $transition-duration;
+          @include breakPoint_over-PC{
+            font-size: var(--font-fontsize-h5, 18px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%; /* 25.2px */
+            letter-spacing: 0.9px;
+          }
+        }
+        .name{
+          font-size: var(--font-fontsize-p, 16px);
+          font-style: normal;
+          font-weight: 500;
+          line-height: 140%; /* 22.4px */
+          letter-spacing: 0.8px;
+          .position{
+            display: inline-block;
+            font-size: var(--font-fontsize-p--btn, 14px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%;
+            letter-spacing: 0.7px;
+            margin-left: 5px;
+          }
+        }
+        .category {
+          position: relative;
+          @include breakPoint_over-PC {
+          }
+          .label {
+            position: relative;
+            font-size: var(--font-fontsize-p--menu-small, 12px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%; /* 16.8px */
+            letter-spacing: 0.6px;
+            display: inline-block;
+            color: #555555;
+            &::before{
+              content: "# ";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// ニュースリスト
+// ------------------------------
+@mixin wp-block-newsList-style {
+  .module_newsList-01 {
+    &._career{
+      article{
+        border-bottom: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+        &:first-child{
+          border-top: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+        }
+        a{
+          padding: 16px 0 !important;
+        }
+      }
+    }
+    article {
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba($color: $color-gray-border-02, $alpha: 0.5);
+      }
+      &:first-child{
+        a{
+          padding-top: 0;
+        }
+      }
+      &:last-child{
+        a{
+          padding-bottom: 0;
+        }
+      }
+      &:has(.seminars){
+        a{
+          .head {
+            .date{
+              display: none;
+            }
+          }
+        }
+      }
+      a {
+        display: block;
+        padding: 16px 0;
+        color: $color-text;
+        text-decoration: none;
+        transition: $transition-duration;
+        @include breakPoint_over-PC {
+          display: flex;
+          align-items: flex-start;
+          gap: 25px;
+        }
+        &::after {
+          content: none;
+        }
+        &:hover {
+          .body {
+            .title {
+              color: $color-primary;
+              text-decoration: underline;
+            }
+          }
+        }
+        .sticky &{
+          @include breakPoint_over-PC{
+            flex-direction: column;
+          }
+        }
+        &[target='_blank'],
+        &[href$='.pdf'],
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include font-awesome();
+              transition: none;
+              margin-left: 0.5em;
+            }
+          }
+        }
+        &[target='_blank'] {
+          .title {
+            &::after {
+              @include icon-blank;
+            }
+          }
+        }
+        &[href$='.doc'],
+        &[href$='.docx'],
+        &[href$='.docm'],
+        &[href$='.xls'],
+        &[href$='.xlsx'],
+        &[href$='.xlsm'] {
+          .title {
+            &::after {
+              @include icon-file;
+            }
+          }
+        }
+        &[href$='.pdf'] {
+          .title {
+            &::after {
+              @include icon-pdf;
+            }
+          }
+        }
+      }
+      .head {
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+        @include breakPoint_over-PC {
+        }
+        .date {
+          display: flex;
+          @include font_sansSerif-en();
+          font-size: var(--font-fontsize-p, 16px);
+          font-style: normal;
+          font-weight: 400;
+          line-height: 100%; /* 16px */
+          letter-spacing: 0.8px;
+          color: $color-gray-text;
+          min-width: 94px;
+          margin-top: 5px;
+          @include breakPoint_over-PC {
+          }
+        }
+        .category {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          .label {
+            @extend %label;
+            &:not(:last-child) {
+            }
+          }
+        }
+      }
+      .body {
+        margin-top: 8px;
+        @include breakPoint_over-PC {
+          flex: 1;
+          margin-top: 0;
+        }
+        .title {
+          font-size: var(--font-fontsize-p, 16px);
+          font-style: normal;
+          font-weight: 500;
+          line-height: 160%; /* 25.6px */
+          letter-spacing: 0.8px;
+          transition: $transition-duration;
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// ナビゲーション
+// ------------------------------
+@mixin wp-block-navigation-style {
+  .wp-block-acf-navigation-small + .wp-block-acf-navigation-large {
+    margin-top: 40px;
+    @include breakPoint_over-PC {
+      margin-top: 56px;
+    }
+  }
+  .wp-block-acf-navigation-large + .wp-block-acf-navigation-small {
+    margin-top: 40px;
+    @include breakPoint_over-PC {
+      margin-top: 56px;
+    }
+  }
+  .module_navigation {
+    display: flex;
+    flex-direction: column;
+    @include breakPoint_over-PC {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    & + .module_navigation {
+      margin-top: 40px;
+      @include breakPoint_over-PC {
+        margin-top: 56px;
+      }
+    }
+    // 共通
+    .navigation {
+      a {
+        text-decoration: none;
+        color: $color-text;
+        display: flex;
+        &::after {
+          content: unset;
+        }
+        @include hover {
+          .content {
+            opacity: 0.7;
+          }
+          .image {
+            img {
+              transform: scale(1.05);
+            }
+          }
+        }
+        &[target='_blank'] {
+          .content {
+            .title {
+              &::after {
+                @include font-awesome();
+                @include icon-blank;
+                margin-left: 10px;
+              }
+            }
+          }
+        }
+        &.is-disabled {
+          pointer-events: none;
+        }
+        .image {
+          overflow: hidden;
+          flex-shrink: 0;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 0px 0px 12.182px 0px rgba(0, 0, 0, 0.05) inset;
+            transition: $transition-duration;
+          }
+        }
+        .content {
+          transition: $transition-duration;
+          .title {
+            font-weight: 500;
+            color: $color-primary;
+            line-height: 1.6;
+            letter-spacing: 0.1em;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+          }
+          .text {
+            line-height: 1.8;
+            letter-spacing: 0.08em;
+            color: $color-text;
+          }
+        }
+      }
+    }
+    // 大
+    &.--large {
+      gap: 40px;
+      @include breakPoint_over-PC {
+        gap: 60px;
+      }
+      .navigation {
+        @include breakPoint_over-PC {
+          width: calc(50% - 60px / 2);
+        }
+        a {
+          flex-direction: column;
+          gap: 20px;
+          .image {
+            border-radius: 8px;
+            width: 100%;
+            aspect-ratio: 335 / 219;
+          }
+          .content {
+            .title {
+              font-size: 24px;
+              text-align: center;
+              text-underline-offset: 6px;
+              margin-bottom: 20px;
+              @include breakPoint_over-PC {
+                text-align: left;
+              }
+            }
+            .text {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    // 小
+    &.--small {
+      gap: 30px;
+      @include breakPoint_over-PC {
+        gap: 40px;
+      }
+      .navigation {
+        @include breakPoint_over-PC {
+          width: calc(50% - 40px / 2);
+        }
+        a {
+          align-items: flex-start;
+          gap: 15px;
+          @include breakPoint_over-PC {
+            align-items: center;
+            gap: 25px;
+          }
+          .image {
+            border-radius: 4px;
+            width: 120px;
+            aspect-ratio: 1 / 1;
+            border: 1px solid $color-gray-border;
+            @include breakPoint_over-PC {
+              border: unset;
+              width: 180px;
+              aspect-ratio: 18 / 15;
+            }
+          }
+          .content {
+            .title {
+              font-size: 16px;
+              text-underline-offset: 4px;
+              margin-bottom: 10px;
+              @include breakPoint_over-PC {
+                font-size: 20px;
+                margin-bottom: 15px;
+              }
+            }
+            .text {
+              font-size: 12px;
+              @include breakPoint_over-PC {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------
+// その他
+// ------------------------------
+@mixin wp-block-other {
+  .wp-block-columns + .wp-block-columns {
+    margin-top: 32px;
+    @include breakPoint_over-PC {
+      margin-top: 48px;
+    }
+  }
+  .is-type-video{
+    &.aligncenter{
+      display: flex;
+      justify-content: center;
+    }
+  }
+  img[src*="icon_nwgl"]{
+    display: none !important;
+  }
+  .wp-block-group:has(.wp-block[data-align=right], .wp-block[data-align=left]){
+    display: flow-root;
+  }
+}

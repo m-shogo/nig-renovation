@@ -56,6 +56,7 @@ services:
     volumes:
       - wp_core:/var/www/html
       - ./nig/wp-content/themes/samplemain:/var/www/html/nig/wp-content/themes/samplemain
+      - ./nig/wp-content/themes/nig:/var/www/html/nig/wp-content/themes/nig
       - ./nig/css:/var/www/html/nig/css
       - ./nig/js:/var/www/html/nig/js
       - ./data/backups:/var/www/html/nig/wp-content/ai1wm-backups
