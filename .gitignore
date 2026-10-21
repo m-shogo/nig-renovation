@@ -3,6 +3,30 @@
 /data/plugins/*
 !/data/**/.gitkeep
 
+# WordPress 外の大容量ファイル(検証サーバーから表示する。ローカルに置いたものは優先される)
+/nig/images/*
+!/nig/images/common/
+/nig/pdf/
+/nig/download/
+
+# uploads はトップページで使う画像だけ Git 管理する
+/nig/wp-content/uploads/**
+!/nig/wp-content/uploads/*/
+!/nig/wp-content/uploads/*/*/
+!/nig/wp-content/uploads/2023/02/DDBJ.png
+!/nig/wp-content/uploads/2023/02/NIG-JOINT.png
+!/nig/wp-content/uploads/2023/02/NIGINTERN-1.jpg
+!/nig/wp-content/uploads/2023/02/slide-DDBJ1200-300_e.png
+!/nig/wp-content/uploads/2023/02/slide-tokubetsu1200-300_e.png
+!/nig/wp-content/uploads/2023/02/sokendai.jpg
+!/nig/wp-content/uploads/2023/08/Support-Us.jpg
+!/nig/wp-content/uploads/2023/10/slide-1200-300_01.jpg
+!/nig/wp-content/uploads/2023/11/slide-nigintern1200-300.jpg
+!/nig/wp-content/uploads/2024/01/slide_spring_e.jpg
+!/nig/wp-content/uploads/2024/04/slide_summer_e.jpg
+!/nig/wp-content/uploads/2024/05/NIGSymposium_e.jpg
+!/nig/wp-content/uploads/2024/07/slide-daigakuinseibosyu1200-300_e.jpg
+
 # ai1wm が backups に自動生成するファイル
 *.wpress
 

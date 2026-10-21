@@ -34,6 +34,7 @@ fi
 echo "==> All-in-One WP Migration ($AI1WM_VERSION) + Unlimited Extension"
 wp plugin install all-in-one-wp-migration --version="$AI1WM_VERSION" --force --activate
 wp plugin install "$EXT_ZIP" --force --activate
+wp plugin activate all-in-one-wp-migration all-in-one-wp-migration-unlimited-extension
 
 echo "==> 復元: $file"
 wp ai1wm restore "$file" --yes

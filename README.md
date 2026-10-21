@@ -22,15 +22,18 @@ Windows・Mac(Apple Silicon 含む)で同じ手順で動く。
 ```
 nig-renovation/
 ├─ docker-compose.yml
-├─ docker/wordpress/        # Dockerfile, php.ini, Apache 設定(ローカルに無いファイルの転送)
+├─ docker/wordpress/        # Dockerfile, php.ini, Apache 設定(ローカルに無い uploads の転送)
 ├─ scripts/
 │   ├─ restore.sh           # .wpress から環境を作る/戻す
 │   └─ export.sh            # 今の DB とファイルを .wpress に書き出す
 ├─ nig/                     # サーバーの /nig/ と同じ構造(Git 管理するものだけ)
 │   ├─ css/  js/            # WordPress 外の静的ファイル
-│   └─ wp-content/themes/
-│       ├─ samplemain/      # 現在の有効テーマ
-│       └─ nig/             # リニューアル用テーマ(.wpress には入っていない。Git が正本)
+│   ├─ images/              # WordPress 外の画像。common/ だけ Git 管理、残りは各自で置く
+│   └─ wp-content/
+│       ├─ themes/
+│       │   ├─ samplemain/  # 現在の有効テーマ
+│       │   └─ nig/         # リニューアル用テーマ(.wpress には入っていない。Git が正本)
+│       └─ uploads/2023/ 2024/  # 年ごとにマウント。トップで使う画像だけ Git 管理
 ├─ acf/                     # ACF フィールド定義の JSON(参考保管)
 ├─ data/                    # Git 管理外。Google Drive で共有
 │   ├─ backups/             # .wpress(コンテナの ai1wm-backups と同じフォルダ)
@@ -46,18 +49,18 @@ nig-renovation/
 |---|---|
 | Docker 設定、スクリプト、手順書 | `.wpress`(500MB 超。GitHub は 1 ファイル 100MB まで。DB はマージできない) |
 | テーマ `samplemain`・`nig` | Unlimited Extension の zip(有料プラグイン。リポジトリが公開のため) |
-| `nig/css`、`nig/js` | `images`・`pdf` など(合計 4GB 超。検証サーバーから表示する) |
+| `nig/css`、`nig/js`、`nig/images/common`、トップで使う uploads 画像(`.gitignore` に列挙) | `images` の残り・`pdf`・uploads の残りなど(合計 4GB 超。各自で手元に置く) |
 | ACF の JSON | `wp-config.php`、`.env`(パスワード) |
 
 ### ローカルに無いファイルの扱い
 
-`.wpress` にはメディアが入っていない(検証サーバー自体が uploads を本番から表示している)。
-ローカルに実ファイルが無い場合だけ、Apache が次へ 302 転送する(`docker/wordpress/apache.conf`)。
+`.wpress` にはメディアも `/nig/images/` も入っていない(検証サーバー自体が uploads を本番から表示している)。
+uploads だけは、ローカルに実ファイルが無い場合に Apache が次へ 302 転送する(`docker/wordpress/apache.conf`)。
 
 - `/nig/wp-content/uploads/...` → 本番 `https://www.nig.ac.jp`
-- `/nig/images/`・`pdf/`・`download/`・ファビコンなど → 検証サーバー `https://nig-new.codiadev8.site`
 
 ローカルに同じパスのファイルを置けば、そちらが優先される。
+`/nig/images/`・`pdf/`・`download/`・ファビコンなどは転送しない。`nig/` に置いたものだけが表示される(`nig/images/common` は Git 管理、それ以外は各自で置く)。
 
 ## 初回セットアップ(Windows / Mac 共通)
 

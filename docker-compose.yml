@@ -38,8 +38,7 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: wp_
       WP_URL: http://localhost:${WP_PORT:-3080}/nig
-      # ローカルに無いファイルの転送先(docker/wordpress/apache.conf)
-      STATIC_FALLBACK_URL: ${STATIC_FALLBACK_URL:-https://nig-new.codiadev8.site}
+      # ローカルに無い uploads の転送先(docker/wordpress/apache.conf)
       UPLOADS_FALLBACK_URL: ${UPLOADS_FALLBACK_URL:-https://www.nig.ac.jp}
       WP_VERSION: ${WP_VERSION:-6.9.5}
       # 7.112 以降は Unlimited Extension 2.88 以上が必要(手元の zip は 2.83)
@@ -59,6 +58,10 @@ services:
       - ./nig/wp-content/themes/nig:/var/www/html/nig/wp-content/themes/nig
       - ./nig/css:/var/www/html/nig/css
       - ./nig/js:/var/www/html/nig/js
+      - ./nig/images:/var/www/html/nig/images
+      # uploads 全体を覆うと復元された .htaccess などが隠れるので、年ごとに重ねる
+      - ./nig/wp-content/uploads/2023:/var/www/html/nig/wp-content/uploads/2023
+      - ./nig/wp-content/uploads/2024:/var/www/html/nig/wp-content/uploads/2024
       - ./data/backups:/var/www/html/nig/wp-content/ai1wm-backups
       - ./data/plugins:/data/plugins:ro
       - ./scripts:/scripts:ro

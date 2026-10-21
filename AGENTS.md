@@ -17,3 +17,4 @@
 - DB を変えたら、作業の最後に `export.sh` → Google Drive → `DB_LOG.md` を commit する。
 - `wp-content/uploads/.htaccess`(本番の uploads を参照する検証サーバー用の設定)は消さない・書き換えない。
 - バージョン(WordPress・PHP・MariaDB・All-in-One WP Migration)を変えるときは README の表と LESSONS を更新する。
+- 構成・手順・Git 管理の範囲(`docker-compose.yml`、`docker/`、`scripts/`、`.gitignore`、`.env.example` など)を変えたら、同じ commit で README も更新する。commit 前に README と実際の構成がずれていないか確認する。

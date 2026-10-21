@@ -39,6 +39,22 @@
 - 原因: コンテナが UTC だった。
 - 対策: `docker-compose.yml` で `TZ: Asia/Tokyo` を設定。
 
+## 環境構築(2026-10-21 Mac)
+
+### 初回の `restore.sh` が「'ai1wm' is not a registered wp command」で止まる
+- 原因: `wp plugin install --activate` が「already active」と出したのに、DB 上は有効になっていなかった。
+- 対策: `restore.sh` で install の後に `wp plugin activate` を明示的に実行する。止まった場合は再実行すればよい。
+
+### `/nig/images/` の画像が出ない(.wpress に入っていない・検証サーバーは Basic 認証)
+- 原因: `/nig/images/` は WordPress の外なので `.wpress` に含まれない。転送先の検証サーバーは Basic 認証で 401 を返す。
+- 対策: 検証サーバーへの転送をやめた。`nig/images/` は各自で置き、`nig/images/common` だけ Git 管理する。
+  `nig/images/` はマウントしないとコンテナから見えない(`docker-compose.yml`)。
+
+### uploads をフォルダごとマウントすると復元したファイルが隠れる
+- 原因: `wp-content/uploads/` には `.wpress` から復元した `.htaccess`・`2026/`・`cache/` がある。
+- 対策: `nig/wp-content/uploads/` は年ごとにマウントする。新しい年の画像を置いたら `docker-compose.yml` に 1 行足す。
+  Git に入れる uploads 画像は `.gitignore` に 1 ファイルずつ列挙する。
+
 ## 運用ルール(破綻を防ぐため)
 
 - DB は Git に入れない。正本はローカル。受け渡しは `export.sh` → Google Drive → `DB_LOG.md` の順。
