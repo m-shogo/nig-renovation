@@ -104,6 +104,46 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 ### 11. Docker のマウント
 `docker-compose.yml` は今 `samplemain` と `nig` だけマウントしている。複製テーマを有効にする前に、そのフォルダのマウントを足す。足さないとコンテナから見えず、復元で消える。
 
+### 12. 言語ディレクトリは今と逆に組んである
+`nig` は日本語が `/`、英語が `/en/`。今の WPML は英語が `/nig/`、日本語が `/nig/ja/`。
+`_header.php` の `nig_switch_lang_path()` と `_footer.php` の `$lang_path` は使わず、`icl_get_languages()` の URL をそのまま使う。`home_url()` の上に `/en` を足すと二重になる。
+英語ロゴ幅の CSS は `body.en-US`(Bogo)前提。WPML では付かないので、`body.eng` か `html[lang=en]` に付け替える。
+
+### 13. `/nig/` が抜ける URL を直す
+新テーマの検索 `action="/"`、言語切替の `HTTP_HOST` 直結、SCSS の `$imageDir: '/wp/wp-content/themes/nig/images/'`、`site.webmanifest` のルート相対パスは、このサイトでは動かない。`home_url()` かテーマ URI に直す。
+今の検索は Google カスタム検索ページ(`/googlesearch_ja`)へ飛ばしている。新 header の `?s=` に変えると検索結果のページが変わる。段階 3 では今の送り先を維持する。
+
+### 14. テーマを複製するとメニュー割り当てが空になる
+割り当ては `theme_mods_samplemain` に保存されている。複製後に `hdmenu` / `hdmenu_ja` と各 `sidemenu_*` を付け直す。段階 0 のチェック項目。
+`samplemain/style.css` に `Theme Name:` が無い。複製時に必ず書く。
+
+### 15. 本文クラスの移植量
+公開本文で使われている主な旧クラス(件数の目安): `bold` 1435、`text` 1158、`pb20` 880、`italic` 656、`caption_text` 518、`arrow` 系 517、`qaQ`/`qaA` 226、`image_right` 146、`coursesTalbe` 108、`icon_text` 95。
+定義の多くは `common.css` だけにある。段階 2 で本文枠へ移す対象の中心。
+新 header の `.list` `.title` `.menu` は、旧 `common.css` の同名指定と衝突する。旧 CSS を残したまま新 header を出すと崩れる。
+
+### 16. `#site-base` とパン屑の色
+パン屑の色帯は `#site-base .bgColor*` で効いている。新 header で `#site-base` をやめるなら、色指定を本文枠側へ移す。
+`#leftSlot` は今も `add_style.css` で非表示。サイドバー復活は段階 6。
+
+### 17. Walker は 1 種類では足りない
+新 header のナビは 3 系統。SP アコーディオン(`common-menu-02` 相当)、PC メガメニュー(`common-menu-01` 相当)、補助リンク。HTML とクラスが違う。同じ `hdmenu` から出すなら Walker を分けるか、深さで出し分ける。
+並びは `button` → `a` → `div.wrapper` を守る。`common.js` は `next().next()` で開閉する。
+`href` の無い `<a>` が 1 つあると `common.js` 全体が止まる。URL 空の項目は `<span>` か `href="#"` にする。
+`modaal` が無いと同じく全体が止まる。header だけでは使わなくても読み込む。
+
+### 18. 英語 header に `wp_head()` / `wp_footer()` が無い
+日本語だけある。新 header で両方入れると、英語ページに WPML の hreflang とプラグイン CSS が初めて出る。想定内として確認する。
+`insert_custom_tmpl()` は header から呼ばれ、メインループを 1 件進める。新 header では呼ばない。本文は出るが `in_the_loop()` の状態は変わる。
+
+### 19. その他
+- `inc/custom.php` のタクソノミー rewrite slug はすべて `category`。標準の `/category/` と衝突するのでファイルごと入れない。
+- 新 CSS は `input[type=checkbox|radio]{display:none}` が全体に効く。旧フォームのチェックが見えなくなる。本文枠の外、または除外セレクタが必要。
+- `home.css` は `body.page-template-original-frontPage` に依存する。テンプレートファイル名を変えると TOP の見た目が消える。
+- Font Awesome Pro が入っている。公開リポジトリに置いてよいか確認する。
+- `$NowLanguage` は `functions.php` のグローバルスコープで代入している。関数の中へ移すと null になる。
+- 今のサイドメニュー location はテーマ名に紐づく。下層 HTML は出しているが画面では隠している。
+
 ## やってはいけないこと
 
 - `nig` テーマを有効にする
@@ -122,10 +162,11 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 各段階の終わりに、英 TOP・日 TOP・下層固定ページ 1 つ・投稿 1 つ・カテゴリ 1 つを目視する。前の段階に戻せること。
 
 ### 段階 0: 複製して見た目を変えない
-1. `samplemain` を `nig-renewal`(仮)にコピーする。`style.css` の Theme Name だけ変える。
-2. `docker-compose.yml` にマウントを足してコンテナを再作成する。
+1. `samplemain` を `nig-renewal`(仮)にコピーする。`style.css` に `Theme Name: nig-renewal` を書く(元ファイルには無い)。
+2. `docker-compose.yml` にマウントを足してコンテナを再作成する。README も同じ commit で更新する。
 3. ローカルだけ新しいテーマを有効にする。`samplemain` は残す。
-4. 今と同じ見た目なら成功。ここで初めて「触ってよいテーマ」ができる。
+4. 外れたメニュー割り当て(`hdmenu` / `hdmenu_ja` / `sidemenu_*`)を付け直す。
+5. 今と同じ見た目なら成功。ここで初めて「触ってよいテーマ」ができる。
 
 ### 段階 1: 資産をテーマへ移す(まだ出さない)
 1. `nig` から `css/` `js/` `images/` `ico/` `webfonts/` `template-parts/` を複製テーマへコピーする。
@@ -140,12 +181,14 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 5. **header/footer はまだ旧のまま**。下層の本文が読めることを先に確認する。ここで崩れるのは CSS 移植不足なので、範囲を足す。
 
 ### 段階 3: header / footer
-1. `nig` の `_header.php` / `_footer.php` を移植する。`get_field('common-menu-*')` を Walker + `hdmenu` / `hdmenu_ja` に置き換える。
-2. 言語切り替えは `icl_get_languages()`(今の header と同じ)。Bogo は使わない。
-3. `header-ja.php` / `footer-ja.php` は同じ部品を呼ぶ薄いファイルにする。`get_header($NowLanguage['load'])` の 32 箇所は触らない。
+1. `nig` の `_header.php` / `_footer.php` を移植する。`get_field('common-menu-*')` は使わない。SP 用と PC 用で Walker を分け、`hdmenu` / `hdmenu_ja` から出す。
+2. 言語切り替えは `icl_get_languages()` の URL をそのまま使う。`/en` を足す処理は捨てる。
+3. `header-ja.php` / `footer-ja.php` は同じ部品を呼ぶ薄いファイルにする。`get_header($NowLanguage['load'])` の呼び出し元は触らない。
 4. 対象者 4 リンクは、該当ページができるまで出さないか、既存の近いページへ仮置きする。404 を量産しない。
-5. `wp_head()` / `wp_footer()` を入れる。管理画面ログイン時のバーと WPML の CSS を確認する。
-6. メニュー項目の HTML に入っている `<img>` は Walker で外す(テキストだけ出す)。
+5. 英日とも `wp_head()` / `wp_footer()` を入れる。英語ページに WPML とプラグインの CSS が出ることを確認する。
+6. メニュー項目の `<img>` は Walker で外す。`href` の無い `<a>` は出さない。`modaal` は読む。
+7. 検索の送り先は当面 `/googlesearch_ja` のまま。`action="/"` にはしない。
+8. `insert_custom_tmpl()` は新 header から呼ばない。
 
 ### 段階 4: TOP
 1. 英語・日本語の固定フロントページを作り、WPML で対にし、テンプレートを `original-frontPage.php`(または `front-page.php`)にする。
@@ -171,3 +214,5 @@ Figma の対象者 4 柱と今の 7 柱をどう対応させるか決めてか�
 - セミナーを新 TOP に載せるか(今は外部 JS。カテゴリ `seminar` は英語側に無い)
 - 旧 `top_slider` を新 ACF へ変換するか、管理画面で入れ直すか
 - Figma の IA を段階 5 でいつやるか
+- Font Awesome Pro を公開リポジトリに置いてよいか
+- 検索を Google カスタム検索のままにするか、WordPress 検索に変えるか
