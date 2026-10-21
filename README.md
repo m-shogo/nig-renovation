@@ -39,6 +39,7 @@ nig-renovation/
 │   ├─ backups/             # .wpress(コンテナの ai1wm-backups と同じフォルダ)
 │   └─ plugins/             # all-in-one-wp-migration-unlimited-extension.zip
 └─ docs/
+    ├─ PLAN.md              # リニューアルの方針(やりたいこと・決めたこと・未決)
     ├─ DB_LOG.md            # どの .wpress が最新かの記録
     └─ LESSONS.md           # 失敗と対策の記録
 ```

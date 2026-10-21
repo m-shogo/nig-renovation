@@ -6,6 +6,7 @@
 1. [README.md](README.md): 構成と手順
 2. [docs/LESSONS.md](docs/LESSONS.md): 過去の失敗と対策。**同じ失敗をしたら、ここに追記する。**
 3. [docs/DB_LOG.md](docs/DB_LOG.md): どの `.wpress` が最新か
+4. [docs/PLAN.md](docs/PLAN.md): リニューアルでやりたいこと・決めたこと・未決のこと。方針が決まったら更新する。
 
 ## 守ること
 - サイトは `http://localhost:3080/nig/`。サーバーと同じく `/nig/` 配下で動かす。
