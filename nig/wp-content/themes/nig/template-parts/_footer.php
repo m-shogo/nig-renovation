@@ -58,7 +58,7 @@
           <ul>
             <li class="_twitter"><a href="https://x.com/NIG_idenken" target="_blank"><?php get_template_part( 'ico/ico', 'twitter' ); ?></a></li>
             <li class="_youtube"><a href="https://www.youtube.com/user/NIGchannel" target="_blank"><?php get_template_part( 'ico/ico', 'youtube' ); ?></a></li>
-            <li class="_facebook"><a href="https://www.facebook.com/people/%E5%9B%BD%E7%AB%8B%E9%81%BA%E4%BC%9D%E5%AD%A6%E7%A0%94%E7%A9%B6%E6%89%80/100057459939425/#" target="_blank"><?php get_template_part( 'ico/ico', 'facebook' ); ?></a></li>
+            <li class="_facebook"><a href="<?php echo $lang === 'en' ? 'https://www.facebook.com/people/National-Institute-of-Genetics-Official/100064809672618' : 'https://www.facebook.com/people/%E5%9B%BD%E7%AB%8B%E9%81%BA%E4%BC%9D%E5%AD%A6%E7%A0%94%E7%A9%B6%E6%89%80/100057459939425/#'; ?>" target="_blank"><?php get_template_part( 'ico/ico', 'facebook' ); ?></a></li>
           </ul>
 
         </div>
@@ -87,8 +87,8 @@
               </a>
             </li>
             <li>
-              <a href="<?php echo $lang === 'en' ? 'https://ds.rois.ac.jp/en/' : 'https://ds.rois.ac.jp/'; ?>" target="_blank">
-                <span><?php echo $lang === 'en' ? 'Joint Support-Center for Data Science Research' : 'データサイエンス共同利用基盤施設'; ?></span>
+              <a href="<?php echo $lang === 'en' ? 'https://fs.rois.ac.jp/en/' : 'https://fs.rois.ac.jp'; ?>" target="_blank">
+                <span><?php echo $lang === 'en' ? 'Co-creation Center for Future Science Systems' : '未来科学システム共創施設'; ?></span>
               </a>
             </li>
           </ul>
