@@ -93,20 +93,20 @@ echo sprintf('<?xml version="1.0" encoding="%s"?>'.PHP_EOL , get_bloginfo( 'char
 
 	<title><?php echo $title; /*wp_title();*/ ?></title>
 	<!-- <script src="<?php echo $_hpRootDir; ?>js/jquery-1.11.0.min.js"></script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="<?php echo $_hpRootDir; ?>js/default.js?20220204v1"></script>
+	<script src="<?php echo $_hpRootDir; ?>js/jquery-3.7.1.min.js"></script>
+	<script src="<?php echo $_hpRootDir; ?>js/default.js?20261117v1"></script>
 	<script src="<?php echo $_hpRootDir; ?>js/scrollTopControl.js"></script>
     <script src="<?php echo $_hpRootDir; ?>js/footerFixed.js"></script>
     <script src="<?php echo $_hpRootDir; ?>js/yearSelect.js"></script>
     <script src="<?php echo $_hpRootDir; ?>js/navibutton.js"></script>
-    <script src="<?php echo $_hpRootDir; ?>js/globalnavi.js?20220105v1"></script>
+    <script src="<?php echo $_hpRootDir; ?>js/globalnavi.js?20261117v1"></script>
 <!--	<script src="<?php echo $_hpRootDir; ?>js/smoothover.js"></script>	-->
 <link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>wp-includes/css/dist/block-library/style.min.css" media="screen,print" />    
 <?php
 	if( is_home() || is_front_page() ){
 ?>
-	<script src="<?php echo $_hpRootDir; ?>js/jquery.bxslider.js"></script>
-	<script src="<?php echo $_hpRootDir; ?>js/index.js?20220204v1"></script>
+	<script src="<?php echo $_hpRootDir; ?>js/jquery.bxslider.js?20261117v1"></script>
+	<script src="<?php echo $_hpRootDir; ?>js/index.js?20261117v1"></script>
 	
 <!--[if lt IE 8 ]><link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/ol_index.css" media="screen,print" /> <![endif]-->
 <!--[if (gte IE 8)]><link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/index.css" media="screen,print" /> <![endif]-->

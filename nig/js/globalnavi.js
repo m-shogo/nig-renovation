@@ -34,7 +34,7 @@ $(function(){
 
     // init
     function init() {
-        elm_button.live('click', function(e){
+        $(document).on('click', '#main-nav > li', function(e){
 
             $(this).children('a').toggleClass('is-open');
             $(this).children('._subCategory').slideToggle();
@@ -56,7 +56,7 @@ $(function(){
 
     // init
     function init2() {
-        elm_button2.live('click', function(e){
+        $(document).on('click', '#main-nav ._subCategory .menu-item-has-children', function(e){
             $(this).children('a').toggleClass('is-open');
             $(this).children('.sub-menu').slideToggle();
 
@@ -79,7 +79,7 @@ $(function(){
     // // init
     function init3() {
 
-        elm_button3.live('click', function(e){
+        $(document).on('click', '#main-nav ._subCategory li a', function(e){
             // $check_anker_href2 = $(this).attr('href');
             // if($check_anker_href2 != '#') {
             //     e.stopPropagation();
@@ -106,7 +106,7 @@ $(function(){
     // // init
     function init4() {
 
-        elm_button4.live('click', function(e){
+        $(document).on('click', '#main-nav ._naviArrow', function(e){
 
             $(this).parent('a').toggleClass('is-open');
             $(this).parent().parent().children('._subCategory').slideToggle();

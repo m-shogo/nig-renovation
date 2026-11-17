@@ -93,7 +93,7 @@ function agent() {
 
 
 
-$(window).load(function(){
+$(window).on('load', function(){
 	$('#slideWrap #bxslider').children('li').each(function(i,elem){
 		$(this).attr('data-num',i);
 	});

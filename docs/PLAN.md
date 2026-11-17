@@ -251,6 +251,14 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 - News は通常の `post`。Bogo の `'lang'` と `nig/inc` のセミナー関数は使わない。
 - スライダー、重要なお知らせ、研究者、Recommends は ACF。投稿タイプではない。入れるのは TOP 用グループだけ。
 
+### 仕様と functions.php
+- お知らせ、投稿タイプ、ショートコード、パーマリンクは今の環境のまま。`samplemain/functions.php` を残す。
+- 今ある投稿タイプは `top_important` / `top_slider` / `top_pickup`。ショートコードは `[get_posts]` `[get_posts_en]` `[onphp]`。
+- `nig/functions.php` は読み込まない。中身は `inc/*.php` の一括読み込みで、投稿タイプ・リライト・Bogo・検索改変・管理画面の URL 改変が入っている。
+- 新デザインに必要なものだけ別ファイルで足す。jQuery 3.7.1、`common.js`、`modaal`、Swiper、TOP だけの `home.js`、`style.css`、スライダー用の `add_image_size`。
+- いま動いている旧 JS は jQuery 3.7.1 で動くよう直した。`globalnavi.js` の `.live()`、`default.js` と `index.js` の `$(window).load()`、bxSlider の `.load()`。読み込みは `nig/js/jquery-3.7.1.min.js`。1.8.2 は使わない。
+- `inc/custom.php`、`inc/permalink.php`、`inc/shortcode.php`、`inc/search.php`、`inc/admin.php` は足さない。
+
 ## 実装前に残っている懸念
 
 決めたことの外で、無視すると崩れるもの。

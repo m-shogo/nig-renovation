@@ -464,7 +464,7 @@ $(document).ready( function(){
 	
 	
 	//	初期セットアップ
-	$(window).load(function(){
+	$(window).on('load', function(){
 
 		windowProfile.reSize();
 
