@@ -131,7 +131,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 ### 15. 本文クラスの移植量
 公開本文で使われている主な旧クラス(件数の目安): `bold` 1435、`text` 1158、`pb20` 880、`italic` 656、`caption_text` 518、`arrow` 系 517、`qaQ`/`qaA` 226、`image_right` 146、`coursesTalbe` 108、`icon_text` 95。
-定義の多くは `common.css` だけにある。段階 2 で本文枠へ移す対象の中心。
+定義の多くは `common.css` だけにある。段階 4 で本文枠へ移す対象の中心。
 新 header の `.list` `.title` `.menu` は、旧 `common.css` の同名指定と衝突する。旧 CSS を残したまま新 header を出すと崩れる。
 
 ### 16. `#site-base` とパン屑の色
@@ -172,49 +172,48 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 ## 破綻しない進め方(この順だけ)
 
-各段階の終わりに、英 TOP・日 TOP・下層固定ページ 1 つ・投稿 1 つ・カテゴリ 1 つを目視する。前の段階に戻せること。
+各段階は別 commit。終わりに英 TOP・日 TOP・下層固定ページ 1 つ・投稿 1 つ・カテゴリ 1 つを見る。前の段階に戻せること。
 
-### 段階 0: 複製して見た目を変えない
-1. `samplemain` を `nig-renewal`(仮)にコピーする。`style.css` に `Theme Name: nig-renewal` を書く(元ファイルには無い)。
+新 CSS と `common.js` は旧ヘッダーの DOM では動かない。下層を先に新 CSS へ載せると、ヘッダーを替えたときに枠を書き直す。だからヘッダーと CSS の切り替えは同じ段階にし、下層の本文枠はその次、TOP はヘッダーが固まってからにする。
+
+### 段階 0: 済。jQuery 3.7.1
+今のサイトの JS を 3.7.1 で動かした。`samplemain` に入っている。ここは戻さない。
+
+### 段階 1: 複製して見た目を変えない
+1. いまの `samplemain` を `nig-renewal` にコピーする。`style.css` に `Theme Name: nig-renewal` を書く。
 2. `docker-compose.yml` にマウントを足してコンテナを再作成する。README も同じ commit で更新する。
-3. ローカルだけ新しいテーマを有効にする。`samplemain` は残す。
-4. 外れたメニュー割り当て(`hdmenu` / `hdmenu_ja` / `sidemenu_*`)を付け直す。
-5. 今と同じ見た目なら成功。ここで初めて「触ってよいテーマ」ができる。
+3. ローカルだけ新しいテーマを有効にする。`samplemain` は比較用に残す。これ以降 `samplemain` は編集しない。
+4. 外れたメニュー割り当て(`hdmenu` / `hdmenu_ja` / `sidemenu_*`)を付け直す。項目の中身は変えない。
+5. 今と同じ見た目なら成功。
 
-### 段階 1: 資産をテーマへ移す(まだ出さない)
-1. `nig` から `css/` `js/` `images/` `ico/` `webfonts/` `template-parts/` を複製テーマへコピーする。
-2. `functions.php` は `samplemain` のものを残す。enqueue 用に薄いファイルを 1 つ足すだけ。
-3. この段階ではまだ旧 header が旧 CSS を読む。サイトは変わらない。
+### 段階 2: 資産を置くが、まだ読まない
+1. `nig` から `css/` `js/` `images/` `ico/` `webfonts/` を複製テーマへコピーする。
+2. `functions.php` は段階 1 のものを残す。enqueue 用のファイルは足すが、この段階では旧 CSS のままにする。
+3. サイトの見た目は変わらない。
 
-### 段階 2: 下層の枠だけ先に新 CSS へ乗せる
-1. 旧 `/nig/css/*.css` と旧 `/nig/js/*.js` の読み込みをやめる。
-2. 新 `style.css` + `common.js` + jQuery 3.7.1 を読む。
-3. `pagetemp-*.php` / `category.php` / `single.php` などの本文を `#global_contents` で包む。中の `#leftSlot` `#rightSlot` `.box` は残す。
-4. 旧 CSS から本文用(`.listlink_box` `.icon_text` `#leftSlot` パン屑 色クラスなど)だけを、本文枠向けに移植する。
-5. **header/footer はまだ旧のまま**。下層の本文が読めることを先に確認する。ここで崩れるのは CSS 移植不足なので、範囲を足す。
+### 段階 3: ヘッダーとフッター、同時に CSS と JS を切り替え
+旧 CSS・旧 JS を残したまま新ヘッダーだけ出さない。同じ段階で両方入れ替える。
+1. 移植の前に仕様書と Figma の Header を見る。
+2. `_header.php` を `header.php` に載せる。対象者 4 リンクは出さない。`common-menu-*` は使わない。`hdmenu` / `hdmenu_ja` の既存項目だけ。項目の `<img>` は外す。`href` の無い `<a>` は出さない。
+3. 言語切替は `icl_get_languages()` の URL。`/en/` は足さない。`html lang` は `ICL_LANGUAGE_CODE`。英語幅の CSS は `body.en-US` をやめる。
+4. `_footer.php` を `footer.php` に載せる。項目は足さない。`common-submenu-*` は読まない。
+5. `header-ja.php` と `footer-ja.php` は置かない。`wp_head()` と `wp_footer()` は日英とも入れる。`insert_custom_tmpl()` は呼ばない。
+6. 旧 `/nig/css` と旧 `/nig/js`（`globalnavi.js` など）をやめる。新 `style.css`、jQuery 3.7.1、`modaal`、`common.js` を読む。検索の送り先は `/googlesearch_ja` のまま。
+7. 確認は Figma の Header と余白。下層の本文が崩れて見えるのは次の段階で直す。ページが 200 で、文字が HTML にあることまで見る。
 
-### 段階 3: header / footer
-1. `nig` の `_header.php` を移植する。対象者 4 リンクの `<ul class="list">` は出さない。`get_field('common-menu-*')` は使わない。SP 用と PC 用で Walker を分け、`hdmenu` / `hdmenu_ja` の既存項目だけを出す。項目は足さない。
-2. `_footer.php` はそのまま移植する。メニューの組み替えや項目追加はしない。`common-submenu-*` は読まない。
-3. 言語切り替えは `icl_get_languages()` の URL をそのまま使う。`/en` を足す処理は捨てる。
-4. 日英は `header.php` と `footer.php` の1枚で出す。判定は `ICL_LANGUAGE_CODE`。`header-ja.php` と `footer-ja.php` は置かない。`get_header('ja')` はファイルが無いと `header.php` に落ちる。
-5. 英日とも `wp_head()` / `wp_footer()` を入れる。英語ページに WPML とプラグインの CSS が出ることを確認する。
-6. メニュー項目の `<img>` は Walker で外す。`href` の無い `<a>` は出さない。`modaal` は読む。
-7. 検索の送り先は当面 `/googlesearch_ja` のまま。`action="/"` にはしない。
-8. `insert_custom_tmpl()` は新 header から呼ばない。
+### 段階 4: 下層の本文を読めるようにする
+1. `pagetemp-*.php` / `category.php` / `single.php` などの本文を `#global_contents` で包む。中の `#leftSlot` `#rightSlot` `.box` は残す。
+2. 旧 CSS から本文用(`.listlink_box` `.icon_text` パン屑 色クラス)だけを、本文枠の中に移植する。
+3. ヘッダーは触らない。サイドバーの復活や本文の作り込みはしない。
 
-### 段階 4: TOP
-1. 英語・日本語の固定フロントページを作り、WPML で対にし、両方のテンプレートを `original-frontPage.php` にする。ファイル名は変えない(`body.page-template-original-frontPage` に TOP の CSS が依存する)。
-2. `show_on_front` を `page` にする。`index.php` から `index-en.php` / `index-ja.php` を読む経路は使わない。
-3. ACF は TOP 用グループだけインポートする。スライダー・お知らせ・研究者は管理画面から入れる。
-4. `highlights` と `interviews` の枠は出さない。投稿タイプは作らない。`'lang' => $lang` は使わない。News は通常の `post`。`nig/inc` のセミナー関数はコピーしない。
-5. `list-*.php` はカード HTML 用に残してよい。中のタクソノミー名だけ今のに合わせる。
+### 段階 5: TOP
+ヘッダーの HTML が決まってから始める。`original-frontPage.php` は `get_header()` を呼ぶので、先に有効にすると旧ヘッダー前提で余白を直すことになる。
+1. テンプレートを複製テーマへ置く。ファイル名は変えない。4 リンクと、仕様書で削除のキャッチコピーは出さない。`highlights` と `interviews` の枠は出さない。`'lang'` は使わない。News は通常の `post`。
+2. 英日の固定ページを作り、WPML で対にし、このテンプレートを付ける。`show_on_front` を `page` にする。
+3. TOP 用 ACF だけ入れる。スライダーが空でもテンプレートは切り替える。`home.js` はこの段階で読む。
 
-### 段階 5: 情報設計(今回はやらない)
-対象者 4 ページの新設や、メニュー項目の追加・組み替えはしない。今の 7 項目を新 header に載せるところまで。
-
-### 段階 6: 下層の見た目
-サイドバー・パン屑・本文タイポを新デザインに寄せる。段階 2 で残した旧クラスを、ここで少しずつ新モジュールへ移す。最初のリリースには必須にしない。
+### 段階 6: 今はやらない
+メニュー項目の追加・削除、対象者 4 ページ、下層の見た目を新モジュールへ寄せる作業。段階 3 のヘッダーは、メニューの中身を差し替えれば追従できる状態にしておく。
 
 ## 複製テーマの名前
 
@@ -263,7 +262,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 決めたことの外で、無視すると崩れるもの。
 
-1. **新 CSS は下層を巻き込む。** Meyer reset は `body` や `a` 全体に効く。header と TOP だけを出す段階で、旧下層テンプレートへ同時に掛けない。段階 2 の本文枠を飛ばすと下層が崩れる。
+1. **新 CSS は下層を巻き込む。** Meyer reset は `body` や `a` 全体に効く。ヘッダーと CSS は同じ段階で切り替え、本文枠は直後の段階で足す。本文枠を飛ばしたまま下層の見た目を作り込まない。
 2. **`nig` の URL はこの環境ではそのまま動かない。** 言語切替の `/en/`、検索 `action="/"`、SCSS の画像パス `/wp/wp-content/themes/nig/images/`。`/nig/` を付けて、言語 URL は WPML のものを使う。
 3. **`common.js` は条件が欠けると全体が止まる。** `href` の無い `<a>`、`modaal` 未読込。メニュー項目のタイトルに入っている `<img>` は外す。開閉の並びは `button` → `a` → `div.wrapper`。
 4. **英語用の幅指定が `body.en-US` 前提。** これは Bogo のクラスで、WPML では付かない。`html[lang=en]` か、こちらで付けるクラスに変える。
