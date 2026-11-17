@@ -198,6 +198,34 @@ get_header();
 				</div>
 			</div>
 		<?php endif; ?>
+		<?php if ( have_rows( 'top_scientists-02' ) ) : ?>
+			<div class="global_inner">
+				<ul class="list">
+					<?php while ( have_rows( 'top_scientists-02' ) ) : the_row(); ?>
+						<?php
+						$img   = get_sub_field( 'img' );
+						$src   = $nig_renewal_image( $img, 'top_img' );
+						$title = get_sub_field( 'title' );
+						$url   = get_sub_field( 'url' );
+						$genre = get_sub_field( 'genre' );
+						$text  = get_sub_field( 'text' );
+						?>
+						<li>
+							<?php if ( $url ) : ?><a href="<?php echo esc_url( $url ); ?>"><?php else : ?><span class="_disabled"><?php endif; ?>
+								<div class="head">
+									<?php if ( $src ) : ?><p class="image"><img src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( wp_strip_all_tags( (string) $title ) ); ?>"></p><?php endif; ?>
+									<div class="titleArea">
+										<?php if ( $genre ) : ?><p class="genre"><?php echo esc_html( $genre ); ?></p><?php endif; ?>
+										<?php if ( $title ) : ?><h3 class="title"><?php echo esc_html( $title ); ?></h3><?php endif; ?>
+									</div>
+								</div>
+								<?php if ( $text ) : ?><div class="body"><p class="text"><?php echo esc_html( $text ); ?></p></div><?php endif; ?>
+							<?php if ( $url ) : ?></a><?php else : ?></span><?php endif; ?>
+						</li>
+					<?php endwhile; ?>
+				</ul>
+			</div>
+		<?php endif; ?>
 	</section>
 
 	<?php if ( have_rows( 'top_recommends-01' ) ) : ?>
