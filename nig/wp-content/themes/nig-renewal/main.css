@@ -1,0 +1,300 @@
+/*// 共通設定 ///////////////////////////////*/
+
+*{
+	padding : 0;
+	margin : 0;
+	border: none;
+}
+
+body{
+	text-align:center;
+	font-family:"ＭＳ ゴシック" , monospace ;
+	font-size:12px;
+	line-height:1em;
+	width:100%;
+	background-color:#111;
+}
+
+
+/*// タグ設定 ///////////////////////////////*/
+a{		color:#206196;text-decoration:none;	}
+a:hover{color:#FF4000;}
+a.name{
+	color:#111;
+	cursor:normal;
+}
+
+a.or{	color:#FF4000;	}
+a.or:hover{	color:#000;	}
+
+
+ul{		list-style:none;	}
+ol{		list-style-position:inside;	}
+img,input{	vertical-align : bottom;	}
+a img{	border:none;	}
+th{	text-align:left;	}
+
+/*// クラス設定 ///////////////////////////////*/
+
+.clear{	clear:both;	}
+
+.Fl{	float:left;	}
+.Fr{	float:right;	}
+
+.lT{	text-align:left;	}
+.cT{	text-align:center;	}
+.rT{	text-align:right;	}
+
+.tV{	vertical-align : top;	}
+.mV{	vertical-align : middle;	}
+.uV{	vertical-align : unser;	}
+
+
+.Mtw{	margin-top:36px;	}
+.Mt{	margin-top:18px;	}
+.Mts{	margin-top:9px;	}
+.Ml{	margin-left:16px;	}
+
+.bgCw{	background-color:#FFF;	}
+.bgCwg{	background-color:#EEE;	}
+.bgCg{	background-color:#CCC;	}
+.bgCb{	background-color:#98BBD7;	}
+.bB{	background-color:#F7FAFF;	}
+
+.bgDot{	background: url( "./img/dotted.gif" ) repeat;	}
+
+
+
+.fWn{	font-weight:normal;	}
+.fCo{	color:#EF711F;	}
+.fCr{	color:#900;	}
+.fCg{	color:#666;	}
+.fCb{	color:#1F506E;	}
+.fCbl{	color:#111;	}
+
+.fSs{	font-size: 10px;	}
+.fSm{	font-size: 12px;	}
+.fSl{	font-size: 16px;	}
+.fSll{	font-size: 24px;	}
+
+.lH10{	line-height: 1em;	}
+.lH12{	line-height: 1.25em;	}
+.lH15{	line-height: 1.5em;	}
+.lH17{	line-height: 1.75em;	}
+.lH20{	line-height: 2em;	}
+
+.Ma1{	margin-left:1px;	margin-right:1px;	}
+
+
+.Pa5{	padding:5px;	}
+.Pa8{	padding:8px;	}
+.Pa10{	padding:10px;	}
+.Pa15{	padding:15px;	}
+.Pa20{	padding:20px;	}
+
+.Ps10{	padding-left:10px;	padding-right:10px;	}
+.Ps15{	padding-left:15px;	padding-right:15px;	}
+.Ps20{	padding-left:20px;	padding-right:20px;	}
+
+.Ms10{	margin-left:10px;	margin-right:10px;	}
+.Ms15{	margin-left:15px;	margin-right:15px;	}
+
+.Ml10{	margin-left:10px;	}
+.Mr10{	margin-right:10px;	}
+
+.drS{		box-shadow: 0 0 6px #333;	}
+.r8{
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+
+
+/*----------------------------------------------------------------
+	メイン
+----------------------------------------------------------------*/
+
+body{
+	padding-top:4px;
+	background: url( "./img/bg_head.jpg" ) repeat-x center top;
+
+}
+
+.w960{
+	text-align:left;
+	width:960px;
+	margin:0 auto;
+}
+
+/*----------------------------------------------------------------
+	ヘッダー
+----------------------------------------------------------------*/
+#header{
+	background: url( "./img/bg_header.gif" ) repeat-x center top;
+	height:75px;
+	overflow:hidden;
+}
+
+h1{
+	font-size:12px;
+	font-weight:normal;
+	color:#666;
+}
+
+div#hconts{
+	height:63px;
+	overflow:hidden;
+	line-height:63px;
+}
+div#hconts img{	vertical-align : top;	}
+
+/*##
+ トップメニュー
+###########################*/
+
+
+#topMenuBox{
+	height:40px;
+	position: relative;
+	background: url( "./img/bg_menuline.gif" ) repeat-x left top;
+	box-shadow: 0 4px 2px #666;
+	z-index:10000;
+}
+
+#topMenuBox ul{
+	width:960px;
+	height:40px;
+	margin:0 auto;
+}
+#topMenuBox ul li{
+	overflow:hidden;
+	float:left;
+}
+#topMenuBox ul li a{
+	display:block;
+	height:40px;
+	background: url( "./img/bg_menu.jpg" ) no-repeat left top;
+	text-indent:-100em;
+	overflow:hidden;
+}
+
+#topMenuBox ul li.tm01 a{		width:92px;		background-position: 0 0;	}
+#topMenuBox ul li.tm02 a{		width:150px;	background-position: -92px 0;	}
+#topMenuBox ul li.tm03 a{		width:186px;	background-position: -242px 0;	}
+#topMenuBox ul li.tm04 a{		width:124px;	background-position: -428px 0;	}
+#topMenuBox ul li.tm05 a{		width:128px;	background-position: -552px 0;	}
+#topMenuBox ul li.tm09 a{		width:130px;	background-position: -680px 0;	}
+
+#topMenuBox ul li.tm01 a:hover , #topMenuBox ul li.tm01 a.ch{		background-position: 0 -40px;	}
+#topMenuBox ul li.tm02 a:hover , #topMenuBox ul li.tm02 a.ch{		background-position: -92px -40px;	}
+#topMenuBox ul li.tm03 a:hover , #topMenuBox ul li.tm03 a.ch{		background-position: -242px -40px;	}
+#topMenuBox ul li.tm04 a:hover , #topMenuBox ul li.tm04 a.ch{		background-position: -428px -40px;	}
+#topMenuBox ul li.tm05 a:hover , #topMenuBox ul li.tm05 a.ch{		background-position: -552px -40px;	}
+#topMenuBox ul li.tm09 a:hover , #topMenuBox ul li.tm09 a.ch{		background-position: -680px -40px;	}
+
+#rightBox{
+	padding : 16px 0;
+	width:696px;
+	float:right;
+	text-align:center;
+}
+#leftBox{
+	text-align:left;
+	padding : 16px 0;
+	width:260px;
+	float:left;
+	text-align:center;
+}
+
+
+/*##
+ コンテンツ
+###########################*/
+div#mainContents{
+	min-height:900px;
+	background: url( "./img/bg_contents.jpg" ) no-repeat center top;
+}
+
+ul#headImg{
+	width:970px;
+	height:255px;
+}
+ul#headImg li{
+	margin :0 15px 15px;
+}
+
+
+h3.t01{
+	background: url( "./img/bg_title.gif" ) no-repeat left center;
+	padding:6px 8px 6px 40px;
+	font-size: 16px;
+	color:#00A13F;
+}
+
+
+.text01{
+	padding:4px 8px;
+	font-size: 12px;
+	color:#535353;
+	
+	line-height:1.5em;
+}
+
+/*##
+ フッター
+###########################*/
+
+p#gotoTop{
+	width:960px;
+	margin:0 auto;
+	clear:both;
+	text-align:right;
+}
+
+#fotter{
+	background: #049C16 url( "./img/bg_foot.jpg" ) repeat-y top center;
+	color:#FFF;
+	padding:24px 0;
+}
+
+#fotter a{	color:#FFF;	}
+#fotter a:hover{	color:#FF0;	}
+
+
+
+
+#footerMenuBox{
+	width:940px;
+	margin:0 auto;
+	text-align:left;
+}
+
+
+#footerMenuBox ul{
+	width:960px;
+	marign:0 auto;
+	height:20px;
+}
+#footerMenuBox ul li{
+	float:left;
+}
+
+
+#footerMenuBox ul li a{
+	padding: 0 68px 0 12px;
+	background: url( "./img/bg_ftmenu.gif" ) no-repeat left top;
+	display:block;
+	float:left;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+	line-height:20px;
+
+}
+
+
+#fotter hr{
+	border: 1px solid #00CF59;
+	margin:24px 0;
+}

@@ -31,8 +31,9 @@ nig-renovation/
 │   ├─ images/              # WordPress 外の画像。common/ だけ Git 管理、残りは各自で置く
 │   └─ wp-content/
 │       ├─ themes/
-│       │   ├─ samplemain/  # 現在の有効テーマ
-│       │   └─ nig/         # リニューアル用テーマ(.wpress には入っていない。Git が正本)
+│       │   ├─ samplemain/  # 切り戻し用。直接編集しない
+│       │   ├─ nig-renewal/ # 作業テーマ。samplemain の複製
+│       │   └─ nig/         # 新デザインの正本。有効にはしない
 │       └─ uploads/2023/ 2024/  # 年ごとにマウント。トップで使う画像だけ Git 管理
 ├─ acf/                     # ACF フィールド定義の JSON(参考保管)
 ├─ data/                    # Git 管理外。Google Drive で共有
@@ -49,7 +50,7 @@ nig-renovation/
 | 入れる | 入れない(理由) |
 |---|---|
 | Docker 設定、スクリプト、手順書 | `.wpress`(500MB 超。GitHub は 1 ファイル 100MB まで。DB はマージできない) |
-| テーマ `samplemain`・`nig` | Unlimited Extension の zip(有料プラグイン。リポジトリが公開のため) |
+| テーマ `samplemain`・`nig-renewal`・`nig` | Unlimited Extension の zip(有料プラグイン。リポジトリが公開のため) |
 | `nig/css`、`nig/js`、`nig/images/common`、トップで使う uploads 画像(`.gitignore` に列挙) | `images` の残り・`pdf`・uploads の残りなど(合計 4GB 超。各自で手元に置く) |
 | ACF の JSON | `wp-config.php`、`.env`(パスワード) |
 
