@@ -1,0 +1,21 @@
+---
+description: ヘッダー実装時は仕様書と Figma を見てから書き、対象者4リンクとメニュー改変を禁止する
+alwaysApply: true
+---
+
+# ヘッダーとメニュー
+
+ヘッダー、グローバルナビ、`ul.list`、`hdmenu`、`hdmenu_ja` を実装・修正するときは、コードを書く前に次を開いて現状を確認する。`nig` テーマの HTML は古い部分があるので、そこを正にしない。
+
+- PC: https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=15568-3408
+- SP: https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=6009-1464
+- 仕様書: https://www.figma.com/design/bifb2nXzhIe9zIzpHEOXwo/nig-renovation%E4%BB%95%E6%A7%98%E6%9B%B8?node-id=15407-3
+- 方針: `docs/PLAN.md` の「対象者 4 リンク」
+
+確認してから書くこと。
+
+- 対象者4リンク（`ul.list` の `/researchers/` `/students/` `/public/` `/business/`）は仕様書で「削除」。Figma の Header にも無い。`_header.php` と `original-frontPage.php` の `#top_link-01` の両方で出さない。余白用に残さない。
+- 見た目・余白・JS・動きの正本は `nig/wp-content/themes/nig`。ただし上記4リンクの HTML は従わない。
+- メニュー項目の追加・削除・並べ替えはしない。マスター権限がないと禁止。`hdmenu` と `hdmenu_ja` は表示するだけ。
+- ACF の `common-menu-*` は使わない。
+- 実装後、Figma の Header と余白が崩れていないか見てから完了にする。

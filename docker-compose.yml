@@ -38,8 +38,6 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_TABLE_PREFIX: wp_
       WP_URL: http://localhost:${WP_PORT:-3080}/nig
-      # ローカルに無い uploads の転送先(docker/wordpress/apache.conf)
-      UPLOADS_FALLBACK_URL: ${UPLOADS_FALLBACK_URL:-https://www.nig.ac.jp}
       WP_VERSION: ${WP_VERSION:-6.9.5}
       # 7.112 以降は Unlimited Extension 2.88 以上が必要(手元の zip は 2.83)
       AI1WM_VERSION: ${AI1WM_VERSION:-7.111}

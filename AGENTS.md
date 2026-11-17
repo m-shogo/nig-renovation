@@ -10,6 +10,7 @@
 
 ## 守ること
 - サイトは `http://localhost:3080/nig/`。サーバーと同じく `/nig/` 配下で動かす。
+- ヘッダーとメニューを実装するときは [.cursor/rules/header-menu.mdc](.cursor/rules/header-menu.mdc) に従う。仕様書と Figma を見てから書き、メニュー項目は追加・削除しない。
 - 編集してよいのは `nig/`(テーマ・css・js)、`docker/`、`scripts/`、`docs/`、`acf/`。
 - WordPress 本体やプラグインのファイルは直接編集しない(コンテナの volume 上にあり、復元で消える)。
 - `.wpress`・プラグインの zip・`.env`・`wp-config.php` は commit しない。リポジトリは公開設定。

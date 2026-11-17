@@ -18,8 +18,9 @@
 ### uploads の画像が出ない(.wpress にメディアが入っていない)
 - 原因: 検証サーバーは uploads を持たず、`wp-content/uploads/.htaccess` で本番へ転送している。そのため書き出しにもメディアが入らない。
   さらにこの `.htaccess` の `RewriteEngine on` が上位ディレクトリの転送ルールを打ち消していた。
-- 対策: 転送ルールは `.htaccess` ではなく Apache の仮想ホスト設定(`docker/wordpress/apache.conf`)に書く。
-  `uploads/.htaccess` は検証サーバー用の大事なファイルなので消さない・書き換えない。
+- 対策: ローカルの Apache では本番へ転送しない。無いファイルは 404。
+  `uploads/.htaccess` は検証サーバー用(ホスト名が `codiadev8.site` のときだけ本番へ飛ぶ)なので消さない・書き換えない。ローカルのホスト名では効かない。
+  この `.htaccess` の `RewriteEngine on` は、同じディレクトリに別の転送ルールを書くと打ち消す。ローカルの転送はここに足さない。
 
 ### 固定ページが 404 になる
 - 原因: Docker イメージ既定の `.htaccess` が `RewriteBase /` のまま。WP-CLI の `rewrite flush --hard` は Apache の設定を検出できず書き直さない。

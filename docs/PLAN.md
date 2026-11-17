@@ -5,36 +5,45 @@
 
 ## ゴール
 
-新デザインを、今動いているサイトの構造・データに当てはめる。`nig` テーマをそのまま有効にはしない。
+見た目・余白・JS・動きは、組み上げ済みの `nig/wp-content/themes/nig` をそのまま使う。Figma から作り直さない。CSS も JS も書き直さない。
 
-- 新デザインの実装(HTML・CSS・JS): `nig/wp-content/themes/nig`(構築済み。CSS の調整はほぼ無い想定)
-- 当てはめ先(今の構造・データ): `nig/wp-content/themes/samplemain`
-- TOP は `nig` の `original-frontPage.php` と **TOP 用 ACF だけ** 持ってきてよい
-- header・footer も `nig` のものを持ってくる。メニューは **ACF なし**(今の WordPress メニュー + WPML)
-- CSS は `nig` のものを全部持ってくる想定(旧グローバル CSS は読まない)
+それを、今のローカル環境(検証サーバーの `.wpress` を復元したもの)に載せる。`nig` テーマ自体は有効にしない。`samplemain` を複製したテーマへ、`nig` の HTML・CSS・JS・画像を入れる。
+
+メニューの中身だけは、検証環境の既存メニュー `hdmenu`(英)・`hdmenu_ja`(日)を入れる。項目は足さない。ACF のメニューは使わない。対象者 4 リンクは出さない。そのとき header の余白が潰れないようにする。
+
+- デザイン・JS・動きの正本: `nig/wp-content/themes/nig`(`css/`、`js/common.js`、`template-parts/_header.php`、`template-parts/_footer.php`)
+- TOP の正本: `original-frontPage.php`。`get_header()` と `get_footer()` を引数なしで呼ぶ。`index-en.php` と `index-ja.php` は使わない
+- データの正本: 今のローカル DB。メニューは `hdmenu` / `hdmenu_ja`
+- footer は `_footer.php` のまま。項目は足さない
+- 旧 `/nig/css/` は読まない
 
 ## デザイン・仕様
 
-- PC デザイン: https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=15626-29173
-- SP デザイン: https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=15626-24421
+Figma 上のファイルが正本。このリポジトリには書き出していない。
+
+- PC(TOP): https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=15568-3408
+- SP(TOP): https://www.figma.com/design/0BHOnrnHSBSx5QTvh94RgY/nig-renovation?node-id=6009-1464
 - 仕様書: https://www.figma.com/design/bifb2nXzhIe9zIzpHEOXwo/nig-renovation%E4%BB%95%E6%A7%98%E6%9B%B8?node-id=15407-3
 
-## 決めたこと(2026-10-21)
+## 決めたこと
+
+2026-10-21 にテーマ・CSS・TOP を決め、2026-11-16 に header と footer を決めた。
 
 1. **テーマ**: `samplemain` を複製して別テーマにする。`samplemain` は今の状態のまま残し、比較・切り戻し用にする。
-2. **header・footer のメニュー**: ACF は使わない。今の WordPress のメニュー `hdmenu`(英)・`hdmenu_ja`(日)を Walker で読み、`nig` と同じクラスの HTML を出す。
-   言語切り替えは Bogo ではなく WPML の関数で書き直す。`header.php`・`header-ja.php` は同じ部品を呼ぶ。
-3. **CSS**: `nig` の CSS に差し替える。旧 `/nig/css/common.css`・`navigation.css`・`index.css` は読まない。
+2. **header のメニュー**: ACF のメニュー(`common-menu-*`)は廃止する。今の WordPress メニュー `hdmenu`(英)・`hdmenu_ja`(日)の項目だけを、新 header の HTML に載せる。メニュー項目の追加・削除・並べ替えはしない。
+   日英は `header.php` 1 枚。判定は `ICL_LANGUAGE_CODE`。`header-ja.php` は置かない。言語切替の URL は `icl_get_languages()`。
+3. **footer**: `nig` の `_footer.php` をそのまま使う。メニューの組み替えや項目追加はしない。住所・サイトマップ・関連機関・SNS はテーマに直書きされている。ACF の `common-submenu-*` は入れない。
+4. **CSS**: `nig` の CSS に差し替える。旧 `/nig/css/common.css`・`navigation.css`・`index.css` は読まない。
    DB の本文(投稿・固定ページ)で使われている旧クラスの指定だけを、本文エリアに限定して移植する。
-4. **TOP の一覧データ**: `original-frontPage.php` の `highlights`・`interviews` の検索条件を、今の `post`・カテゴリ・既存 CPT に読み替える。データ移行はしない。
-   TOP の ACF は `acf/acf-new.json` から **TOP 関連グループだけ** 取り込む。
+5. **TOP**: `original-frontPage.php` だけを使う。`index-en.php` と `index-ja.php` は使わない。`highlights` と `interviews` は作らず、既存投稿への読み替えもせず、その枠は出さない。
+   スライダー・お知らせ・研究者・Recommends の ACF は `acf/acf-new.json` から **TOP 関連グループだけ** 取り込む。
 
 ## 2 つのテーマの違い(調査)
 
 | 項目 | samplemain(今・有効) | nig(新デザイン・未使用) |
 |---|---|---|
 | 多言語 | WPML。`header-ja.php` / `footer-ja.php`。`icl_get_languages` | Bogo 前提。`get_locale()`。1 つの header |
-| グローバルナビ | メニュー `hdmenu`(136) / `hdmenu_ja`(165)。第1階層は About NIG / Research / PhD / RIC / Bioresources / Outreach / Career | フロントページ ACF(`common-menu-01` 対象者4件 + `common-menu-02` メガメニュー)。第1階層は researchers / students / public / business |
+| グローバルナビ | メニュー `hdmenu`(136) / `hdmenu_ja`(165)。第1階層は About NIG / Research / PhD / RIC / Bioresources / Outreach / Career | 上段は直書きの対象者4リンク。ドロップダウンは ACF `common-menu-01`(PC) / `common-menu-02`(SP)。どちらも今回は使わない |
 | CSS | WordPress 外 `/nig/css/*.css`。header が直接 link | テーマ内 `css/style.css`(約337KB、SCSS)。`_head_contents.php` で head にインライン出力。Meyer reset が全体に効く |
 | JS / jQuery | 1.8.2(CDN) + `/nig/js/globalnavi.js` 等。`wp_head()` を呼んでいない | 3.7.1 + `js/common.js`(header の DOM 前提) + Swiper。`wp_head()` / `wp_footer()` あり |
 | TOP | `show_on_front=posts`。`index.php` → `index-en.php` / `index-ja.php`。CPT `top_slider`(17) / `top_pickup`(18) / `top_important`(1) | 固定フロントページ + テンプレート `original-frontPage.php`。CPT `highlights` / `interviews`(今の DB に無い) |
@@ -75,11 +84,14 @@ header/footer/TOP に必要な関数だけ抜き出す。`nig_get_seminars_categ
 
 ACF の出し先は「固定フロントページ」または `original-frontPage.php`。今は `show_on_front=posts` でフロントページが無いので、**英日の固定ページを作ってから** 取り込む。
 
-### 7. メニューの情報設計が新デザインと一致していない
-今の第1階層は 7 項目(About NIG / Research / PhD / RIC / Bioresources / Outreach / Career)。項目タイトルに `<img>` が入っている。
-新 header の第1階層は対象者 4 項目(`researchers/` `students/` `public/` `business/`)。これらのスラッグの固定ページは今の DB に無い。
-**今のメニューを Walker で出すと、新デザインの枠に旧 IA が入る。** 対象者 4 リンクをそのまま出すと 404 になる。
-メニューの組み直しと対象者ページの新設は、header 差し替えより後の段階にする。最初は旧 7 項目を新 HTML に載せる。
+### 7. 対象者 4 リンクはデザインから削除済み
+`ul.list` の4件（研究・共同研究を探したい `/researchers/`、大学院で学びたい `/students/`、遺伝研を知りたい `/public/`、産学連携を考えたい `/business/`）は、今の Figma には無い。PC の TOP ではレイヤー `targeting` が非表示。Header はロゴと、遺伝研について / 研究 / 大学院 / 共同研究・研究支援事業 / バイオリソース / 社会連携・産学連携 / 人材キャリア の7項目だけ。
+
+仕様書の注記は「削除」。旧メニュー構造にする、とも書いてある。`nig` テーマの `_header.php` に残っている `ul.list` は古いので出さない。余白用に残さない。
+
+メニュー項目の追加・削除はマスター権限がないと禁止。WordPress のメニューは触らず、今ある `hdmenu` / `hdmenu_ja` を表示するだけ。
+
+実装するときは `.cursor/rules/header-menu.mdc` に従う。仕様書と Figma を見てから書き、書いたあとも Header と照合する。
 
 ### 8. TOP のデータ対応表
 
@@ -87,8 +99,8 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 |---|---|---|---|
 | メインスライダー | ACF `top_slider-01`(画像 ID) | CPT `top_slider` + ACF `top_slider_image` / `top_slider_link` | 当面は新 ACF に手入力。自動変換は後回し可 |
 | Important | ACF `top_notice-*` | CPT `top_important` | 同上 |
-| Our Research | CPT `highlights` + `highlights_cat` | カテゴリ `research-highlights`(322) / `collaboration-pr`(27) | `post` + カテゴリ。固定表示は `_custom_pickup` か既存の運用に合わせる |
-| Interviews | CPT `interviews` | **相当データ無し** | 枠を出さないか、空のまま。投稿タイプは作らない |
+| Our Research | CPT `highlights` + `highlights_cat` | 投稿タイプが無い | 枠を出さない。投稿タイプは作らない。投稿への読み替えもしない |
+| Interviews | CPT `interviews` | 投稿タイプが無い | 枠を出さない。投稿タイプは作らない |
 | News & Events | 通常投稿 + 親カテゴリタブ | `information`(198) `events`(21) `prizes-and-awards`(70) `whats-new`(69) `important-notice`(27) など | `post` のまま。タブは今ある親カテゴリ。`seminar` カテゴリは英語側に見当たらない(今の TOP は外部 JS) |
 | Our Scientists | ACF `top_scientists-*` | 無し(手入力) | ACF のまま |
 | Pickup 等 | ACF | CPT `top_pickup` | 必要なら後で対応 |
@@ -150,11 +162,12 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 - `samplemain` を直接編集する
 - `acf-new.json` を全件インポートする
 - `nig/inc/custom.php` や `nig/functions.php` を丸ごとコピーする
-- `highlights` / `interviews` の CPT を作って 1790 件を移す
+- `highlights` / `interviews` の CPT を作る。既存投稿へ読み替えて枠を出すことも、今はしない
 - 旧 CSS と新 CSS を同時に読む
 - jQuery 1.8.2 と 3.7.1 を同時に読む
 - パーマリンクや WPML の言語ディレクトリを変える
-- 対象者 4 ページが無い状態で、その URL を header の主リンクにする
+- 対象者 4 リンク(`ul.list` の `/researchers/` `/students/` `/public/` `/business/`)を出す
+- WordPress のメニュー項目を追加・削除・並べ替えする（マスター権限がないと禁止）
 - header/footer/CSS/TOP/下層を同じ commit で一度に替える
 
 ## 破綻しない進め方(この順だけ)
@@ -181,24 +194,24 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 5. **header/footer はまだ旧のまま**。下層の本文が読めることを先に確認する。ここで崩れるのは CSS 移植不足なので、範囲を足す。
 
 ### 段階 3: header / footer
-1. `nig` の `_header.php` / `_footer.php` を移植する。`get_field('common-menu-*')` は使わない。SP 用と PC 用で Walker を分け、`hdmenu` / `hdmenu_ja` から出す。
-2. 言語切り替えは `icl_get_languages()` の URL をそのまま使う。`/en` を足す処理は捨てる。
-3. `header-ja.php` / `footer-ja.php` は同じ部品を呼ぶ薄いファイルにする。`get_header($NowLanguage['load'])` の呼び出し元は触らない。
-4. 対象者 4 リンクは、該当ページができるまで出さないか、既存の近いページへ仮置きする。404 を量産しない。
+1. `nig` の `_header.php` を移植する。対象者 4 リンクの `<ul class="list">` は出さない。`get_field('common-menu-*')` は使わない。SP 用と PC 用で Walker を分け、`hdmenu` / `hdmenu_ja` の既存項目だけを出す。項目は足さない。
+2. `_footer.php` はそのまま移植する。メニューの組み替えや項目追加はしない。`common-submenu-*` は読まない。
+3. 言語切り替えは `icl_get_languages()` の URL をそのまま使う。`/en` を足す処理は捨てる。
+4. 日英は `header.php` と `footer.php` の1枚で出す。判定は `ICL_LANGUAGE_CODE`。`header-ja.php` と `footer-ja.php` は置かない。`get_header('ja')` はファイルが無いと `header.php` に落ちる。
 5. 英日とも `wp_head()` / `wp_footer()` を入れる。英語ページに WPML とプラグインの CSS が出ることを確認する。
 6. メニュー項目の `<img>` は Walker で外す。`href` の無い `<a>` は出さない。`modaal` は読む。
 7. 検索の送り先は当面 `/googlesearch_ja` のまま。`action="/"` にはしない。
 8. `insert_custom_tmpl()` は新 header から呼ばない。
 
 ### 段階 4: TOP
-1. 英語・日本語の固定フロントページを作り、WPML で対にし、テンプレートを `original-frontPage.php`(または `front-page.php`)にする。
-2. `show_on_front` を `page` にする。この瞬間に旧 `index-en.php` / `index-ja.php` は使われなくなる。
+1. 英語・日本語の固定フロントページを作り、WPML で対にし、両方のテンプレートを `original-frontPage.php` にする。ファイル名は変えない(`body.page-template-original-frontPage` に TOP の CSS が依存する)。
+2. `show_on_front` を `page` にする。`index.php` から `index-en.php` / `index-ja.php` を読む経路は使わない。
 3. ACF は TOP 用グループだけインポートする。スライダー・お知らせ・研究者は管理画面から入れる。
-4. `original-frontPage.php` のクエリを上の対応表どおり `post` + カテゴリに変える。`interviews` はデータが無ければ枠を出さない。
+4. `highlights` と `interviews` の枠は出さない。投稿タイプは作らない。`'lang' => $lang` は使わない。News は通常の `post`。`nig/inc` のセミナー関数はコピーしない。
 5. `list-*.php` はカード HTML 用に残してよい。中のタクソノミー名だけ今のに合わせる。
 
-### 段階 5: 情報設計(別作業)
-Figma の対象者 4 柱と今の 7 柱をどう対応させるか決めてから、メニューを組み直し、固定ページを足す。段階 3 の header はメニューを差し替えるだけで追従できる状態にしておく。
+### 段階 5: 情報設計(今回はやらない)
+対象者 4 ページの新設や、メニュー項目の追加・組み替えはしない。今の 7 項目を新 header に載せるところまで。
 
 ### 段階 6: 下層の見た目
 サイドバー・パン屑・本文タイポを新デザインに寄せる。段階 2 で残した旧クラスを、ここで少しずつ新モジュールへ移す。最初のリリースには必須にしない。
@@ -207,12 +220,56 @@ Figma の対象者 4 柱と今の 7 柱をどう対応させるか決めてか�
 
 仮: `nig-renewal`。フォルダも Theme Name もこれにする。`nig` は参照用のまま残す。
 
+## 2026-11-17 確定（実装で外さない）
+
+このチャットで決めたこと。実装時はここを上から確認する。
+
+### 作業場所
+- 見るのはローカル `http://localhost:3080/nig/` だけ。検証サーバーの Basic 認証は開かない。
+- 中身は `nig-new-codiadev8-site-nig-20261020-172431-xx8bxnc530pb.wpress`。
+- 手元に無い uploads は本番 `https://www.nig.ac.jp` へ転送しない。無いパスは 404。`uploads/.htaccess` は消さない・書き換えない。
+
+### 正本
+- 見た目・余白・JS・動きは `nig/wp-content/themes/nig`。CSS も JS も Figma から作り直さない。
+- その HTML には古い部分がある。ヘッダーと TOP を書く前に、仕様書と Figma（PC `15568-3408`、SP `6009-1464`）を見る。ルールは `.cursor/rules/header-menu.mdc`。
+- `nig` テーマは有効にしない。`samplemain` は直接編集しない。複製テーマ `nig-renewal` に載せる。載せる前に `docker-compose.yml` へマウントを足す。
+
+### ヘッダー・フッター・言語
+- `header.php` と `footer.php` の 1 枚で日英を出す。判定は `ICL_LANGUAGE_CODE`（`en` / `ja`）。WPML 文字列翻訳はファイルの切り分けには使わない。
+- `header-ja.php` と `footer-ja.php` は置かない。`get_header('ja')` はファイルが無いと `header.php` に落ちる。
+- Bogo の経路（日本語が `/`、英語が `/en/`）は使わない。切替先は `icl_get_languages()` の URL。ディレクトリは英語が `/nig/`、日本語が `/nig/ja/` のまま。
+- `wp_head()` と `wp_footer()` は日英とも入れる。
+- メニューは `hdmenu` と `hdmenu_ja` を表示するだけ。追加・削除・並べ替えはしない。マスター権限がないと禁止。
+- ACF の `common-menu-*` と `common-submenu-*` は使わない。
+- 対象者 4 リンク（`/researchers/` `/students/` `/public/` `/business/`）は出さない。`_header.php` の `ul.list` と、`original-frontPage.php` の `#top_link-01` の両方。余白用に残さない。Figma の `targeting` は非表示。仕様書の注記は「削除」。
+- フッターは `_footer.php` の直書き（住所、サイトマップ、関連機関、SNS）のまま。項目は足さない。
+
+### TOP
+- 正本は `original-frontPage.php`。`get_header()` と `get_footer()` は引数なし。ファイル名は変えない。
+- `index-en.php` と `index-ja.php` は使わない。表示には、英日の固定フロントページを WPML で対にし、`show_on_front` を `page` にする。この 2 ページはメニュー項目ではない。
+- `highlights` と `interviews` は無い。投稿タイプは作らない。今の投稿への読み替えもしない。Our Research と Interviews の枠は出さない。
+- News は通常の `post`。Bogo の `'lang'` と `nig/inc` のセミナー関数は使わない。
+- スライダー、重要なお知らせ、研究者、Recommends は ACF。投稿タイプではない。入れるのは TOP 用グループだけ。
+
+## 実装前に残っている懸念
+
+決めたことの外で、無視すると崩れるもの。
+
+1. **新 CSS は下層を巻き込む。** Meyer reset は `body` や `a` 全体に効く。header と TOP だけを出す段階で、旧下層テンプレートへ同時に掛けない。段階 2 の本文枠を飛ばすと下層が崩れる。
+2. **`nig` の URL はこの環境ではそのまま動かない。** 言語切替の `/en/`、検索 `action="/"`、SCSS の画像パス `/wp/wp-content/themes/nig/images/`。`/nig/` を付けて、言語 URL は WPML のものを使う。
+3. **`common.js` は条件が欠けると全体が止まる。** `href` の無い `<a>`、`modaal` 未読込。メニュー項目のタイトルに入っている `<img>` は外す。開閉の並びは `button` → `a` → `div.wrapper`。
+4. **英語用の幅指定が `body.en-US` 前提。** これは Bogo のクラスで、WPML では付かない。`html[lang=en]` か、こちらで付けるクラスに変える。
+5. **英語ページには今 `wp_head()` が無い。** 共通 header で入れると、英語側に WPML とプラグインの CSS が初めて出る。出ることを確認する。
+6. **旧 `top_slider` は新スライダーに自動では入らない。** 新テンプレートは ACF `top_slider-01` を読む。変換するか、管理画面で入れ直すかは未決。空ならスライダーは出ない。
+7. **キャッチコピー。** 仕様書の注記は「キャッチコピーは削除」。`original-frontPage.php` は `tm_title` を出している。実装時に Figma と照合し、仕様にあれば出さない。
+8. **セミナーは未決。** 今の英語 TOP は `www.nig.ac.jp` の外部 JS。新 TOP へ載せるかは決めていない。`nig_get_seminars_category_id` は `inc/custom.php` にあり、ファイルごとコピーしない。
+9. **検索の送り先は未決。** 今は Google カスタム検索。新 header の `?s=` に変えると結果ページが変わる。決まるまでは `/googlesearch_ja` を維持する。
+10. **Font Awesome Pro を公開リポジトリに置いてよいか未決。** テーマに含まれている。
+11. **複製するとメニュー割り当てが空になる。** `hdmenu` と `hdmenu_ja` を付け直す。項目の中身は変えない。
+
 ## 未決(実装前に決めること)
 
-- 対象者 4 リンクを、段階 3 で隠すか、既存ページへ仮置きするか
-- Interviews 枠を出さないか、別コンテンツで埋めるか
 - セミナーを新 TOP に載せるか(今は外部 JS。カテゴリ `seminar` は英語側に無い)
 - 旧 `top_slider` を新 ACF へ変換するか、管理画面で入れ直すか
-- Figma の IA を段階 5 でいつやるか
 - Font Awesome Pro を公開リポジトリに置いてよいか
 - 検索を Google カスタム検索のままにするか、WordPress 検索に変えるか

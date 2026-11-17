@@ -56,12 +56,10 @@ nig-renovation/
 ### ローカルに無いファイルの扱い
 
 `.wpress` にはメディアも `/nig/images/` も入っていない(検証サーバー自体が uploads を本番から表示している)。
-uploads だけは、ローカルに実ファイルが無い場合に Apache が次へ 302 転送する(`docker/wordpress/apache.conf`)。
+ローカルでは本番へ転送しない。`/nig/wp-content/uploads/` も `/nig/images/` も、置いてあるファイルだけが表示され、無いパスは 404 になる。
 
-- `/nig/wp-content/uploads/...` → 本番 `https://www.nig.ac.jp`
-
-ローカルに同じパスのファイルを置けば、そちらが優先される。
-`/nig/images/`・`pdf/`・`download/`・ファビコンなどは転送しない。`nig/` に置いたものだけが表示される(`nig/images/common` は Git 管理、それ以外は各自で置く)。
+`wp-content/uploads/.htaccess` は検証サーバー用(ホスト名が `codiadev8.site` のときだけ本番へ転送する)なので消さない・書き換えない。ローカルのホスト名では効かない。
+`nig/images/common` は Git 管理、それ以外の `images` は各自で置く。
 
 ## 初回セットアップ(Windows / Mac 共通)
 
