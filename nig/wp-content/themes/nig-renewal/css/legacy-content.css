@@ -9,6 +9,30 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+#global_contents #rightSlot .module_newsList-01 a:link,
+#global_contents #rightSlot .module_newsList-01 a:visited {
+  color: #111;
+  text-decoration: none;
+}
+#global_contents #rightSlot .module_pager-01 a:link,
+#global_contents #rightSlot .module_pager-01 a:visited {
+  color: #111;
+  text-decoration: none;
+}
+#global_contents #rightSlot .module_pager-01 li.current a,
+#global_contents #rightSlot .module_pager-01 a.current,
+#global_contents #rightSlot .module_pager-01 li.current > span {
+  color: #fff;
+  background-color: #009f7f;
+}
+#global_contents #rightSlot .module_pager-01 li.prev a:link,
+#global_contents #rightSlot .module_pager-01 li.next a:link,
+#global_contents #rightSlot .module_pager-01 li.prev a:visited,
+#global_contents #rightSlot .module_pager-01 li.next a:visited {
+  color: #009f7f;
+  background: transparent;
+  border: 0;
+}
 
 #global_contents .image_left,
 #global_contents .imageL {
@@ -327,57 +351,164 @@ body.single #global_contents #rightSlot > h2:first-of-type { display: none; }
   display: none;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap {
-  display: flex;
-  align-items: center;
-  width: 235px;
-  height: 35px;
-  margin-bottom: 15px;
+  position: relative;
+  width: 200px;
+  height: 46px;
+  margin: 0;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul {
-  position: relative;
-  z-index: 1;
-  width: 200px;
-  height: 35px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  width: 100%;
   margin: 0;
-  padding-left: 0;
-  background-color: #dcdddd;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #009f7f;
+  border-radius: 8px;
   cursor: pointer;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li {
   display: none;
   width: 100%;
-  height: 35px;
-  background-color: #dcdddd;
+  margin: 0;
+  padding: 0;
+  background: #fff;
   list-style: none;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li:first-child,
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li.is-active {
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  color: #000;
-  font-size: 15px;
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 5px 52px 5px 32px;
+  color: #111;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.7px;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a {
-  display: block;
-  padding-left: 10px;
-  color: #000;
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 8px 52px 8px 32px;
+  color: #111;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.7px;
+  text-decoration: none;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a:hover {
+  color: #009f7f;
 }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: '年'; }
 html[lang="ja"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: '年'; }
 html[lang="en"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: ''; }
 html[lang="en"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li .ja-year { display: none; }
 #global_contents .categoryTemp__titleBlock .yearSelectWrap .yearSelectButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
-  background-color: #595757;
-  color: #fff;
-  font-size: 10px;
+  width: 46px;
+  height: 46px;
+  background: transparent;
+  color: #009f7f;
   cursor: pointer;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap .yearSelectButton span {
+  display: none;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap .yearSelectButton::before {
+  content: "\f078";
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+}
+
+#global_contents .module_pager-02 {
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1260px;
+}
+#global_contents .module_pager-02 li,
+#global_contents .module_pager-02 li + li {
+  margin: 0;
+}
+#global_contents .module_pager-02 li a:link,
+#global_contents .module_pager-02 li a:visited {
+  color: #fff;
+  background-color: #009f7f;
+  text-decoration: none;
+}
+#global_contents .module_pager-02 li a:hover {
+  color: #009f7f;
+  background-color: #fff;
+}
+
+#global_contents #rightSlot .box p.icon_green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid #3c8fd5;
+  border-radius: 8px;
+  min-width: 91px;
+  color: #3c8fd5;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.6px;
+}
+
+#global_contents #rightSlot .box img[src*="icon_pdf"],
+#global_contents #rightSlot .box img[src*="icon_blank"],
+#global_contents #rightSlot .box img[src*="icon_win"],
+#global_contents #rightSlot .box img[src*="icon_external"] {
+  display: none;
+}
+#global_contents #rightSlot .box a[target="_blank"]:not(:has(img)):not(.icon-none):not(:empty)::after {
+  content: "\f14c";
+  display: inline-block;
+  margin-left: 4px;
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 300;
+  font-size: 0.9em;
+  line-height: 1;
+}
+#global_contents #rightSlot .box a[href$=".pdf"]:not(:has(img)):not(.icon-none):not(:empty)::after,
+#global_contents #rightSlot .box a[href$=".PDF"]:not(:has(img)):not(.icon-none):not(:empty)::after {
+  content: "\f1c1";
+  display: inline-block;
+  margin-left: 4px;
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 300;
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+#global_contents #rightSlot .box .wp-block-flexible-table-block-table:not(.organization_table) > table th,
+#global_contents #rightSlot .box .wp-block-flexible-table-block-table:not(.organization_table) > table td {
+  padding: 15px 20px;
+  border: 1px solid #969696;
+  vertical-align: top;
+}
+#global_contents #rightSlot .box .wp-block-flexible-table-block-table:not(.organization_table) > table th {
+  border-color: #009f7f;
+  background: #d8f1e0;
+  color: #009f7f;
+  font-weight: 500;
 }

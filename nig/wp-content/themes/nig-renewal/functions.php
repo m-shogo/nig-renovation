@@ -458,13 +458,20 @@ function shortcode_get_posts($atts) {
 		
 
 		
-		$html .= '<div class="listlink_box"><div class="date">';
-		$html .= date('Y/m/d', strtotime($p->post_date)) ;
-		$html .= $icon ;
-		$html .= '</div><p><a href="' . get_permalink($p->ID) . '">' . $p->post_title . '</a></p>';
-		$html .= '</div>';
+		$html .= nig_renewal_news_article(
+			array(
+				'date'     => date( 'Y.m.d', strtotime( $p->post_date ) ),
+				'datetime' => date( 'Y-m-d', strtotime( $p->post_date ) ),
+				'icons'    => $icon,
+				'title'    => $p->post_title,
+				'url'      => get_permalink( $p->ID ),
+			),
+			false
+		);
 	}
-	$html .= '';
+	if ( $html !== '' ) {
+		$html = '<div class="module_newsList-01">' . $html . '</div>';
+	}
 
 	return $html;
 }
@@ -521,13 +528,20 @@ function shortcode_get_posts_en($atts) {
 		
 
 		
-		$html .= '<div class="listlink_box"><div class="date">';
-		$html .= date('Y/m/d', strtotime($p->post_date)) ;
-		$html .= $icon ;
-		$html .= '</div><p><a href="' . get_permalink($p->ID) . '">' . $p->post_title . '</a></p>';
-		$html .= '</div>';
+		$html .= nig_renewal_news_article(
+			array(
+				'date'     => date( 'Y.m.d', strtotime( $p->post_date ) ),
+				'datetime' => date( 'Y-m-d', strtotime( $p->post_date ) ),
+				'icons'    => $icon,
+				'title'    => $p->post_title,
+				'url'      => get_permalink( $p->ID ),
+			),
+			false
+		);
 	}
-	$html .= '';
+	if ( $html !== '' ) {
+		$html = '<div class="module_newsList-01">' . $html . '</div>';
+	}
 
 	return $html;
 }
@@ -581,3 +595,4 @@ add_filter('body_class', 'add_ancestor_page_to_body_classes');
 
 require_once get_template_directory() . '/inc/header-menu.php';
 require_once get_template_directory() . '/inc/enqueue-renewal.php';
+require_once get_template_directory() . '/inc/news-list.php';

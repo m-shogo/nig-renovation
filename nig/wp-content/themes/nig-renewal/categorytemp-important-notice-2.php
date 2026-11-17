@@ -75,7 +75,8 @@ $categoryID = 93;
         $posts = get_posts($args);
     }
 */
-if (is_array( $posts )){
+if ( is_array( $posts ) && $posts ) {
+	nig_renewal_news_list_open();
 	foreach($posts as $post){
 	
 		
@@ -166,14 +167,17 @@ if (is_array( $posts )){
 		
 	
 ?>
-				<div class="listlink_box bbb222">
-					
-					<div class="date"><?php the_time('Y/m/d'); echo $icon.$newIcon;?></div>
-					<p><a href="<?php the_permalink(); ?>"><?php echo $holdDay; the_title(); ?></a></p>
-					
-				</div>
-<?php 
+				<?php
+					nig_renewal_news_article(
+						array(
+							'icons'  => $icon . $newIcon,
+							'prefix' => $holdDay,
+						)
+					);
+				?>
+<?php
 	}
+	nig_renewal_news_list_close();
 //	wp_reset_query();
 }
 ?><?php /*if(function_exists('wp_pagenavi')) { wp_pagenavi(); }*/ ?>

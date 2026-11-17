@@ -136,7 +136,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 ### 16. `#site-base` とパン屑の色
 パン屑の色帯は `#site-base .bgColor*` で効いている。新 header で `#site-base` をやめるなら、色指定を本文枠側へ移す。
-`#leftSlot` は今も `add_style.css` で非表示。サイドバー復活は段階 6。
+`#leftSlot` は検証の `add_style.css` で全ページ非表示。中身が空の固定ページも、年一覧が入っている投稿も、画面には出ていない。左列は出さない。
 
 ### 17. Walker は 1 種類では足りない
 新 header のナビは 3 系統。SP アコーディオン(`common-menu-02` 相当)、PC メガメニュー(`common-menu-01` 相当)、補助リンク。HTML とクラスが違う。同じ `hdmenu` から出すなら Walker を分けるか、深さで出し分ける。
@@ -165,7 +165,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 - `highlights` / `interviews` の CPT を作る。既存投稿へ読み替えて枠を出すことも、今はしない
 - 旧 CSS と新 CSS を同時に読む
 - jQuery 1.8.2 と 3.7.1 を同時に読む
-- パーマリンクや WPML の言語ディレクトリを変える
+- 検証環境の URL を変える。固定ページ、投稿、カテゴリ、投稿タイプ、アーカイブ、言語ディレクトリ（英語 `/nig/`、日本語 `/nig/ja/`）を含む。スラッグもリライトも変えない
 - 対象者 4 リンク(`ul.list` の `/researchers/` `/students/` `/public/` `/business/`)を出す
 - WordPress のメニュー項目を追加・削除・並べ替えする（マスター権限がないと禁止）
 - header/footer/CSS/TOP/下層を同じ commit で一度に替える
@@ -215,7 +215,8 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 ### 段階 6
 メニューの追加・削除と対象者4ページはまだやらない。
-下層は、新しい見出し帯とパンくずを先に載せる。本文の HTML は書き直さず、見出し・本文・表・リストの見た目だけ CSS で新しい部品へ寄せる。隠している左メニューはまだ出さない。
+下層は、新しい見出し帯とパンくずを先に載せる。本文の HTML は書き直さず、見出し・本文・表・リストの見た目だけ CSS で新しい部品へ寄せる。左列は出さない。
+カテゴリと年別の投稿一覧（旧 `listlink_box`）は `module_newsList-01`。ページャーは `module_pager-01`。URL は `/2025/page/2?cat=63` のまま。
 
 ## 複製テーマの名前
 
@@ -227,6 +228,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 
 ### 作業場所
 - 見るのはローカル `http://localhost:3080/nig/` だけ。検証サーバーの Basic 認証は開かない。
+- 検証環境の URL は変えない。固定ページ、投稿、カテゴリ、投稿タイプ、アーカイブ（年別・カテゴリ一覧）を含む。スラッグ、リライト、`/category/`、言語ディレクトリ（英語 `/nig/`、日本語 `/nig/ja/`）もそのまま。`inc/permalink.php` は足さない。
 - 中身は `nig-new-codiadev8-site-nig-20261020-172431-xx8bxnc530pb.wpress`。
 - 手元に無い uploads は本番 `https://www.nig.ac.jp` へ転送しない。無いパスは 404。`uploads/.htaccess` は消さない・書き換えない。
 
@@ -253,7 +255,7 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 - スライダー、重要なお知らせ、研究者、Recommends は ACF。投稿タイプではない。入れるのは TOP 用グループだけ。
 
 ### 仕様と functions.php
-- お知らせ、投稿タイプ、ショートコード、パーマリンクは今の環境のまま。`samplemain/functions.php` を残す。
+- お知らせ、投稿タイプ、ショートコード、パーマリンクは今の環境のまま。`samplemain/functions.php` を残す。URL は検証環境と揃えたままにする。
 - 今ある投稿タイプは `top_important` / `top_slider` / `top_pickup`。ショートコードは `[get_posts]` `[get_posts_en]` `[onphp]`。
 - `nig/functions.php` は読み込まない。中身は `inc/*.php` の一括読み込みで、投稿タイプ・リライト・Bogo・検索改変・管理画面の URL 改変が入っている。
 - 新デザインに必要なものだけ別ファイルで足す。jQuery 3.7.1、`common.js`、`modaal`、Swiper、TOP だけの `home.js`、`style.css`、スライダー用の `add_image_size`。
@@ -282,3 +284,32 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 - 旧 `top_slider` を新 ACF へ変換するか、管理画面で入れ直すか
 - Font Awesome Pro を公開リポジトリに置いてよいか
 - 検索を Google カスタム検索のままにするか、WordPress 検索に変えるか
+
+## 2026-11-17 下層の見た目（実装済み）
+
+頼まれた見た目だけ直した。URL、メニュー項目、左列、投稿タイプは変えていない。
+
+- カテゴリと年別の一覧は `module_newsList-01`。ページャーは `module_pager-01`。`common.js` は `li.current` を見るので、`paginate_links_output` で `current` / `prev` / `next` を `li` に付けている。矢印は Font Awesome。確認先は `http://localhost:3080/nig/2025?cat=63` と `/nig/2025/page/2?cat=63`。
+- 年の選択は HTML と `nig/js/yearSelect.js` のまま。灰色の箱だけ `module_select-01` の枠・角丸・矢印に寄せた。`<select>` にはしない。開閉は `slideToggle()` なので、年の `li` に `display` の `!important` や固定の高さを付けない。日本語は「年」、英語は付けない。
+- 記事の前後は `module_pager-02`。同じカテゴリの前後と、もともとあった戻りリンク（`listReturnButton` の URL）だけ。行き先の形は変えていない。
+- 本文の `p.icon_green`（Press release）は一覧と同じ青いラベル。
+- Events の開催日 `YYYY/MM/DD` だけ `YYYY.MM.DD`。文言「End」は変えない。灰色は既存の `jobs-past`。
+- PDF と外部リンクのアイコンは `#rightSlot .box` の中だけ。`common.js` の `.global_contents`（クラス）は `#global_contents`（id）に合わせていない。クラスを足すと下層全体の CSS が当たる。
+- 見出しの無い表（`wp-block-flexible-table-block-table`）に余白と罫線。`organization_table` は対象外。
+
+## 残しているもの（チャットで止めた理由）
+
+次に入るとき、ここを先に読む。指示が無い限り再開しない。
+
+- **メニューの追加・削除・並べ替えと、対象者4ページ。** 「この２つは今やらなくていい」。4リンクは仕様書が削除、Figma の Header にも無い。「これいらない」。`ul.list` も `#top_link-01` も出さない。余白用に残さない。
+- **左列 `#leftSlot`。** 検証サイトは 2022 年から `display:none`。固定ページの中身は空。ユーザーは「必要ない」。出さない。ACF の `common-menu-01` も使わない。
+- **検証環境の URL。** 「あらゆる URL は変えない」。固定ページ、投稿、カテゴリ、投稿タイプ、年アーカイブ、`/category/`、英語 `/nig/`、日本語 `/nig/ja/`。`inc/permalink.php` は足さない。
+- **TOP の並びと、Research / Interview。** 投稿タイプ `highlights` と `interviews` は作らない。今の投稿へ読み替えない。「今はこのままでいい」なので Opportunities → Important → Scientists → News のまま。Figma の Research → Scientists → Interview → News には揃えない。
+- **スマホヘッダーの対象者4リンク。** Figma の SP には描いてあるが、仕様と「これいらない」で出さない。緑バーの下に PC の7項目が見えるのは、その非表示をまだ頼まれていないため。
+- **ヘッダー・フッターの文言差。** 直す指示が無い。JA フッターの「調達情報」（テーマの `_footer.php` にあり Figma には無い）、5枚目の関連機関名（テーマは未来科学システム共創施設、Figma はデータサイエンス共同利用基盤施設）、メニュー名「共同研究・研究支援案内」（Figma は事業）。メニュー文言は変えない。
+- **検索。** 決まるまで `/googlesearch_ja`。`action="/"` や `?s=` にしない。
+- **`body.en-US`。** 新しい CSS がこのクラスを見ている。WPML から同じクラスを出して、セレクタは書き換えていない。段階 3 の「やめる」は未実施。
+- **セミナー、Font Awesome Pro の公開、Important の見本1件。** セミナーは未決。Pro の webfont を公開リポジトリに置いてよいかは未決。Important の1件は枠を見えるように入れた見本。消す指示はない。
+- **無い画像。** uploads が手元に無いパスは 404。`https://www.nig.ac.jp` へ取りにいかない。
+- **`categorytemp-en.php` と `categorytemp-ja.php`。** 一覧ではなく本文をそのまま出すテンプレート。`module_newsList-01` にはしていない。
+- **記事日付の `the_date()`。** サイトの日付形式のまま。`Y.m.d` にしたのは Events の開催日だけ。

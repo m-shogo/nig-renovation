@@ -29,7 +29,8 @@ global $menuColor;
 //	カテゴリ内容
 	$week = array('日','月','火','水','木','金','土');
 
-if (is_array( $posts )){
+if ( is_array( $posts ) && $posts ) {
+	nig_renewal_news_list_open();
 	foreach($posts as $post){
 	
 		
@@ -58,13 +59,17 @@ if (is_array( $posts )){
 		
 	
 ?>
-				<div class="listlink_box">
-					<div class="date"><?php the_time('Y/m/d'); echo $newIcon.$icon;?></div>
-					<p><a href="<?php the_permalink(); ?>"><?php echo $holdDay; the_title(); ?></a></p>
-					
-				</div>
-<?php 
+				<?php
+					nig_renewal_news_article(
+						array(
+							'icons'  => $newIcon . $icon,
+							'prefix' => $holdDay,
+						)
+					);
+				?>
+<?php
 	}
+	nig_renewal_news_list_close();
 //	wp_reset_query();
 
 }

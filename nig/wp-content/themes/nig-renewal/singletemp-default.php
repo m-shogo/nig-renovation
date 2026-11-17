@@ -93,10 +93,6 @@ if( isset( $d[0] ) && $d[0] ){
             }
         ?>
         <?php if(!empty($link_return)) :?>
-            <?php if(  $NowLanguage['load'] == 'ja' ) :?>
-            <a class="listReturnButton" href="<?php echo $link_return; ?>">リストに戻る</a>
-            <?php else: ?>
-            <a class="listReturnButton" href="<?php echo $link_return; ?>">Back</a>
-                <?php endif;?>
+            <?php nig_renewal_post_pager( $link_return, ( $NowLanguage['load'] == 'ja' ) ? 'リストに戻る' : 'Back' ); ?>
         <?php endif;?>
 	</div>

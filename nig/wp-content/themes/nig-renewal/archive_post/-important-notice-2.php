@@ -10,7 +10,7 @@ $new_query = new WP_Query($args);
 ?>
 
 <?php if ($new_query->have_posts()) : ?>
-   
+        <?php nig_renewal_news_list_open(); ?>
         <?php while ($new_query->have_posts()) : $new_query->the_post(); ?>
             <?php
             // 親テンプレート未設定時の初期化
@@ -18,13 +18,17 @@ $new_query = new WP_Query($args);
             if ( ! isset( $newIcon ) ) { $newIcon = ''; }
             if ( ! isset( $holdDay ) ) { $holdDay = ''; }
             ?>
-            <div class="listlink_box">
-                   <div class="date">
-            <?php the_time('Y/m/d'); echo $newIcon.$icon;?></div>
-					<p><a href="<?php the_permalink(); ?>"><?php echo $holdDay; the_title(); ?></a></p>
-             </div>
+            <?php
+            nig_renewal_news_article(
+                array(
+                    'icons'  => $newIcon . $icon,
+                    'prefix' => $holdDay,
+                )
+            );
+            ?>
            
         <?php endwhile; ?>
+        <?php nig_renewal_news_list_close(); ?>
         <?php wp_reset_postdata(); ?>
  
 <?php else : ?>

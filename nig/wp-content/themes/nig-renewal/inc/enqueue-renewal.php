@@ -30,7 +30,7 @@ add_action(
 		wp_enqueue_script( 'nig-renewal-common', get_theme_file_uri( '/js/common.js' ), array( 'jquery', 'nig-renewal-modaal' ), '20261117', true );
 
 		if ( nig_renewal_wrap_lower_content() ) {
-			wp_enqueue_style( 'nig-renewal-legacy', get_theme_file_uri( '/css/legacy-content.css' ), array( 'nig-renewal' ), '20261117d' );
+			wp_enqueue_style( 'nig-renewal-legacy', get_theme_file_uri( '/css/legacy-content.css' ), array( 'nig-renewal' ), '20261117h' );
 		}
 		if ( is_category() ) {
 			global $_hpRootDir;

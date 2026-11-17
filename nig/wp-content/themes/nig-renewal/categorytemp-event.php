@@ -65,7 +65,8 @@ $_myDB->my_get_year_archives($categoryID);
 	$week = array('日','月','火','水','木','金','土');
 
 
-if (is_array( $posts )){
+if ( is_array( $posts ) && $posts ) {
+	nig_renewal_news_list_open();
 	foreach($posts as $post){
 	
 		
@@ -157,40 +158,33 @@ if (is_array( $posts )){
 ?>
 
 
-				<div class="listlink_box">
-                <?php if($NowLanguage['load'] == 'ja') { ?>
-					<div class="date"><?php echo $holdDay; echo $endIcon.$icon;?>
+				<?php
+					$nig_event_new = '';
+					if ( get_the_time( 'U' ) > time() - ( 31 * 24 * 60 * 60 ) ) {
+						$nig_event_new = ( $NowLanguage['load'] == 'ja' )
+							? '<span class="icon_text icon_new">新着</span>'
+							: '<span class="icon_text icon_new">New</span>';
+					}
+					$nig_event_date = nig_renewal_slash_date( $holdDay );
+					$nig_event_datetime = get_the_date( 'Y-m-d' );
+					if ( preg_match( '/^(\d{4})\.(\d{2})\.(\d{2})$/', $nig_event_date, $nig_event_match ) ) {
+						$nig_event_datetime = $nig_event_match[1] . '-' . $nig_event_match[2] . '-' . $nig_event_match[3];
+					}
+					nig_renewal_news_article(
+						array(
+							'date'     => $nig_event_date !== '' ? $nig_event_date : get_the_date( 'Y.m.d' ),
+							'datetime' => $nig_event_datetime,
+							'icons'    => $endIcon . $icon . $nig_event_new,
+						)
+					);
+				?>
+
+
+
+
 <?php
-$post_time = get_the_time('U');
-$days = 31; //New!を表示させる日数
-$last = time() - ($days * 24 * 60 * 60);
-if ($post_time > $last) {
-echo '<span class="icon_text icon_new icon_automatic icon_event_none">新着</span>';
-}
-?></div>
-
-                <?php } else { ?>
-					<div class="date"><?php echo $holdDay; echo $endIcon.$icon;?>
-<?php
-$post_time2 = get_the_time('U');
-$days = 31; //New!を表示させる日数
-$last = time() - ($days * 24 * 60 * 60);
-if ($post_time2 > $last) {
-echo '<span class="icon_text icon_new icon_automatic icon_event_none">New</span>';
-}
-?></div>
-
-                <?php } ?>
-
-					<p><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p>
-					
-				</div>
-
-
-
-
-<?php 
 	}
+	nig_renewal_news_list_close();
 //	wp_reset_query();
 
 }

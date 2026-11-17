@@ -123,7 +123,8 @@ function readPickup( $category , $title , $view = '', $icon = '', $noicon = '' )
 			$reStr .= '		<h2>'.$title.'</h2>';
 		}
 		
-		if ( is_array($myposts)  ){
+		if ( is_array($myposts) && $myposts ){
+			$reStr .= '<div class="module_newsList-01">';
 		
 			$week = array('日','月','火','水','木','金','土');
 
@@ -204,14 +205,16 @@ function readPickup( $category , $title , $view = '', $icon = '', $noicon = '' )
 				}else{
 					$holdDay = '';
 				}
-				$reStr .='
-				<div class="listlink_box">
-					<div class="date">'.get_the_time('Y/m/d').$icon.'</div>
-					<p><a href="'.get_permalink().'">'.$holdDay.get_the_title().'</a></p>
-				</div>
-';
+				$reStr .= nig_renewal_news_article(
+					array(
+						'icons'  => $icon,
+						'prefix' => $holdDay,
+					),
+					false
+				);
 	
 			}
+			$reStr .= '</div>';
 		}
 		wp_reset_query();	
 	}

@@ -47,9 +47,9 @@ $menuColor = 'bgColorGl';
 			<br style="clear:both">
 		</div>
         <?php if(  $NowLanguage['load'] == 'ja' ) :?>
-            <a class="listReturnButton" href="<?php echo home_url('/'.RECRUITMENT_PAGE_SLAG.'/'); ?>">リストに戻る</a>
+            <?php nig_renewal_post_pager( home_url( '/' . RECRUITMENT_PAGE_SLAG . '/' ), 'リストに戻る' ); ?>
         <?php else: ?>
-            <a class="listReturnButton" href="<?php echo home_url('/'.RECRUITMENT_PAGE_SLAG.'/'); ?>">Back</a>
+            <?php nig_renewal_post_pager( home_url( '/' . RECRUITMENT_PAGE_SLAG . '/' ), 'Back' ); ?>
         <?php endif;?>
 	</div>
 	

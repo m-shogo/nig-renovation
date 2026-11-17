@@ -8,7 +8,7 @@ $d = get_post_custom_values('holdday');
 if( isset( $d[0] ) && $d[0] ){
 	$endIcon = _plusEndIcon( $d[0] );
 
-	$holdDay = sprintf( '<div class="data">%s%s</div>' , $d[0] ,$endIcon );
+	$holdDay = sprintf( '<div class="data">%s%s</div>' , esc_html( nig_renewal_slash_date( $d[0] ) ) , $endIcon );
 }else{
 	$holdDay = '';
 }
@@ -85,10 +85,6 @@ $_myDB->my_get_year_archives($categoryData->cat_ID);
             }
         ?>
         <?php if(!empty($link_return)) :?>
-            <?php if(  $NowLanguage['load'] == 'ja' ) :?>
-            <a class="listReturnButton" href="<?php echo $link_return; ?>">リストに戻る</a>
-            <?php else: ?>
-            <a class="listReturnButton" href="<?php echo $link_return; ?>">Back</a>
-            <?php endif;?>
+            <?php nig_renewal_post_pager( $link_return, ( $NowLanguage['load'] == 'ja' ) ? 'リストに戻る' : 'Back' ); ?>
         <?php endif;?>
 	</div>
