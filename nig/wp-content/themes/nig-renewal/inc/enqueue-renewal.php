@@ -1,7 +1,7 @@
 <?php
 /**
  * 新しい CSS と JS。旧 /nig/css と /nig/js は header.php から出さない。
- * home.js はトップを載せる段階まで読み込まない。
+ * home.js と home.css はフロントテンプレートだけ。
  */
 
 add_filter(
@@ -35,6 +35,13 @@ add_action(
 		if ( is_category() ) {
 			global $_hpRootDir;
 			wp_enqueue_script( 'nig-renewal-year-select', $_hpRootDir . 'js/yearSelect.js', array( 'jquery' ), '20261117', true );
+		}
+		if ( is_page_template( 'original-frontPage.php' ) ) {
+			wp_enqueue_style( 'nig-renewal-swiper', get_theme_file_uri( '/css/swiper-bundle.min.css' ), array(), '20261117' );
+			wp_enqueue_style( 'nig-renewal-home', get_theme_file_uri( '/css/home.css' ), array( 'nig-renewal' ), '20261117' );
+			wp_enqueue_script( 'nig-renewal-swiper', get_theme_file_uri( '/js/swiper-bundle.min.js' ), array(), '20261117', true );
+			wp_enqueue_script( 'nig-renewal-dualtab', get_theme_file_uri( '/js/jquery.dualtab.js' ), array( 'jquery' ), '20261117', true );
+			wp_enqueue_script( 'nig-renewal-home', get_theme_file_uri( '/js/home.js' ), array( 'jquery', 'nig-renewal-swiper', 'nig-renewal-dualtab' ), '20261117', true );
 		}
 	},
 	20

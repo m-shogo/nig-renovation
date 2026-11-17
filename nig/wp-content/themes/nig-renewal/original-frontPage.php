@@ -1,0 +1,227 @@
+<?php
+/**
+ * Template Name: フロントテンプレート
+ */
+$lang = nig_renewal_current_lang();
+if ($lang === 'en') {
+	$notice_title = 'Important Notice';
+	$more_text    = 'View More';
+	$nopost_text  = 'No articles found.';
+} else {
+	$notice_title = '重要なお知らせ';
+	$more_text    = '一覧を見る';
+	$nopost_text  = '記事はありません。';
+}
+
+$nig_renewal_image = function ( $id, $size ) {
+	if ( ! $id ) {
+		return '';
+	}
+	$thumb = wp_get_attachment_image_src( $id, $size );
+	if ( ! $thumb ) {
+		$thumb = wp_get_attachment_image_src( $id, 'full' );
+	}
+	return ( $thumb && ! empty( $thumb[0] ) ) ? $thumb[0] : '';
+};
+
+get_header();
+?>
+<div class="top_mainVisual">
+	<div class="slider tm_slide-container">
+		<?php if ( have_rows( 'top_slider-01' ) ) : ?>
+			<ul class="slider-wrapper">
+				<?php $count = 0; ?>
+				<?php while ( have_rows( 'top_slider-01' ) ) : the_row(); ?>
+					<?php
+					$img_pc   = get_sub_field( 'img_pc' );
+					$img_sp   = get_sub_field( 'img_sp' );
+					$src_pc   = $nig_renewal_image( $img_pc, 'top_main_pc' );
+					$src_sp   = $nig_renewal_image( $img_sp, 'top_main_sp' );
+					$alt_pc   = $img_pc ? get_post_meta( $img_pc, '_wp_attachment_image_alt', true ) : '';
+					$alt_sp   = $img_sp ? get_post_meta( $img_sp, '_wp_attachment_image_alt', true ) : '';
+					$count++;
+					?>
+					<li class="slider-slide<?php echo $count === 1 ? ' active' : ''; ?>">
+						<p class="tm_background">
+							<?php if ( $src_sp ) : ?><img src="<?php echo esc_url( $src_sp ); ?>" alt="<?php echo esc_attr( $alt_sp ); ?>" class="_only-SP"><?php endif; ?>
+							<?php if ( $src_pc ) : ?><img src="<?php echo esc_url( $src_pc ); ?>" alt="<?php echo esc_attr( $alt_pc ); ?>" class="_over-TB"><?php endif; ?>
+						</p>
+					</li>
+				<?php endwhile; ?>
+			</ul>
+		<?php endif; ?>
+	</div>
+</div>
+<main id="global_contents" class="global_contents">
+	<?php if ( get_field( 'top_notice_select' ) && have_rows( 'top_notice-01' ) ) : ?>
+		<section id="top_notice-01" class="top_notice-01">
+			<div class="global_inner">
+				<div class="notice">
+					<div class="head"><h2 class="title"><?php echo esc_html( $notice_title ); ?></h2></div>
+					<div class="body">
+						<ul>
+							<?php while ( have_rows( 'top_notice-01' ) ) : the_row(); ?>
+								<?php
+								$date  = get_sub_field( 'date', false );
+								$label = get_sub_field( 'label' );
+								$title = get_sub_field( 'title' );
+								$url   = get_sub_field( 'url' );
+								$none  = get_sub_field( 'none' );
+								if ( $none || ! $title ) {
+									continue;
+								}
+								$when = $date ? date_create( $date ) : false;
+								?>
+								<li>
+									<?php if ( $when ) : ?><p class="date"><time datetime="<?php echo esc_attr( $when->format( 'Y-m-d' ) ); ?>"><?php echo esc_html( $when->format( 'Y.m.d' ) ); ?></time></p><?php endif; ?>
+									<?php if ( $label ) : ?><p class="label"><?php echo esc_html( $label ); ?></p><?php endif; ?>
+									<p class="title">
+										<?php if ( $url ) : ?>
+											<a href="<?php echo esc_url( $url ); ?>"<?php echo get_sub_field( 'target' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $title ); ?></a>
+										<?php else : ?>
+											<span class="_disabled"><?php echo esc_html( $title ); ?></span>
+										<?php endif; ?>
+									</p>
+								</li>
+							<?php endwhile; ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<section id="top_news-01" class="top_news-01">
+		<div class="global_inner">
+			<h2 class="top_title-01">
+				<span class="title-main">News＆Events</span>
+				<?php if ( $lang !== 'en' ) : ?><span class="title-sub">お知らせ</span><?php endif; ?>
+			</h2>
+		</div>
+		<div class="main global_inner">
+			<div class="list">
+				<div class="module_tab-01">
+					<ul class="module_tab-head">
+						<li><a href="#tab01-01">All</a></li>
+						<?php
+						$categories = get_categories( array(
+							'suppress_filters' => false,
+							'parent'           => 0,
+							'orderby'          => 'description',
+							'order'            => 'ASC',
+							'hide_empty'       => true,
+						) );
+						$counter = 1;
+						foreach ( $categories as $category ) {
+							$counter++;
+							echo '<li class="' . esc_attr( $category->slug ) . '"><a href="#tab01-' . esc_attr( sprintf( '%02d', $counter ) ) . '">' . esc_html( $category->name ) . '</a></li>';
+						}
+						?>
+					</ul>
+					<div class="module_tab-body" id="tab01-01">
+						<?php
+						$posts = get_posts( array(
+							'suppress_filters'    => false,
+							'post_type'           => 'post',
+							'posts_per_page'      => 4,
+							'has_password'        => false,
+							'orderby'             => 'date',
+							'order'               => 'DESC',
+							'ignore_sticky_posts' => 1,
+						) );
+						if ( $posts ) {
+							get_template_part( 'list', 'news' );
+						} else {
+							echo '<p class="top_nopost">' . esc_html( $nopost_text ) . '</p>';
+						}
+						?>
+					</div>
+					<?php
+					$counter = 1;
+					foreach ( $categories as $category ) {
+						$counter++;
+						echo '<div class="module_tab-body" id="tab01-' . esc_attr( sprintf( '%02d', $counter ) ) . '">';
+						$posts = get_posts( array(
+							'suppress_filters'    => false,
+							'post_type'           => 'post',
+							'cat'                 => $category->term_id,
+							'posts_per_page'      => 4,
+							'has_password'        => false,
+							'orderby'             => 'date',
+							'order'               => 'DESC',
+							'ignore_sticky_posts' => 1,
+						) );
+						if ( $posts ) {
+							get_template_part( 'list', 'news' );
+						} else {
+							echo '<p class="top_nopost">' . esc_html( $nopost_text ) . '</p>';
+						}
+						echo '</div>';
+					}
+					?>
+				</div>
+			</div>
+			<p class="top_button"><a href="<?php echo esc_url( get_post_type_archive_link( 'post' ) ); ?>" class="top_button-01"><span><?php echo esc_html( $more_text ); ?></span></a></p>
+		</div>
+	</section>
+
+	<section id="top_scientists-01" class="top_scientists-01">
+		<div class="global_inner">
+			<h2 class="top_title-01">
+				<span class="title-main">Our Scientists</span>
+				<?php if ( $lang !== 'en' ) : ?><span class="title-sub">研究者と研究室</span><?php endif; ?>
+			</h2>
+		</div>
+		<?php if ( have_rows( 'top_scientists-01' ) ) : ?>
+			<div class="swiper scientists_swiper-container">
+				<ul class="swiper-wrapper">
+					<?php while ( have_rows( 'top_scientists-01' ) ) : the_row(); ?>
+						<?php
+						$img   = get_sub_field( 'img' );
+						$src   = $nig_renewal_image( $img, 'top_img' );
+						$url   = get_sub_field( 'url' );
+						$title = get_sub_field( 'title' );
+						$theme = get_sub_field( 'theme' );
+						?>
+						<li class="swiper-slide">
+							<?php if ( $url ) : ?><a href="<?php echo esc_url( $url ); ?>"><?php else : ?><span class="_disabled"><?php endif; ?>
+								<p class="image<?php echo $src ? '' : ' _noImage'; ?>"><img src="<?php echo esc_url( $src ? $src : get_template_directory_uri() . '/images/common/noimage_logo_01.svg' ); ?>" alt="<?php echo esc_attr( wp_strip_all_tags( (string) $title ) ); ?>"></p>
+								<?php if ( $title ) : ?><h3 class="title"><?php echo esc_html( $title ); ?></h3><?php endif; ?>
+								<?php if ( $theme ) : ?><p class="theme"><?php echo esc_html( $theme ); ?></p><?php endif; ?>
+							<?php if ( $url ) : ?></a><?php else : ?></span><?php endif; ?>
+						</li>
+					<?php endwhile; ?>
+				</ul>
+				<div class="swiper-control global_inner">
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				</div>
+			</div>
+		<?php endif; ?>
+	</section>
+
+	<?php if ( have_rows( 'top_recommends-01' ) ) : ?>
+		<section id="top_recommends-01" class="top_recommends-01">
+			<div class="global_inner">
+				<h2 class="top_title-01"><span class="title-main">Our <br class="_over-TB">Recommendations</span></h2>
+				<ul class="list">
+					<?php while ( have_rows( 'top_recommends-01' ) ) : the_row(); ?>
+						<?php
+						$img   = get_sub_field( 'img' );
+						$src   = $nig_renewal_image( $img, 'top_img' );
+						$title = get_sub_field( 'title' );
+						$url   = get_sub_field( 'url' );
+						?>
+						<li>
+							<?php if ( $url ) : ?><a href="<?php echo esc_url( $url ); ?>"<?php echo get_sub_field( 'target' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php else : ?><span class="_disabled"><?php endif; ?>
+								<?php if ( $src ) : ?><p class="image"><img src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( wp_strip_all_tags( (string) $title ) ); ?>"></p><?php endif; ?>
+								<?php if ( $title ) : ?><p class="title"><?php echo esc_html( $title ); ?></p><?php endif; ?>
+							<?php if ( $url ) : ?></a><?php else : ?></span><?php endif; ?>
+						</li>
+					<?php endwhile; ?>
+				</ul>
+			</div>
+		</section>
+	<?php endif; ?>
+</main>
+<?php get_footer(); ?>

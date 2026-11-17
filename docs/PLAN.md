@@ -208,10 +208,9 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 4. ヘッダーの中身は触らない。サイドバーの復活や本文の作り込みはしない。
 
 ### 段階 5: TOP
-ヘッダーの HTML が決まってから始める。`original-frontPage.php` は `get_header()` を呼ぶので、先に有効にすると旧ヘッダー前提で余白を直すことになる。
-1. テンプレートを複製テーマへ置く。ファイル名は変えない。4 リンクと、仕様書で削除のキャッチコピーは出さない。`highlights` と `interviews` の枠は出さない。`'lang'` は使わない。News は通常の `post`。
-2. 英日の固定ページを作り、WPML で対にし、このテンプレートを付ける。`show_on_front` を `page` にする。
-3. TOP 用 ACF だけ入れる。スライダーが空でもテンプレートは切り替える。`home.js` はこの段階で読む。
+1. `original-frontPage.php` を複製テーマに置いた。4 リンクとキャッチコピーは出さない。`highlights` と `interviews` は出さない。News は通常の `post`。`'lang'` は使わない。
+2. 英日の固定ページ（en=51100, ja=51101）を WPML で対にし、`show_on_front=page`。作り直しは `scripts/setup-front-page.php`。
+3. TOP 用 ACF は `acf/top.json` の3グループだけ入れた。中身は空。`home.css` と `home.js` はこのテンプレートだけ。
 
 ### 段階 6: 今はやらない
 メニュー項目の追加・削除、対象者 4 ページ、下層の見た目を新モジュールへ寄せる作業。段階 3 のヘッダーは、メニューの中身を差し替えれば追従できる状態にしておく。

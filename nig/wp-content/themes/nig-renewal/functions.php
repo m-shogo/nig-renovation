@@ -108,6 +108,9 @@ register_nav_menus( array('sidemenu_Sitemap'=>'Sitemap(サイドメニュー)') 
 
 //	投稿アイキャッチ有効化
 add_theme_support( 'post-thumbnails', array( 'post' ) );
+add_image_size( 'top_main_pc', 2760, 1296, true );
+add_image_size( 'top_main_sp', 750, 976, true );
+add_image_size( 'top_img', 750, 999, false );
 the_post_thumbnail( 'thumbnail', 'class=eyecatchimg' );			//	1アイキャッチクラス設定
 
 global $_hpRootDir , $_sslURL , $_userLoginData;
