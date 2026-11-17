@@ -1,0 +1,59 @@
+.top_banner .swiper-slide {
+	width: 100%;
+}
+
+.top_banner .swiper-slide img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 840 / 560;
+	object-fit: cover;
+}
+
+.top_banner .swiper-pagination {
+	position: static;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.top_banner .swiper-pagination-bullet {
+	width: 8px;
+	height: 8px;
+	margin: 0 !important;
+	border-radius: 4px;
+	background: #009f7f;
+	opacity: 0.35;
+}
+
+.top_banner .swiper-pagination-bullet-active {
+	width: 32px;
+	opacity: 1;
+}
+
+@media (min-width: 1100px) {
+	.top_banner .swiper-slide {
+		width: 840px;
+	}
+}
+
+.top_notice-01 + .top_notice-01 {
+	padding-top: 16px !important;
+}
+
+.top_notice-01--opportunities .notice {
+	border-color: #009f7f;
+}
+
+.top_notice-01--opportunities .notice .head {
+	background: #009f7f;
+}
+
+.top_notice-01--opportunities .notice .head .title:before {
+	content: "\f024";
+}
+
+.top_notice-01--important .notice .head .title:before {
+	content: "\f06a";
+}

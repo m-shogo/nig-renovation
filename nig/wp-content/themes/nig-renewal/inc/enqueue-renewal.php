@@ -39,9 +39,11 @@ add_action(
 		if ( is_page_template( 'original-frontPage.php' ) ) {
 			wp_enqueue_style( 'nig-renewal-swiper', get_theme_file_uri( '/css/swiper-bundle.min.css' ), array(), '20261117' );
 			wp_enqueue_style( 'nig-renewal-home', get_theme_file_uri( '/css/home.css' ), array( 'nig-renewal' ), '20261117' );
+			wp_enqueue_style( 'nig-renewal-front', get_theme_file_uri( '/css/front-adjust.css' ), array( 'nig-renewal-home' ), '20261117' );
 			wp_enqueue_script( 'nig-renewal-swiper', get_theme_file_uri( '/js/swiper-bundle.min.js' ), array(), '20261117', true );
 			wp_enqueue_script( 'nig-renewal-dualtab', get_theme_file_uri( '/js/jquery.dualtab.js' ), array( 'jquery' ), '20261117', true );
 			wp_enqueue_script( 'nig-renewal-home', get_theme_file_uri( '/js/home.js' ), array( 'jquery', 'nig-renewal-swiper', 'nig-renewal-dualtab' ), '20261117', true );
+			wp_enqueue_script( 'nig-renewal-banner', get_theme_file_uri( '/js/front-banner.js' ), array( 'nig-renewal-swiper' ), '20261117', true );
 		}
 	},
 	20

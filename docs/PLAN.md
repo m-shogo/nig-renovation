@@ -210,7 +210,8 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 ### 段階 5: TOP
 1. `original-frontPage.php` を複製テーマに置いた。4 リンクとキャッチコピーは出さない。`highlights` と `interviews` は出さない。News は通常の `post`。`'lang'` は使わない。
 2. 英日の固定ページ（en=51100, ja=51101）を WPML で対にし、`show_on_front=page`。作り直しは `scripts/setup-front-page.php`。
-3. TOP 用 ACF は `acf/top.json` の3グループ。中身は本番 `https://www.nig.ac.jp/` と `https://www.nig.ac.jp/en/` の表示から入れた。画像はローカルのメディア。リンク先は本番の URL。入れ直しは `scripts/import-top-acf.php`。
+3. TOP 用 ACF は `acf/top.json`。中身は本番 `https://www.nig.ac.jp/` と `https://www.nig.ac.jp/en/` の表示から入れた。画像はローカルのメディア。リンク先は本番の URL。入れ直しは `scripts/import-top-acf.php`。
+4. お知らせは Opportunities（`top_notice-*`、緑、旗）と Important（`top_important-*`、朱色、感嘆符）の2枠。項目は同じ。スライダーは横840pxのカードで、下のドットで送る。Research と Interview はまだ出さない。SP ヘッダーの対象者4リンクは出さない。
 
 ### 段階 6: 今はやらない
 メニュー項目の追加・削除、対象者 4 ページ、下層の見た目を新モジュールへ寄せる作業。段階 3 のヘッダーは、メニューの中身を差し替えれば追従できる状態にしておく。

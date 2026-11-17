@@ -122,7 +122,7 @@
     },
     {
         "key": "group_5d5cb6d7e02d5",
-        "title": "トップ_重要なお知らせ",
+        "title": "トップ_Opportunities",
         "fields": [
             {
                 "key": "field_5d6776189bd4d",
@@ -146,7 +146,7 @@
             },
             {
                 "key": "field_5d5cb6ecb6e82",
-                "label": "重要なお知らせ",
+                "label": "Opportunities",
                 "name": "top_notice-01",
                 "aria-label": "",
                 "type": "repeater",
@@ -324,6 +324,156 @@
             ]
         ],
         "menu_order": 2,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": ""
+    },
+    {
+        "key": "group_nig_top_important",
+        "title": "トップ_Important",
+        "fields": [
+            {
+                "key": "field_nig_important_select",
+                "label": "表示設定",
+                "name": "top_important_select",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "表示する",
+                "ui_off_text": "表示しない"
+            },
+            {
+                "key": "field_nig_important_rows",
+                "label": "Important",
+                "name": "top_important-01",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "Opportunities と同じ項目です。色とアイコンだけ違います。",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": { "width": "", "class": "", "id": "" },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "row",
+                "button_label": "+ Important を追加",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_nig_important_date",
+                        "label": "日付",
+                        "name": "date",
+                        "aria-label": "",
+                        "type": "date_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "display_format": "Y/n/j",
+                        "return_format": "Y/n/j",
+                        "first_day": 1,
+                        "parent_repeater": "field_nig_important_rows",
+                        "default_to_current_date": 0
+                    },
+                    {
+                        "key": "field_nig_important_label",
+                        "label": "ラベル",
+                        "name": "label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "default_value": "",
+                        "parent_repeater": "field_nig_important_rows"
+                    },
+                    {
+                        "key": "field_nig_important_title",
+                        "label": "タイトル",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "default_value": "",
+                        "parent_repeater": "field_nig_important_rows"
+                    },
+                    {
+                        "key": "field_nig_important_url",
+                        "label": "リンク先",
+                        "name": "url",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "default_value": "",
+                        "parent_repeater": "field_nig_important_rows"
+                    },
+                    {
+                        "key": "field_nig_important_target",
+                        "label": "外部リンク",
+                        "name": "target",
+                        "aria-label": "",
+                        "type": "checkbox",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "20", "class": "", "id": "" },
+                        "choices": { "はい": "はい" },
+                        "default_value": [],
+                        "return_format": "value",
+                        "allow_custom": 0,
+                        "layout": "vertical",
+                        "toggle": 0,
+                        "parent_repeater": "field_nig_important_rows"
+                    },
+                    {
+                        "key": "field_nig_important_none",
+                        "label": "表示設定",
+                        "name": "none",
+                        "aria-label": "",
+                        "type": "checkbox",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": { "width": "", "class": "", "id": "" },
+                        "choices": { "_hide": "このお知らせを非表示にする" },
+                        "default_value": [],
+                        "return_format": "value",
+                        "allow_custom": 0,
+                        "layout": "vertical",
+                        "toggle": 0,
+                        "parent_repeater": "field_nig_important_rows"
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                { "param": "page_type", "operator": "==", "value": "front_page" }
+            ],
+            [
+                { "param": "page_template", "operator": "==", "value": "original-frontPage.php" }
+            ]
+        ],
+        "menu_order": 3,
         "position": "normal",
         "style": "default",
         "label_placement": "top",

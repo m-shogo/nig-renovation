@@ -4,13 +4,56 @@
  */
 $lang = nig_renewal_current_lang();
 if ($lang === 'en') {
-	$notice_title = 'Important Notice';
-	$more_text    = 'View More';
-	$nopost_text  = 'No articles found.';
+	$more_text   = 'View More';
+	$nopost_text = 'No articles found.';
 } else {
-	$notice_title = '重要なお知らせ';
-	$more_text    = '一覧を見る';
-	$nopost_text  = '記事はありません。';
+	$more_text   = '一覧を見る';
+	$nopost_text = '記事はありません。';
+}
+
+if ( ! function_exists( 'nig_renewal_render_notice' ) ) {
+	function nig_renewal_render_notice( $select, $field, $title, $modifier ) {
+		if ( ! get_field( $select ) || ! have_rows( $field ) ) {
+			return;
+		}
+		?>
+		<section id="<?php echo esc_attr( $field ); ?>" class="top_notice-01 <?php echo esc_attr( $modifier ); ?>">
+			<div class="global_inner">
+				<div class="notice">
+					<div class="head"><h2 class="title"><?php echo esc_html( $title ); ?></h2></div>
+					<div class="body">
+						<ul>
+							<?php while ( have_rows( $field ) ) : the_row(); ?>
+								<?php
+								$date  = get_sub_field( 'date', false );
+								$label = get_sub_field( 'label' );
+								$title_text = get_sub_field( 'title' );
+								$url   = get_sub_field( 'url' );
+								$none  = get_sub_field( 'none' );
+								if ( $none || ! $title_text ) {
+									continue;
+								}
+								$when = $date ? date_create( $date ) : false;
+								?>
+								<li>
+									<?php if ( $when ) : ?><p class="date"><time datetime="<?php echo esc_attr( $when->format( 'Y-m-d' ) ); ?>"><?php echo esc_html( $when->format( 'Y.m.d' ) ); ?></time></p><?php endif; ?>
+									<?php if ( $label ) : ?><p class="label"><?php echo esc_html( $label ); ?></p><?php endif; ?>
+									<p class="title">
+										<?php if ( $url ) : ?>
+											<a href="<?php echo esc_url( $url ); ?>"<?php echo get_sub_field( 'target' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $title_text ); ?></a>
+										<?php else : ?>
+											<span class="_disabled"><?php echo esc_html( $title_text ); ?></span>
+										<?php endif; ?>
+									</p>
+								</li>
+							<?php endwhile; ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<?php
+	}
 }
 
 $nig_renewal_image = function ( $id, $size ) {
@@ -27,69 +70,31 @@ $nig_renewal_image = function ( $id, $size ) {
 get_header();
 ?>
 <div class="top_mainVisual">
-	<div class="slider tm_slide-container">
-		<?php if ( have_rows( 'top_slider-01' ) ) : ?>
-			<ul class="slider-wrapper">
-				<?php $count = 0; ?>
+	<?php if ( have_rows( 'top_slider-01' ) ) : ?>
+		<div class="top_banner swiper">
+			<ul class="swiper-wrapper">
 				<?php while ( have_rows( 'top_slider-01' ) ) : the_row(); ?>
 					<?php
-					$img_pc   = get_sub_field( 'img_pc' );
-					$img_sp   = get_sub_field( 'img_sp' );
-					$src_pc   = $nig_renewal_image( $img_pc, 'top_main_pc' );
-					$src_sp   = $nig_renewal_image( $img_sp, 'top_main_sp' );
-					$alt_pc   = $img_pc ? get_post_meta( $img_pc, '_wp_attachment_image_alt', true ) : '';
-					$alt_sp   = $img_sp ? get_post_meta( $img_sp, '_wp_attachment_image_alt', true ) : '';
-					$count++;
+					$img_pc = get_sub_field( 'img_pc' );
+					$img_sp = get_sub_field( 'img_sp' );
+					$src    = $nig_renewal_image( $img_pc ? $img_pc : $img_sp, 'full' );
+					$alt    = $img_pc ? get_post_meta( $img_pc, '_wp_attachment_image_alt', true ) : '';
+					if ( ! $src ) {
+						continue;
+					}
 					?>
-					<li class="slider-slide<?php echo $count === 1 ? ' active' : ''; ?>">
-						<p class="tm_background">
-							<?php if ( $src_sp ) : ?><img src="<?php echo esc_url( $src_sp ); ?>" alt="<?php echo esc_attr( $alt_sp ); ?>" class="_only-SP"><?php endif; ?>
-							<?php if ( $src_pc ) : ?><img src="<?php echo esc_url( $src_pc ); ?>" alt="<?php echo esc_attr( $alt_pc ); ?>" class="_over-TB"><?php endif; ?>
-						</p>
-					</li>
+					<li class="swiper-slide"><img src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( $alt ); ?>"></li>
 				<?php endwhile; ?>
 			</ul>
-		<?php endif; ?>
-	</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	<?php endif; ?>
 </div>
 <main id="global_contents" class="global_contents">
-	<?php if ( get_field( 'top_notice_select' ) && have_rows( 'top_notice-01' ) ) : ?>
-		<section id="top_notice-01" class="top_notice-01">
-			<div class="global_inner">
-				<div class="notice">
-					<div class="head"><h2 class="title"><?php echo esc_html( $notice_title ); ?></h2></div>
-					<div class="body">
-						<ul>
-							<?php while ( have_rows( 'top_notice-01' ) ) : the_row(); ?>
-								<?php
-								$date  = get_sub_field( 'date', false );
-								$label = get_sub_field( 'label' );
-								$title = get_sub_field( 'title' );
-								$url   = get_sub_field( 'url' );
-								$none  = get_sub_field( 'none' );
-								if ( $none || ! $title ) {
-									continue;
-								}
-								$when = $date ? date_create( $date ) : false;
-								?>
-								<li>
-									<?php if ( $when ) : ?><p class="date"><time datetime="<?php echo esc_attr( $when->format( 'Y-m-d' ) ); ?>"><?php echo esc_html( $when->format( 'Y.m.d' ) ); ?></time></p><?php endif; ?>
-									<?php if ( $label ) : ?><p class="label"><?php echo esc_html( $label ); ?></p><?php endif; ?>
-									<p class="title">
-										<?php if ( $url ) : ?>
-											<a href="<?php echo esc_url( $url ); ?>"<?php echo get_sub_field( 'target' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $title ); ?></a>
-										<?php else : ?>
-											<span class="_disabled"><?php echo esc_html( $title ); ?></span>
-										<?php endif; ?>
-									</p>
-								</li>
-							<?php endwhile; ?>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
-	<?php endif; ?>
+	<?php
+	nig_renewal_render_notice( 'top_notice_select', 'top_notice-01', 'Opportunities', 'top_notice-01--opportunities' );
+	nig_renewal_render_notice( 'top_important_select', 'top_important-01', 'Important', 'top_notice-01--important' );
+	?>
 
 	<section id="top_news-01" class="top_news-01">
 		<div class="global_inner">
