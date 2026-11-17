@@ -166,7 +166,26 @@
   background-size: 20px;
 }
 #global_contents .qa dd.qaA { padding: 0 0 2em; }
-#global_contents .coursesTalbe { margin-bottom: 15px; }
+#global_contents #breadcrumb { display: none; }
+body.page #global_contents #rightSlot > h2:first-of-type,
+body.single #global_contents #rightSlot > h2:first-of-type { display: none; }
+
+#global_contents .global_mainVisual::before {
+	background-image: url("../images/common/bg-mainVisual-sp.webp");
+}
+#global_contents .global_mainVisual .global_inner {
+	position: relative;
+	z-index: 2;
+}
+@media (min-width: 768px) {
+	#global_contents .global_mainVisual::before {
+		background-image: url("../images/common/bg-mainVisual.webp");
+	}
+	#global_contents .global_mainVisual .global_inner {
+		position: relative;
+	}
+}
+
 
 #global_contents .categoryTemp__titleBlock {
   display: flex;

@@ -135,4 +135,5 @@ if ( $lang === 'en' ) {
 <div class="global_wrapper">
 <?php if ( nig_renewal_wrap_lower_content() ) : ?>
 <div id="global_contents">
+<?php nig_renewal_render_lower_heading(); ?>
 <?php endif; ?>

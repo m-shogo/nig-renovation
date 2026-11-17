@@ -156,3 +156,115 @@ function nig_renewal_render_pc_menu( $children ) {
 		echo '</div></div></div></div>';
 	}
 }
+
+function nig_renewal_lower_title() {
+	$lang = nig_renewal_current_lang();
+	if ( is_404() ) {
+		return $lang === 'ja' ? 'お探しのページは見つかりませんでした' : 'Page not found';
+	}
+	if ( is_search() ) {
+		$query = get_search_query();
+		if ( $query === '' ) {
+			return $lang === 'ja' ? '検索キーワードが未入力です' : 'Please enter a search keyword';
+		}
+		return $lang === 'ja' ? $query . 'の検索結果' : $query . ' - Search Results';
+	}
+	if ( is_category() || is_tag() || is_tax() ) {
+		return wp_strip_all_tags( single_term_title( '', false ) );
+	}
+	if ( is_singular() ) {
+		return wp_strip_all_tags( get_the_title() );
+	}
+	if ( is_archive() ) {
+		return wp_strip_all_tags( get_the_archive_title() );
+	}
+	return '';
+}
+
+function nig_renewal_breadcrumb_items() {
+	$items = array(
+		array(
+			'name' => 'TOP',
+			'url'  => home_url( '/' ),
+		),
+	);
+	if ( is_page() ) {
+		$page = get_queried_object();
+		if ( $page ) {
+			foreach ( array_reverse( get_post_ancestors( $page ) ) as $id ) {
+				$items[] = array(
+					'name' => wp_strip_all_tags( get_the_title( $id ) ),
+					'url'  => get_permalink( $id ),
+				);
+			}
+			$items[] = array(
+				'name' => wp_strip_all_tags( get_the_title( $page ) ),
+				'url'  => '',
+			);
+		}
+	} elseif ( is_singular( 'post' ) ) {
+		$cats = get_the_category();
+		if ( $cats ) {
+			$cat = $cats[0];
+			foreach ( array_reverse( get_ancestors( $cat->term_id, 'category' ) ) as $id ) {
+				$ancestor = get_category( $id );
+				$items[]  = array(
+					'name' => $ancestor->name,
+					'url'  => get_category_link( $ancestor ),
+				);
+			}
+			$items[] = array(
+				'name' => $cat->name,
+				'url'  => get_category_link( $cat ),
+			);
+		}
+		$items[] = array(
+			'name' => wp_strip_all_tags( get_the_title() ),
+			'url'  => '',
+		);
+	} elseif ( is_category() ) {
+		$cat = get_queried_object();
+		if ( $cat ) {
+			foreach ( array_reverse( get_ancestors( $cat->term_id, 'category' ) ) as $id ) {
+				$ancestor = get_category( $id );
+				$items[]  = array(
+					'name' => $ancestor->name,
+					'url'  => get_category_link( $ancestor ),
+				);
+			}
+			$items[] = array(
+				'name' => $cat->name,
+				'url'  => '',
+			);
+		}
+	} else {
+		$title = nig_renewal_lower_title();
+		if ( $title ) {
+			$items[] = array(
+				'name' => $title,
+				'url'  => '',
+			);
+		}
+	}
+	return $items;
+}
+
+function nig_renewal_render_lower_heading() {
+	$title = nig_renewal_lower_title();
+	echo '<div class="global_mainVisual"><div class="global_inner">';
+	if ( $title ) {
+		echo '<h1 class="gm_title"><span>' . esc_html( $title ) . '</span></h1>';
+	}
+	echo '</div></div>';
+	echo '<nav class="module_breadCrumb"><div class="global_inner"><ul class="module_breadCrumb-01">';
+	foreach ( nig_renewal_breadcrumb_items() as $item ) {
+		echo '<li>';
+		if ( $item['url'] ) {
+			echo '<a href="' . esc_url( $item['url'] ) . '"><span>' . esc_html( $item['name'] ) . '</span></a>';
+		} else {
+			echo '<span>' . esc_html( $item['name'] ) . '</span>';
+		}
+		echo '</li>';
+	}
+	echo '</ul></div></nav>';
+}
