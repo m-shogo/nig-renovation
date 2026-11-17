@@ -1,251 +1,135 @@
 <?php
-//	埋め込み変数制御
-
-global $page, $paged , $post, $cat;
-// ルート階層
+global $page, $paged, $post, $cat;
 global $_hpRootDir;
 
-//	タイトル設定 -----------------------------------
-
-
-if ( is_home() || is_front_page() ){	//	ホーム
-	$title = get_bloginfo( 'name' , true ).'::'.get_bloginfo( 'description', 'display' );
-	
-}elseif( is_single() || is_page() ){	//	個別記事
-	$title = get_the_title();//.'::'.get_bloginfo( 'name' , true );
-	
-}elseif( is_category() ){		//	カテゴリ
-	$dat = get_category($cat);	
-	$title = $dat->name;
-	
-}elseif( is_search() ){		//	検索結果
+if ( is_home() || is_front_page() ) {
+	$title = get_bloginfo( 'name', true ) . '::' . get_bloginfo( 'description', 'display' );
+} elseif ( is_single() || is_page() ) {
+	$title = get_the_title();
+} elseif ( is_category() ) {
+	$dat   = get_category( $cat );
+	$title = $dat ? $dat->name : '';
+} elseif ( is_search() ) {
 	$title = 'Search';
-	
-}elseif( is_archive() ){	//	アーカイブ
-	$title = 'archive';	
-}else{
-	$title = 'notfound';	
+} elseif ( is_archive() ) {
+	$title = 'archive';
+} else {
+	$title = 'notfound';
 }
 
-	
-if ( $paged >= 2 || $page >= 2 )	$title .= ' | ' . sprintf( __( 'Page %s','' ), max( $paged, $page ) );
-if ( !(is_home() || is_front_page()) ){	//	ホーム以外
-	$title .= '::'.get_bloginfo( 'name' , true );
+if ( $paged >= 2 || $page >= 2 ) {
+	$title .= ' | ' . sprintf( __( 'Page %s', '' ), max( $paged, $page ) );
+}
+if ( ! ( is_home() || is_front_page() ) ) {
+	$title .= '::' . get_bloginfo( 'name', true );
 }
 
-//	翻訳ページ対象
-if( function_exists('icl_get_languages' )){
-	$pagedatas = icl_get_languages();
+$lang          = nig_renewal_current_lang();
+$logo          = $lang === 'ja' ? 'logo.svg' : 'logo-en.svg';
+$search_label  = $lang === 'ja' ? '検索する' : 'Search';
+$access_label  = $lang === 'ja' ? 'アクセス' : 'Access';
+$switch_label  = $lang === 'ja' ? 'English' : 'Japanese';
+$search_action = trailingslashit( $_hpRootDir ) . 'googlesearch_ja';
+$menu_children = nig_renewal_menu_children( nig_renewal_header_menu_name() );
+$body_extra    = array();
+if ( $lang === 'en' ) {
+	$body_extra[] = 'en-US';
 }
-
-//	GET引継ぎ
-$plus_GET_str = '';
-// $post が無い画面（一部 CPT 等）で post_name 参照しない
-$post_name = ( isset( $post ) && is_object( $post ) ) ? $post->post_name : '';
-if( 
-	$post_name == 'job-opportunities' ||
-	$post_name == 'job-outside-nig' ||
-	$post_name == 'nig-meetings' ||
-	$post_name == 'seminer' ||
-	$post_name == 'seminer-ja'
-	
-	 ){
-	if(is_array( $_GET )){
-		$c = true;
-		foreach( $_GET as $k=>$v ){
-			$plus_GET_str .= sprintf( '%s%s=%s' , ( $c ? '?' : '&amp;' ) , $k , urlencode($v) );
-			$c = false;
-		}
-	}
-}
-if( isset( $pagedatas['ja']['url'] ) )		$langlink = $pagedatas['ja']['url'].$plus_GET_str;
-else										$langlink = $_hpRootDir.'ja/';
-
-
-
-echo sprintf('<?xml version="1.0" encoding="%s"?>'.PHP_EOL , get_bloginfo( 'charset' ) );
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--[if lt IE 7 ]><html style="margin-top: 0 !important" class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html style="margin-top: 0 !important" class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html style="margin-top: 0 !important" class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--> <!--<![endif]-->
-<html lang="en">
+<!DOCTYPE html>
+<html lang="<?php echo esc_attr( $lang ); ?>" dir="ltr">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LG8DRXTLP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-7LG8DRXTLP');
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Language" content="ja" />
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<meta http-equiv="imagetoolbar" content="no" />
-
-
-<meta name="keywords" CONTENT="genome,gene,RNAi,bioinformatics,Ph.D,graduate school,genetics,evolution,DDBJ,epigenetics,development,zebrafish,drosophila,rice,oriza,postdoctoral fellow,bioresource" />
-<meta name="description" CONTENT="NIG is the research institute on genetics. Our mission is to provide infrastructure and opportunities for international collaboration, to train young scientists, and to build new frontiers of life sciences. " />
-
-	<title><?php echo $title; /*wp_title();*/ ?></title>
-	<!-- <script src="<?php echo $_hpRootDir; ?>js/jquery-1.11.0.min.js"></script> -->
-	<script src="<?php echo $_hpRootDir; ?>js/jquery-3.7.1.min.js"></script>
-	<script src="<?php echo $_hpRootDir; ?>js/default.js?20261117v1"></script>
-	<script src="<?php echo $_hpRootDir; ?>js/scrollTopControl.js"></script>
-    <script src="<?php echo $_hpRootDir; ?>js/footerFixed.js"></script>
-    <script src="<?php echo $_hpRootDir; ?>js/yearSelect.js"></script>
-    <script src="<?php echo $_hpRootDir; ?>js/navibutton.js"></script>
-    <script src="<?php echo $_hpRootDir; ?>js/globalnavi.js?20261117v1"></script>
-<!--	<script src="<?php echo $_hpRootDir; ?>js/smoothover.js"></script>	-->
-<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>wp-includes/css/dist/block-library/style.min.css" media="screen,print" />    
-<?php
-	if( is_home() || is_front_page() ){
-?>
-	<script src="<?php echo $_hpRootDir; ?>js/jquery.bxslider.js?20261117v1"></script>
-	<script src="<?php echo $_hpRootDir; ?>js/index.js?20261117v1"></script>
-	
-<!--[if lt IE 8 ]><link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/ol_index.css" media="screen,print" /> <![endif]-->
-<!--[if (gte IE 8)]><link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/index.css" media="screen,print" /> <![endif]-->
-<!--[if !IE]><!-->
-     <link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/index.css?20220204v1" media="screen,print" />
-<!--<![endif]-->
-<?php
-	}
-?>
-
-	<link rel="start" href="/" title="TopPage" />
-	
-<!--[if lt IE 9 ]>
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/ol_common.css" media="screen,print" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/ol_navigation.css" media="screen,print" />
-<![endif]-->
-<!--[if (gte IE 9)]>
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/common.css" media="screen,print" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/navigation.css" media="screen,print" />
-<![endif]-->
-<!--[if !IE]><!-->
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/common.css?20220105v1" media="screen,print" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/navigation.css" media="screen,print" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $_hpRootDir; ?>css/add_style.css?20220204v1" media="screen,print" />
-<!--<![endif]-->
-
-	<meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1" />
-    <meta name="viewport" content="width=device-width,user-scalable=yes" />
-<!--[if lt IE 9]>
-	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-<![endif]-->
-<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="<?php bloginfo('url'); ?>/favicon.ico" />
-
-<link rel="apple-touch-icon" href="<?php bloginfo('url'); ?>/apple-touch-icon.png" />
-
-<!-- google font -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<?php if ( $lang === 'ja' ) : ?>
+<meta name="keywords" content="ゲノム,遺伝子,RNAI,バイオインフォマティックス,大学院,大学院大学,進化,DDBJ,エピジェネティックス,発生,博士研究員,募集,Postdoctoral Fellow,ゼブラフィッシュ,ショウジョウバエ,イネ,zebrafish,drosophila,oryza,rice,バイオリソース">
+<meta name="description" content="遺伝学の中核拠点として生命システムの解明を目指す先端研究や共同利用・共同研究を推進しています。また、総研大 先端学術院 遺伝学コースを併設し大学院教育を行っています。">
+<title><?php wp_title( '|', true, 'right' ); ?>国立遺伝学研究所</title>
+<?php else : ?>
+<meta name="keywords" content="genome,gene,RNAi,bioinformatics,Ph.D,graduate school,genetics,evolution,DDBJ,epigenetics,development,zebrafish,drosophila,rice,oriza,postdoctoral fellow,bioresource">
+<meta name="description" content="NIG is the research institute on genetics. Our mission is to provide infrastructure and opportunities for international collaboration, to train young scientists, and to build new frontiers of life sciences.">
+<title><?php echo esc_html( $title ); ?></title>
+<?php endif; ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,700;1,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/images/common/favicon.ico' ); ?>">
+<link rel="icon" type="image/svg+xml" href="<?php echo esc_url( get_template_directory_uri() . '/images/common/favicon.svg' ); ?>">
+<script>
+(function() {
+  var MOBILE_BREAKPOINT = 768;
+  function setViewport() {
+    var meta = document.querySelector("meta[name='viewport']");
+    if (!meta) return;
+    if (window.innerWidth <= MOBILE_BREAKPOINT) {
+      meta.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
+    } else {
+      meta.setAttribute('content', 'width=1280');
+    }
+  }
+  var timer = null;
+  window.addEventListener('DOMContentLoaded', setViewport, false);
+  window.addEventListener('resize', function() {
+    clearTimeout(timer);
+    timer = setTimeout(setViewport, 150);
+  }, false);
+  window.addEventListener('orientationchange', setViewport, false);
+})();
+</script>
+<?php wp_head(); ?>
 </head>
-<body <?php body_class( 'eng' ); ?>  class="eng <?php echo esc_attr( $post_name ); ?>">
-
-<!-- <div id="js-loader" class="loader"></div> -->
-
-<!-- Facebook Page Plugin(JavaScript SDK) -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.4";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- /Facebook Page Plugin(JavaScript SDK) -->
-
-<div id="site-base">
-	<div class="mainWrapp" style="position:relative;">
-
-		<!-- sp時のハンバーガーアイコン -->
-		<div class="NaviButton"><span></span><span></span><span></span></div>
-
-		<div id="header" class="autoWrapp">
-			<div id="logo">
-				<h1>
-					<a href="<?php echo $_hpRootDir; ?>">
-						<img src="<?php echo $_hpRootDir; ?>images/common/h1.gif" alt="国立遺伝学研究所" />
-					</a>
-				</h1>
-			</div>
-			
-
-			<div class="header-ChangeButtons">
-				<a class="_access" href="<?php echo $_hpRootDir; ?>about-nig/access">
-					<img src="<?php echo $_hpRootDir; ?>images/common/header_button_access.svg" alt="アクセス">
-				</a>
-				<a class="_change" href="<?php echo $langlink; ?>">
-					<img src="<?php echo $_hpRootDir; ?>images/common/header_button_jp.svg" alt="Japanese">
-				</a>
-				<a class="_now" href="###">
-					<img src="<?php echo $_hpRootDir; ?>images/common/header_button_en_now.svg" alt="English">
-				</a>
-			<!-- </div> divの閉じタグが欠けているのが前提で組まれている -->
-		</div>
-	</div>
-	<div class="header-spacer"></div>
+<body <?php body_class( $body_extra ); ?>>
+<div class="headerNavigation">
+  <div class="headerNavigationInner">
+    <header id="global_header" class="global_header">
+      <div class="inner">
+        <?php if ( is_front_page() || is_home() ) : ?>
+        <h1 class="gh_logo"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php echo esc_url( get_template_directory_uri() . '/images/common/' . $logo ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"></a></h1>
+        <?php else : ?>
+        <p class="gh_logo"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php echo esc_url( get_template_directory_uri() . '/images/common/' . $logo ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"></a></p>
+        <?php endif; ?>
+        <button type="button" class="gh_menu" id="gh_menu"><span class="icon"></span></button>
+      </div>
+    </header>
+    <nav id="global_navigation" class="global_navigation">
+      <ul class="gn_links-01 module_menu-01">
+        <?php nig_renewal_render_sp_menu( $menu_children ); ?>
+        <li><a class="gnl_title mm_title" href="<?php echo esc_url( nig_renewal_lang_url() ); ?>"><span><?php echo esc_html( $switch_label ); ?></span></a></li>
+      </ul>
+      <div class="gn_search module_search-01">
+        <form class="gns_form ms_form" role="search" method="get" action="<?php echo esc_url( $search_action ); ?>">
+          <input class="ms_input" type="search" value="<?php echo esc_attr( isset( $_GET['q'] ) ? (string) $_GET['q'] : '' ); ?>" name="q" placeholder="<?php echo esc_attr( $search_label ); ?>">
+          <button type="submit" class="ms_button"><span></span></button>
+        </form>
+      </div>
+      <div class="submenu">
+        <button id="search" class="search" type="button"><i class="fa-light fa-magnifying-glass"></i><span><?php echo esc_html( $search_label ); ?></span></button>
+        <a href="<?php echo esc_url( nig_renewal_access_url() ); ?>"><span><?php echo esc_html( $access_label ); ?></span></a>
+        <a href="<?php echo esc_url( nig_renewal_lang_url() ); ?>"><span><?php echo esc_html( $switch_label ); ?></span></a>
+      </div>
+    </nav>
+    <div class="module_menu-01">
+      <div class="inner">
+        <?php nig_renewal_render_pc_menu( $menu_children ); ?>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-<div class="mainWrapp bgGl" id="headMenuWrap">
-	<div id="navigation" class="autoWrapp">
-
-		<!-- ハンバーガーメニュー開いた際のアクセスリンクボタンと日英切り替えボタン -->
-		<div class="hm-changeButtons">
-			<a class="_access" href="<?php echo $_hpRootDir; ?>ja/about-nig/access_ja">
-				<img src="<?php echo $_hpRootDir; ?>images/common/header_button_access.svg" alt="アクセス">
-			</a>
-			<a class="_change" href="<?php echo $langlink; ?>">
-				<img src="<?php echo $_hpRootDir; ?>images/common/hm_jp.svg" alt="Japanese">
-			</a>
-			<a class="_now" href="###">
-				<img src="<?php echo $_hpRootDir; ?>images/common/hm_en_now.svg" alt="English">
-			</a>
-		</div>
-
-		<div class="navSerachWrap">
-
-<?php
-	insert_custom_tmpl();
-	//	カスタムメニュー読込み
-	$hdMenuOption = array(
-				'theme_location'  => 'headmenu',
-				'menu'            => 'hdmenu',
-				'container'       => 'div',
-				'container_class' => 'auto-width-wrap',
-				'container_id'    => 'navigation',
-				'menu_class'      => 'mmm',
-				'menu_id'         => '',
-				'echo'            => true,
-				'fallback_cb'     => 'wp_page_menu',
-				'before'          => '',
-				'after'           => '',
-				'link_before'     => '',
-				'link_after'      => '',
-				'items_wrap'      => '<ul id="main-nav">%3$s</ul>',
-				'depth'           => 0,
-				'walker'          => ''
-			);
-	 wp_nav_menu( $hdMenuOption );
-?>
-
-
-			<div class="navi-SearchBox">
-				<form action="<?php bloginfo('url'); ?>/googlesearch_ja" name="search_form" id="search_form">
-					<input id="i_search_input" type="text"  name="q" value="<?php echo htmlspecialchars( isset( $_GET['q'] ) ? (string) $_GET['q'] : '' ); ?>" class="_keyword" />
-					<input type="image" value="検索" src="<?php echo $_hpRootDir; ?>images/common/search.svg" class="_search" />
-				</form>
-			</div>
-		</div>
-	</div>
-	
-
+<div class="overlay" id="overlay"></div>
+<div class="gh_search module_search-pc">
+  <div class="module_search-01">
+    <form class="ms_form" role="search" method="get" action="<?php echo esc_url( $search_action ); ?>">
+      <input class="ms_input" type="search" name="q" placeholder="<?php echo esc_attr( $search_label ); ?>">
+      <button class="ms_button" type="submit"><span></span></button>
+    </form>
+  </div>
+  <div id="gns_close" class="close"><button id="searchClose" type="button"></button></div>
 </div>
+<div class="global_wrapper">

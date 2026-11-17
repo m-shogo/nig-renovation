@@ -575,3 +575,6 @@ function add_ancestor_page_recursive($post, $classes) {
 }
 
 add_filter('body_class', 'add_ancestor_page_to_body_classes');
+
+require_once get_template_directory() . '/inc/header-menu.php';
+require_once get_template_directory() . '/inc/enqueue-renewal.php';
