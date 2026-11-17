@@ -45,7 +45,7 @@ Figma 上のファイルが正本。このリポジトリには書き出して�
 | 多言語 | WPML。`header-ja.php` / `footer-ja.php`。`icl_get_languages` | Bogo 前提。`get_locale()`。1 つの header |
 | グローバルナビ | メニュー `hdmenu`(136) / `hdmenu_ja`(165)。第1階層は About NIG / Research / PhD / RIC / Bioresources / Outreach / Career | 上段は直書きの対象者4リンク。ドロップダウンは ACF `common-menu-01`(PC) / `common-menu-02`(SP)。どちらも今回は使わない |
 | CSS | WordPress 外 `/nig/css/*.css`。header が直接 link | テーマ内 `css/style.css`(約337KB、SCSS)。`_head_contents.php` で head にインライン出力。Meyer reset が全体に効く |
-| JS / jQuery | 1.8.2(CDN) + `/nig/js/globalnavi.js` 等。`wp_head()` を呼んでいない | 3.7.1 + `js/common.js`(header の DOM 前提) + Swiper。`wp_head()` / `wp_footer()` あり |
+| JS / jQuery | 3.7.1（`nig/js/jquery-3.7.1.min.js`）+ `/nig/js/globalnavi.js` 等。英語 header は `wp_head()` を呼んでいない | 3.7.1 + `js/common.js`(header の DOM 前提) + Swiper。`wp_head()` / `wp_footer()` あり |
 | TOP | `show_on_front=posts`。`index.php` → `index-en.php` / `index-ja.php`。CPT `top_slider`(17) / `top_pickup`(18) / `top_important`(1) | 固定フロントページ + テンプレート `original-frontPage.php`。CPT `highlights` / `interviews`(今の DB に無い) |
 | 下層ページ | `#contentsWrapper` / `#leftSlot`(サイドメニュー) / `#rightSlot` / `.box`。パン屑 `#breadcrumb`。色クラス `bgColor*` | `#global_contents` / `.content_inner` / `.gc_main` / `.block-editor_wrap`。サイドバーは別テンプレ |
 | 画像 | `/nig/images/common/`(サイト外) | テーマ内 `themes/nig/images/common`・`images/home`(ロゴ SVG など) |
