@@ -1,0 +1,239 @@
+/*
+ * 新しい style.css に無い、下層本文の指定だけ。
+ * #global_contents の中に限定する。ヘッダーの .title や .list には当てない。
+ */
+
+#global_contents a:link,
+#global_contents a:visited {
+  color: #036eb6;
+  text-decoration: none;
+}
+
+#global_contents .image_left,
+#global_contents .imageL {
+  margin: 0 1em 0.625em 0;
+  float: left;
+}
+
+#global_contents .image_right,
+#global_contents .imageR {
+  margin: 0 0 0.625em 1em;
+  float: right;
+}
+
+#global_contents .italic { font-style: italic; }
+#global_contents .texts_orange { color: #cc3300; }
+#global_contents .texts_red { color: #ff0000; }
+#global_contents .texts_bold,
+#global_contents .box .bold { font-weight: bold; }
+#global_contents .pb20 { padding-bottom: 20px; }
+#global_contents .alignRight { text-align: right; }
+#global_contents .alignCenter { text-align: center; }
+
+#global_contents #breadcrumb {
+  padding: 3.5px 0 3.5px 6.66667%;
+  height: auto;
+  line-height: 1.2em;
+  text-align: left;
+}
+#global_contents #breadcrumb ul {
+  margin: 0.5em 0;
+  font-size: 12px;
+  text-align: left;
+}
+#global_contents #breadcrumb li {
+  display: inline-block;
+  margin: 0;
+  padding: 0 14px 0 8px;
+  font-weight: 400;
+}
+#global_contents #breadcrumb li.next {
+  background: url(/nig/images/common/arrowBread.png) no-repeat right 4px;
+}
+
+#global_contents .bgColorBl { background-color: #2B59A6; color: #fff; }
+#global_contents .bgColorLb { background-color: #01A7BD; color: #fff; }
+#global_contents .bgColorYe { background-color: #DBA332; color: #fff; }
+#global_contents .bgColorGr { background-color: #A5B200; color: #fff; }
+#global_contents .bgColorPu { background-color: #953690; color: #fff; }
+#global_contents .bgColorGl,
+#global_contents .bgColorBr { background-color: #eaeceb; color: #333; }
+#global_contents .bgColorBr a,
+#global_contents .bgColorGl a { color: #595757; }
+#global_contents .bgColorBl a,
+#global_contents .bgColorYe a,
+#global_contents .bgColorGr a,
+#global_contents .bgColorLb a,
+#global_contents .bgColorPu a { color: #fff; }
+
+#global_contents #contentsWrapper { padding-top: 2.5em; }
+#global_contents #leftSlot { display: none; }
+#global_contents #rightSlot {
+  width: 94%;
+  margin: 0 3%;
+}
+#global_contents #rightSlot h2 {
+  margin-bottom: 38px;
+  padding: 0.178em 0 14px;
+  font-size: 25px;
+  font-weight: bold;
+  background: url(/nig/images/common/h2_gray.png) no-repeat left bottom;
+}
+#global_contents #rightSlot h3 {
+  margin: 0 0 30px;
+  padding: 10px 12px;
+  border: solid 1px #9fa0a0;
+  border-left: solid 12px #727171;
+  font-size: 20px;
+  font-weight: bold;
+}
+#global_contents #rightSlot h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+#global_contents .box { margin-bottom: 70px; font-size: 14px; }
+#global_contents .box p {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: justify;
+}
+#global_contents .box .caption_text {
+  max-width: 900px;
+  margin: 10px auto 25px;
+}
+#global_contents #contentsWrapper ol,
+#global_contents #contentsWrapper ul {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+#global_contents #contentsWrapper ol li { list-style: decimal; }
+#global_contents #contentsWrapper ul li { list-style: disc; }
+#global_contents #contentsWrapper .new_pagination li,
+#global_contents #contentsWrapper ul.no_list_style li { list-style: none; }
+
+#global_contents div.listlink_box {
+  margin-bottom: 0.5em;
+  padding-bottom: 0.975em;
+  border-bottom: 1px dotted #999;
+}
+#global_contents div.listlink_box a {
+  display: block;
+  color: #666;
+  font-size: 1.25em;
+  font-weight: bold;
+  line-height: 1.4375em;
+  text-align: left;
+}
+#global_contents div.listlink_box a:hover { color: #333; }
+
+#global_contents .icon_text {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0 14.5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 19px;
+}
+#global_contents .icon_new { background-color: #ed6f5f; }
+#global_contents .icon_past { background-color: #4e6283; }
+#global_contents .icon_pressrelease { background-color: #62c9bb; }
+#global_contents .icon_recruitment,
+#global_contents .icon_collaborations,
+#global_contents .icon_jobs { background-color: #aad762; }
+#global_contents .icon_award { background-color: #9a82bb; }
+#global_contents .icon_publish { background-color: #efc861; }
+#global_contents .icon_soon { background-color: #a51f24; }
+
+#global_contents .list li {
+  display: block;
+  margin: 0 0 2px;
+  padding: 0 0 0 18px;
+  text-align: left;
+  background: url(/nig/images/common/arrow2.gif) no-repeat 0 5px;
+}
+
+#global_contents .qa dt.qaQ {
+  margin: 0 0 0.5em;
+  padding: 0 0 0.1em 1.6em;
+  color: #222;
+  font-size: 1.6em;
+  line-height: 1.5em;
+  background: url(/nig/images/common/qaQ.gif) no-repeat 0 4px;
+  background-size: 20px;
+}
+#global_contents .qa dd.qaA { padding: 0 0 2em; }
+#global_contents .coursesTalbe { margin-bottom: 15px; }
+
+#global_contents .categoryTemp__titleBlock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 94%;
+  margin: 0 3% 50px;
+  background: url(/nig/images/common/h2_gray.png) no-repeat left bottom;
+}
+#global_contents .categoryTemp__titleBlock .categoryName_title {
+  margin: 16px 0 15px;
+  font-size: 25px;
+  font-weight: 700;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap {
+  display: flex;
+  align-items: center;
+  width: 235px;
+  height: 35px;
+  margin-bottom: 15px;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul {
+  position: relative;
+  z-index: 1;
+  width: 200px;
+  height: 35px;
+  margin: 0;
+  padding-left: 0;
+  background-color: #dcdddd;
+  cursor: pointer;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li {
+  display: none;
+  width: 100%;
+  height: 35px;
+  background-color: #dcdddd;
+  list-style: none;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li:first-child,
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li.is-active {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a {
+  display: block;
+  padding-left: 10px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+}
+#global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: '年'; }
+html[lang="ja"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: '年'; }
+html[lang="en"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li a::after { content: ''; }
+html[lang="en"] #global_contents .categoryTemp__titleBlock .yearSelectWrap ul li .ja-year { display: none; }
+#global_contents .categoryTemp__titleBlock .yearSelectWrap .yearSelectButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: #595757;
+  color: #fff;
+  font-size: 10px;
+  cursor: pointer;
+}

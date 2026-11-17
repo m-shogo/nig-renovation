@@ -202,9 +202,10 @@ ACF の出し先は「固定フロントページ」または `original-frontPag
 7. 確認は Figma の Header と余白。下層の本文が崩れて見えるのは次の段階で直す。ページが 200 で、文字が HTML にあることまで見る。
 
 ### 段階 4: 下層の本文を読めるようにする
-1. `pagetemp-*.php` / `category.php` / `single.php` などの本文を `#global_contents` で包む。中の `#leftSlot` `#rightSlot` `.box` は残す。
-2. 旧 CSS から本文用(`.listlink_box` `.icon_text` パン屑 色クラス)だけを、本文枠の中に移植する。
-3. ヘッダーは触らない。サイドバーの復活や本文の作り込みはしない。
+1. ホーム以外の本文を `#global_contents` で包む。中の `#leftSlot` `#rightSlot` `.box` は残す。`#leftSlot` は旧どおり非表示のまま。
+2. 新しい CSS に無い本文用だけを `#global_contents` の中へ置く。旧 `common.css` は戻さない。対象は `.listlink_box` `.icon_text` パン屑 `.bgColor*` `.pb20` `.bold` `.italic` `.image_right` `.caption_text` `.qaQ` `.qaA` `.coursesTalbe` と、カテゴリの `.yearSelectWrap`。
+3. `nig/js/yearSelect.js` はカテゴリだけで読む。年リストの CSS が先頭以外を隠すので、開閉にはこのファイルが要る。中身は `.on('click')` と `slideToggle()` だけで、jQuery 3.7.1 のまま動く。`globalnavi.js` や `default.js` は戻さない。
+4. ヘッダーの中身は触らない。サイドバーの復活や本文の作り込みはしない。
 
 ### 段階 5: TOP
 ヘッダーの HTML が決まってから始める。`original-frontPage.php` は `get_header()` を呼ぶので、先に有効にすると旧ヘッダー前提で余白を直すことになる。

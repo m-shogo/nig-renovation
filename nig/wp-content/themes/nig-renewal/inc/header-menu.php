@@ -4,6 +4,10 @@
  * 項目の追加・削除・並べ替えはしない。
  */
 
+function nig_renewal_wrap_lower_content() {
+	return ! is_front_page() && ! is_home();
+}
+
 function nig_renewal_current_lang() {
 	if ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE ) {
 		return ICL_LANGUAGE_CODE;

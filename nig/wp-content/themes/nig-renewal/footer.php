@@ -2,6 +2,9 @@
 $lang = nig_renewal_current_lang();
 $logo = $lang === 'ja' ? 'logo.svg' : 'logo-en.svg';
 ?>
+<?php if ( nig_renewal_wrap_lower_content() ) : ?>
+</div><!-- /global_contents -->
+<?php endif; ?>
 </div><!-- /global_wrapper -->
 <footer id="global_footer" class="global_footer">
   <div class="gf_information">

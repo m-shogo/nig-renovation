@@ -133,3 +133,6 @@ if ( $lang === 'en' ) {
   <div id="gns_close" class="close"><button id="searchClose" type="button"></button></div>
 </div>
 <div class="global_wrapper">
+<?php if ( nig_renewal_wrap_lower_content() ) : ?>
+<div id="global_contents">
+<?php endif; ?>
